@@ -1,0 +1,1129 @@
+html,
+body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0px;
+}
+
+@media (max-width: 768px) {
+    #logo-header{
+        margin: auto !important;
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        width: 100% !important;
+    }
+    #logo-header{
+        margin: auto !important;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        width: 100% !important;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 95% !important;
+    }
+}
+@media (min-width: 1520px) {
+    .container {
+        width: 1500px !important;
+    }
+    .main_left{
+        width: 23%;
+    }
+    .main_center{
+        width: 54%;
+    }
+    .main_right{
+        width: 23%;
+    }
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+.ads-btn{
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+.required label:after {
+    content: "*";
+    color: red;
+}
+
+.auth-label{
+    display: block;
+    text-align: center;
+    margin-bottom: 0px;
+    background-color: #d0d0d0;
+    position: relative;
+}
+.auth-label:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 45%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom: 0;
+    border-top-color: #d0d0d0;
+}
+
+@media (min-width: 991px) {
+    .side_left{
+        padding: 0px 0px 0px 14px;
+    }
+    .no-side{
+        padding: 0px 0px 0px 0px;
+    }
+}
+
+.panel-dark > .panel-heading * {
+    color: #fff !important;
+}
+
+.list-group-item,
+.thumbnail{
+    border: solid 1px #c4c4c4;
+}
+
+i.lab{
+    font-size: 0.8em;
+    color: #777;
+}
+
+.hr-min{
+    margin: 2px 0px;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+/*TOP*/
+@media (max-width: 1024px) {
+    .top-center-block{
+        width: 100%;
+        text-align: center;
+    }
+}
+@media (max-width: 778px) {
+    .top-center-block{
+        width: 100%;
+    }
+}
+@media (max-width: 1310px) {
+    .top-right-block{
+        max-width: 680px;
+        padding: 0;
+    }
+}
+@media (max-width: 1275px) {
+    .top-right-block{
+        max-width: 652px;
+        padding: 0;
+    }
+}
+@media (max-width: 1245px) {
+    .top-right-block{
+        max-width: 600px;
+        padding-left: 0;
+    }
+}
+@media (max-width: 1215px) {
+    .top-right-block{
+        max-width: 565px;
+        padding-left: 0;
+    }
+}
+@media (min-width: 1310px) {
+    .top-right-block{
+        max-width: none;
+        padding-left: 0;
+    }
+}
+@media (max-width: 1010px) {
+    .top-right-block{
+        width: 100%;
+        max-width: none;
+    }
+}
+
+
+.valute{
+    display: inline-block;
+    padding: 5px 2px;
+}
+.weather
+{
+    display: inline-block;
+    padding: 5px 2px;
+}
+/*Sky-Forms
+------------------------------------*/
+/*Contact Style*/
+.sky-form.contact-style {
+    border: none;
+}
+
+/*Comment Style*/
+.sky-form.comment-style,
+.sky-form.comment-style fieldset {
+    padding: 0;
+    border: none;
+    background: inherit;
+}
+
+.sky-form.comment-style input,
+.sky-form.comment-style textarea {
+    border: none;
+}
+
+.sky-form.comment-style input:focus,
+.sky-form.comment-style textarea:focus {
+    box-shadow: none;
+}
+
+/*Sky Space*/
+.sky-form .sky-space-20 {
+    margin-bottom: 20px;
+}
+
+.sky-form .sky-space-30 {
+    margin-bottom: 30px;
+}
+
+/**/
+/* defaults */
+/**/
+.sky-form {
+    box-shadow: none;
+    border: 1px solid #eee;
+}
+
+.sky-form header {
+    color: inherit;
+    display: block;
+    font-size: 20px;
+    background: #fff;
+    font-weight: 400;
+    padding: 8px 30px;
+}
+
+.sky-form fieldset.no-padding {
+    padding: 0;
+}
+
+.sky-form fieldset {
+    background: #fff;
+}
+
+.sky-form footer {
+    background: #fff;
+    padding: 15px 30px;
+}
+
+.sky-form a {
+    color: inherit;
+}
+
+.sky-form a.btn-u {
+    color: #fff;
+}
+
+.sky-form .input input {
+    height: 34px;
+    padding: 6px 12px;
+}
+
+.sky-form .input input,
+.sky-form .select select,
+.sky-form .textarea textarea {
+    border-width: 1px;
+    font-size: 14px;
+    color: #404040;
+}
+
+.sky-form .select select {
+    height: 33px;
+    padding: 6px 10px;
+}
+
+.sky-form .select-multiple select {
+    height: auto;
+}
+
+/**/
+/* file inputs */
+/**/
+.sky-form .input-file .button {
+    height: 32px;
+    top: 1px;
+    right: 1px;
+}
+
+/**/
+/* captcha inputs */
+/**/
+.sky-form .input-captcha img {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    border-left: 1px solid #e5e5e5;
+}
+
+
+/**/
+/* normal state */
+/**/
+.sky-form .input input,
+.sky-form .select select,
+.sky-form .textarea textarea,
+.sky-form .radio i,
+.sky-form .checkbox i,
+.sky-form .toggle i,
+.sky-form .icon-append,
+.sky-form .icon-prepend {
+    border-color: #bbb;
+}
+.sky-form .toggle i:before {
+    background-color: #999;
+}
+
+.sky-form .button {
+    background: #72c02c;
+}
+
+/**/
+/* toggles */
+/**/
+.sky-form .toggle {
+    font-weight: normal;
+}
+
+.sky-form .toggle i {
+    width: 54px;
+    height: 21px;
+    border-width: 1px;
+}
+.sky-form .toggle i:after {
+    top: 3px;
+}
+.sky-form .toggle i:before {
+    top: 5px;
+    right: 6px;
+}
+
+/*(remove Bootstrap 'radio, checkbox' margin-top)
+--------------------------------------------------*/
+.radio, .checkbox {
+    margin-top: 0;
+}
+
+/**/
+/* radios and checkboxes */
+/**/
+.sky-form .radio i,
+.sky-form .checkbox i {
+    width: 17px;
+    height: 17px;
+    border-width: 1px;
+}
+/*
+.sky-form .checkbox input + i:after {
+    top: 2px;
+    left: 0;
+    font: normal 10px FontAwesome;
+}
+*/
+/**/
+/* checked state */
+/**/
+.sky-form .radio input + i:after {
+    top: 5px;
+    left: 5px;
+    background-color: #999;
+}
+/*
+.sky-form .checkbox input + i:after {
+    color: #999;
+}
+*/
+.sky-form .radio input:checked + i,
+.sky-form .checkbox input:checked + i,
+.sky-form .toggle input:checked + i {
+    border-color: #999;
+}
+.sky-form .rating input:checked ~ label {
+    color: #72c02c;
+}
+
+/**/
+/* selects */
+/**/
+.sky-form .select i {
+    top: 14px;
+    width: 9px;
+    right: 13px;
+    height: 6px;
+}
+.sky-form .select i:after,
+.sky-form .select i:before {
+    top: 4px;
+}
+.sky-form .select i:before {
+    top: -2px;
+    border-bottom: 4px solid #404040;
+}
+
+.label-rounded .ui-slider-handle {
+    border-radius: 50% !important;
+}
+
+/**/
+/* icons */
+/**/
+.sky-form .icon-append,
+.sky-form .icon-prepend {
+    top: 1px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 33px;
+    background: inherit;
+}
+.sky-form .icon-append {
+    right: 1px;
+    padding: 0 3px;
+    min-width: 34px;
+}
+
+.sky-form .icon-prepend {
+    left: 6px;
+    padding-right: 5px;
+}
+
+/**/
+/* focus state */
+/**/
+.sky-form .input input:focus,
+.sky-form .select select:focus,
+.sky-form .textarea textarea:focus {
+    border-color: #bbb;
+    box-shadow: 0 0 2px #c9c9c9;
+}
+
+.sky-form .radio input:focus + i,
+.sky-form .checkbox input:focus + i,
+.sky-form .toggle input:focus + i {
+    border-color: #999;
+    box-shadow: none;
+}
+
+/**/
+/* hover state */
+/**/
+.sky-form .input:hover input,
+.sky-form .select:hover select,
+.sky-form .textarea:hover textarea {
+    border-color: #999;
+}
+
+.sky-form .radio:hover i,
+.sky-form .checkbox:hover i,
+.sky-form .toggle:hover i,
+.sky-form .ui-slider-handle:hover {
+    border-color: #999;
+}
+.sky-form .rating input + label:hover,
+.sky-form .rating input + label:hover ~ label {
+    color: #72c02c;
+}
+
+.sky-form .icon-append,
+.sky-form .icon-prepend {
+    color: #b3b3b3;
+}
+
+/**/
+/* disabled state */
+/**/
+.sky-form .input.state-disabled:hover input,
+.sky-form .select.state-disabled:hover select,
+.sky-form .textarea.state-disabled:hover textarea,
+.sky-form .radio.state-disabled:hover i,
+.sky-form .checkbox.state-disabled:hover i,
+.sky-form .toggle.state-disabled:hover i {
+    border-color: #bbb;
+}
+
+/**/
+/* datepicker */
+/**/
+.ui-datepicker-header {
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.ui-datepicker-inline {
+    border-width: 1px;
+}
+
+.ui-datepicker-inline .ui-datepicker-header {
+    line-height: 27px;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    font-size: 18px;
+    line-height: 47px;
+}
+
+.ui-datepicker-calendar a {
+    border: 1px solid transparent;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    background: inherit;
+    border: 1px solid #bbb;
+}
+.ui-datepicker-calendar a:hover {
+    background: inherit;
+    border: 1px solid #bbb;
+}
+
+/**/
+/* bootstrap compatibility */
+/**/
+.sky-form button *,
+.sky-form button *:after,
+.sky-form button *:before {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.btn-u.button-uploading:after {
+    top: 6px;
+}
+.btn-u.btn-u-lg.button-uploading:after {
+    top: 10px;
+}
+.btn-u.btn-u-sm.button-uploading:after {
+    top: 3px;
+}
+.btn-u.btn-u-xs.button-uploading:after {
+    top: 2px;
+}
+
+.label {
+    padding: 0.2em 0 0.3em;
+}
+
+/*Fix for datepicker's responsive issue on resolution 1024x768*/
+/*.ui-datepicker-calendar a,*/
+.ui-datepicker-calendar span {
+    width: 26px;
+    /*color: #bfbfbf;*/
+}
+
+/* Beautiful lists */
+.rectangle-list span{
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em .8em;
+    *padding: .4em;
+    margin: .5em 0 .5em 2.5em;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.rectangle-list span:hover {
+    background: #eee;
+}
+
+.rectangle-list span:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -2.5em;
+    top: 50%;
+    margin-top: -1em;
+    background: #fa8072;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rectangle-list span:after {
+    position: absolute;
+    content: '';
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.rectangle-list span:hover:after {
+    left: -.5em;
+    border-left-color: #fa8072;
+}
+
+.text-small, .small-text{
+    font-size: 0.88em;
+}
+.control-label {
+    color: #676767;
+    font-size: 0.85em;
+    font-style: italic;
+    margin-bottom: 3px;
+    padding-left: 3px;
+}
+
+.filter{
+    content: " ";
+    display: table;
+    width: 100%;
+    background-color: rgba(180,180,180,0.5);
+    padding-top: 3px;
+    padding-bottom: 9px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+}
+
+.filter .form-group{
+    margin-bottom: 0px;
+}
+
+.filter_element{
+    padding: 6px;
+}
+
+div.sorter-block{
+    display: table;
+    content: " ";
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+    padding: 6px 6px;
+    background-color: #e5e5e5;
+}
+
+div.sorter-block ul{
+    display: inline-block;
+}
+div.sorter-block div{
+    display: inline-block;
+}
+
+div.sorter-block ul.pagination{
+    margin: 0px;
+    float: right;
+}
+
+ul.sorter{
+    list-style: outside none none;
+    margin:2px 5px;
+    padding-left: 0;
+}
+ul.sorter > li{
+    display: inline-block;
+}
+ul.sorter > li a{
+    padding: 4px 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.42857;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.sorter > li a:focus, .sorter > li a:hover, .sorter > li a:active {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    text-decoration: none;
+}
+
+.sorter > li a, .sorter > li a:focus, .sorter > li a:hover, .sorter > li a:active {
+    outline: none !important;
+}
+
+.pagination > li > a, .pagination > li > span {
+    line-height: 12px !important;
+    padding: 6px 12px !important;
+}
+
+.resume-right-col p {
+    margin-bottom: 4px;
+}
+
+.control-label{
+    font-size: 0.8em;
+}
+
+.tags{
+    display: inline-block;
+    height: 21px;
+    margin: 0 10px 5px 0;
+    padding: 0 7px 0 14px;
+    white-space: nowrap;
+    position: relative;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#606c88+0,3f4c6b+100;Grey+3D+%232 */
+    background: #606c88; /* Old browsers */
+    background: -moz-linear-gradient(top,  #606c88 0%, #3f4c6b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#606c88), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #606c88 0%,#3f4c6b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #606c88 0%,#3f4c6b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #606c88 0%,#3f4c6b 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #606c88 0%,#3f4c6b 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
+
+
+    color: #fff;
+    font: bold 11px/20px Arial, Tahoma, sans-serif;
+    text-decoration: none;
+    text-shadow: -1px -1px rgba(0,20,50,0.4);
+
+    border-top: 1px solid #606c88;
+    border-bottom: 1px solid #43506E;
+    border-right: 1px solid #555866;
+    border-radius: 1px 3px 3px 1px !important;
+    box-shadow: inset 0 1px #606c88, 0 1px 2px rgba(0,0,0,0.21);
+}
+.tags:before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: -5px;
+    width: 10px;
+    height: 11px;
+    border-radius: 2px 0 1px 2px !important;
+    box-shadow: inset 1px 0 #606c88, 0 2px 2px -2px rgba(0,0,0,0.63);
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#606c88+0,3f4c6b+100;Grey+3D+%232 */
+    background: #606c88; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #606c88 0%, #3f4c6b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#606c88), color-stop(100%,#3f4c6b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #606c88 0%,#3f4c6b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #606c88 0%,#3f4c6b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #606c88 0%,#3f4c6b 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #606c88 0%,#3f4c6b 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    -webkit-transform: scale(1, 1.5) rotate(45deg);
+    -moz-transform: scale(1, 1.5) rotate(45deg);
+    -ms-transform: scale(1, 1.5) rotate(45deg);
+    transform: scale(1, 1.5) rotate(45deg);
+}
+.tags:after {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 1px;
+    width: 5px;
+    height: 5px;
+    background: #FFF;
+    border-radius: 4px !important;
+
+    box-shadow: 0 1px 0 rgba(0,20,50,0.2), inset 0 1px 1px rgba(0,0,0,0.21);
+}
+
+.tag_btn:hover, .tag_btn:hover:before {
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 1px 0px rgba(0,20,50,0.2), inset 0 30px 0px rgba(0,20,50,0.21);
+}
+.tag-link{
+    font-style: italic;
+}
+.tag-link:hover{
+}
+
+.list-inline .btn-u{
+    margin-bottom: 5px;
+}
+
+.rating-block{
+    padding: 7px;
+    color: #fff !important;
+    border: 2px solid #c6c6c6;
+}
+.rating-block button{
+    color: #fff !important;
+}
+#rating-val{
+    font-size: 1.2em;
+}
+
+.rating_btn{
+    text-align: center;
+}
+
+/*ФОРУМ*/
+.forum_theme {
+    margin-left: 0;
+    padding-left: 0;
+    padding-top: 5px;
+}
+.forum_theme li{
+    list-style: none;
+    border-top: 1px solid #b6b6b6;
+}
+.forum_theme li:last-child{
+    border-bottom: 1px solid #b6b6b6;
+}
+
+.list-forum-theme{
+    background-color: #efefef;
+    padding: 12px 13px 6px 13px;
+    display: block;
+}
+
+.forum_theme li.list-top{
+    background-color: #eed3d7;
+}
+
+@media (min-width: 992px) {
+    .forum_left_col {
+        padding-right: 0px;
+    }
+}
+
+.forum_theme_name{
+    font-size: 1.3em;
+    color: #0D4B70;
+}
+.forum_theme_name:hover{
+    color: #000088 !important;
+}
+
+
+
+#btn_message{
+    margin-bottom: 3px;
+    display: inline-block;
+}
+.label-message{
+    margin-left: 3px;
+    color: #151515;
+    line-height: 33px;
+}
+
+.forum_avatar{
+    max-width: 50px;
+    padding: 3px;
+    border: 1px solid #aaa;
+    border-radius: 50% !important;
+}
+
+.forum_username{
+    font-size: 0.9em;
+    font-style: italic;
+    padding: 3px;
+    margin-bottom: 0px;
+}
+
+.forum_date{
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.forum_btn_group{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+}
+
+.forum_user_text{
+    font-size: 0.9em;
+    font-style: italic;
+    margin-bottom: 3px;
+    line-height: 0.9em;
+}
+.forum_input{
+    background-color: #eee;
+}
+
+#div_spinner{
+    position: absolute;
+    top: 35%;
+    left: 38%;
+    z-index: 2000;
+}
+
+.div_spinner_text{
+    display: inline-block;
+    font-size: 26px;
+    vertical-align:
+    top; margin-top: 10px;
+}
+
+@media (max-width: 992px) {
+    #div_spinner{
+        left: 45%;
+    }
+    .div_spinner_text {
+        display: none;
+    }
+
+}
+
+/*radio_buttons*/
+
+.radio_buttons {
+    margin: 0px;
+}
+.radio_buttons div {
+    float: left;
+    width: 50%;
+}
+.radio_buttons input {
+    position: absolute;
+    left: -9999px;
+}
+.radio_buttons label {
+    display: block;
+    margin: 0 0 0 -1px;
+    padding: 8px 10px;
+    border: 1px solid #BBBBBB;
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .12);
+    cursor: pointer;
+    text-align: center;
+}
+.radio_buttons input:checked + label {
+    background: #EAA8AB;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, .2);
+}
+.radio_buttons div:first-child label {
+    margin-left: 0;
+    border-top-left-radius: 2px !important;
+    border-bottom-left-radius: 2px !important;
+}
+.radio_buttons div:last-child label {
+    border-top-right-radius: 2px !important;
+    border-bottom-right-radius: 2px !important;
+}
+
+.site-index .container-fluid{
+    margin-top: 15px;
+}
+
+
+.slider-main-sign{
+    z-index: 100;
+    display: block;
+    margin-top: -70px;
+    padding: 10px 5px;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+}
+.slider-main-sign h2{
+    margin: 0;
+    padding-left: 15px;
+    font-size: 1em;
+    font-style: italic;
+    color: #fff;
+    text-shadow: 1px 1px 0px #444;
+}
+
+.main-table{
+    width: 100%;
+}
+.main-table th{
+    /*-background-color: #7F8C8D;
+    border: 1px solid #7F8C8D;*/
+    color: #606060;
+    text-align: left;
+    font-size: 1.3em;
+    font-style: normal;
+    font-weight: 600;
+    padding: 4px 0px 6px 0px;
+}
+.main-table tr:first-child:hover{
+     border-bottom: none !important;
+     background-color: transparent !important;
+}
+
+.main-table td{
+    padding: 5px 0px 5px 0px;
+}
+
+.main-table.news td{
+    padding: 0px;
+    padding-bottom: 10px !important;
+}
+
+
+.main-table.news tr:hover{
+    border-bottom: none !important;
+    background-color: transparent !important;
+}
+
+
+.main-table tr{
+}
+
+.main-table tr:hover{
+    background-color: #e6e6e6;
+}
+.main-table .cost{
+    color: #900000;
+    font-style: italic;
+}
+
+.main-table .table-img{
+    width: 90px;
+    padding-right: 0px !important;
+}
+
+.list-inline .tag-sign{
+    font-size: 0.9em;
+    font-style: italic;
+    color: #676767;
+}
+.list-inline .tag-name a{
+    font-size: 0.9em;
+    font-style: italic;
+    color: #820000;
+}
+
+.title-underblock {
+    display: block;
+    width: 100%;
+    padding-bottom: 0.6em;
+    position: relative;
+    border-bottom: 1px solid #505050;
+}
+.title-border.title-bg.dark, .title-bg-line.dark::after, .title-underblock.dark::after {
+    background-color: #820000;
+}
+.title-underblock.title-bottom-border::after {
+    bottom: -3px;
+    height: 5px;
+}
+.title-underblock::after {
+    background-color: transparent;
+    bottom: -2px;
+    content: "";
+    display: block;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    width: 50px;
+}
+
+.cat-button{
+    margin-bottom: 2px;
+}
+
+.slider-on-main{
+    margin-top: 30px;
+}
+
+.item h2{
+    font-size: 1.2em;
+}
+.item p{
+    font-size: 0.9em;
+}
+
+.up-ul span{
+    color: #000088;
+}

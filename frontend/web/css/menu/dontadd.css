@@ -1,0 +1,33 @@
+body {
+    height: 100%;
+}
+h1 {
+    color:#ffffff;
+}
+.row h4 {
+    text-align: center;
+    color:#fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin:30px 0 15px;
+}
+ul {
+    padding:0;
+}
+.row ul li {
+    color:#fff;
+    text-transform: uppercase;
+    margin:10px 0;
+    text-align: center;
+    list-style: none;
+}
+hr {
+    border-width: 2px;
+    width: 30px;
+}
+.row ul li a {
+    color:#fff;
+}
+.row {
+    margin-top: 100px;
+}

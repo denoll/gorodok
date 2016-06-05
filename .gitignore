@@ -1,0 +1,52 @@
+/backend/modules/users/assets/css/flags-iso
+/environments
+/frontend/config/_cache.php
+/backend/web
+/requirements.php
+/init.bat
+/init
+/composer.lock
+/composer.json
+/.bowerrc
+/frontend/web/.htaccess
+/frontend/web/temp
+/frontend/web/js/plugins
+/frontend/config
+/backend/config
+/common/config
+/frontend/modules/profile/yandex
+/common/config/_eauth.php
+/tests
+/yii.bat
+/webstat
+/vendor_old
+# yii console command
+/yii
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+
+# composer itself is not needed
+composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
