@@ -32,7 +32,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 
 <div class="wrapper">
 
-	<div class="header-v4 header-sticky">
+	<div class="header-v4"> <!--header-sticky-->
 
 		<?= $this->render(
 			'top.php',
@@ -61,8 +61,8 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					<?= Alert::widget() ?>
 
 					<br>
-					<?= $content ?>
 
+					<?= $content ?>
 
 				</div>
 			<?php } elseif (($this->params['left']) && ($this->params['right'])) { //Если левы правый блоки и центр ?>
@@ -144,8 +144,13 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 		<div><img src="https://mc.yandex.ru/watch/35183035" style="position:absolute; left:-9999px;" alt=""/></div>
 	</noscript>
 	<!-- /Yandex.Metrika counter -->
-
+	<?php
+	//Сервис для для кнопок поделиться в социальных сетях
+	$this->registerJsFile('https://cdn.jsdelivr.net/jquery.goodshare.js/3.2.4/goodshare.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+	?>
 	<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+
+

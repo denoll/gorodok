@@ -11,7 +11,6 @@ $this->params['left'] = true;
 $this->title = 'Мои объявления о товарах';
 $this->params['breadcrumbs'][] = ['label' => 'Мой профиль', 'url' => [Url::home() . 'profile/index']];
 $this->params['breadcrumbs'][] = $this->title;
-//'education', 'skills', 'about', 'experience'
 
 $pay = Arrays::PAYMENTS();
 $period = Arrays::getConst();

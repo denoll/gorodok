@@ -145,15 +145,9 @@ class CategGoodsVMenu extends Widget
 
 	private function registerJsLoc()
 	{
-		$js = <<< JS
-    $(document).ready(function () {
-
-});
-JS;
 		$this->view->registerJsFile('/js/menu/ttmenu.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-		$this->view->registerJsFile('/js/menu/jquery.fitvids.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+		//$this->view->registerJsFile('/js/menu/jquery.fitvids.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 		$this->view->registerJsFile('/js/menu/hovernav.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-		$this->view->registerJs($js, View::POS_END);
 	}
 }
 

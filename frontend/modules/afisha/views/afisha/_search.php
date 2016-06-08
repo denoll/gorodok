@@ -17,7 +17,7 @@ if (!empty($first_child)) {
 }
 ?>
 
-<div class="doctor-search">
+<div class="afisha-search">
     <?php $form = ActiveForm::begin([
         'action' => empty($get_cat) ? ['index'] : ['index', 'cat'=>$get_cat],
         'method' => 'get',
@@ -43,5 +43,5 @@ if (!empty($first_child)) {
             </div>
         <?php } ?>
     </div>
-
+    <?php ActiveForm::end(); ?>
 </div>

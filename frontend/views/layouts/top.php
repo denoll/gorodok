@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 use frontend\widgets\Avatar;
 
-$this->registerJsFile('https://cdn.jsdelivr.net/jquery.goodshare.js/3.2.4/goodshare.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 <!-- Topbar -->
 <div class="topbar-v1">

@@ -44,9 +44,9 @@ class NewsSidebarWidget extends Widget
             echo '<dt>';
             echo '<a href="' . $path . '?id=' . $item['alias'] . '">';
             if($item['thumbnail'] != null){
-                echo Html::img(Url::home() . 'img/news/' . $item['thumbnail'], ['style' => '']);
+                echo Html::img(Url::to('@frt_url/img/news/') . $item['thumbnail'], ['style' => '']);
             }else {
-                echo Html::img(Url::home() . 'img/no-img.png', ['style' => '']);
+                echo Html::img(Url::to('@frt_url/img/no-img.png'), ['style' => '']);
             }
             echo '</a>';
             echo '</dt>';

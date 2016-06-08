@@ -25,7 +25,6 @@ $is_doctor = $this->params['is_doctor'];
 if (!stristr($path, 'site')) {
 
 	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/')) {
-		//echo $path;
 		if (stristr($path, 'account/')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 0]);
 		}
@@ -50,7 +49,6 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, 'jobs/vacancy/index') || stristr($path, 'jobs/vacancy/view')) {
 			echo CategJob::widget(['cats'=>\common\widgets\Arrays::getJobCat(), 'for'=>'vac']);
 		}
-		//echo NewsSidebarWidget::init();
 	}
 	if (stristr($path, '/med/doctors')) {
 		if (stristr($path, '/med/doctors/index') || stristr($path, '/med/doctors/view')) {
@@ -68,11 +66,10 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, '/goods/update') || stristr($path, '/goods/create') || stristr($path, '/goods/my-ads')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 8]);
 		}
-		if (stristr($path, '/goods') || stristr($path, '/goods')) {
+		if (stristr($path, '/goods')) {
 			echo \frontend\widgets\CategGoodsVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
 		}
-
 	}
 	if (stristr($path, '/service') || stristr($path, '/set-service')) {
 		if (stristr($path, '/service/update') || stristr($path, '/service/create') || stristr($path, '/service/my-ads')) {
@@ -127,63 +124,6 @@ if (!stristr($path, 'site')) {
 		echo \frontend\widgets\CategLetters::widget();
 		echo \frontend\widgets\TagsWidget::widget();
 	}
-	/*
-	if(stristr($path, 'profile/user-profile/update')){
-		echo ProfileLeftSidebar::widget(7);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'profile/user-profile/my-photo')){
-		echo ProfileLeftSidebar::widget(6);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'profile/user-profile/edit-photo')){
-		echo ProfileLeftSidebar::widget(6);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'users/messages')){
-		echo ProfileLeftSidebar::widget(5);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'users/index')){
-		echo ProfileLeftSidebar::widget(1);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'users/profile')){
-		echo ProfileLeftSidebar::widget(3);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'users/friends')){
-		echo ProfileLeftSidebar::widget(3);
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'presentations')){
-		echo CategPres::init();
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'tests/default')||stristr($path, 'tests/result')){
-		echo ProfileLeftSidebar::widget(4);
-	}
-	if(stristr($path, 'tests')){
-		echo CategTest::init();
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'news')){
-		echo CategNews::init();
-		echo TagsWidget::init();
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'page')){
-		echo CategPage::init();
-		echo TagsWidget::init();
-		echo NewsSidebarWidget::init();
-	}
-	if(stristr($path, 'tags')){
-		echo TagsWidget::init();
-		echo NewsSidebarWidget::init();
-	}
-
-*/
-	//echo NewsSidebarWidget::init();
 
 	$show = true;
 

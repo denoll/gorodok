@@ -39,7 +39,7 @@ if ($period <= $const['vip']  && $model['vip_date'] !== null) {
                 <p><i class="small-text">Цена: </i>&nbsp;<span style="font-weight: bold;"><?= $model['cost'] ? number_format($model['cost'],2,',',"'").'&nbsp;<i class="small-text">Руб. </i>' :' - не задана' ?></span></p>
                 <p><i class="small-text"><?= \Yii::$app->formatter->asDate($model['created_at'], 'long') ?></i></p>
                 <p><i class="small-text">Продавец:&nbsp;<?= $model['company'] ? ' Компания ':' Частное лицо ' ?></i></p>
-                <p><?= $model['company'] ? $model['username'] : $model['fio']?></p>
+                <p><?= $model['company'] ? $model['company_name'] : $model['username']?></p>
 
             </div>
         </div>

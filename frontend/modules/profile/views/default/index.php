@@ -120,9 +120,3 @@ if(User::isCompany()){
         </div>
     </div>
 </div>
-<pre>
-    <?php
-    $identity = Yii::$app->getUser()->getIdentity();
-    print_r($identity);
-    ?>
-</pre>

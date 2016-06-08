@@ -7,7 +7,7 @@
 * Released under the WTFPL license - http://sam.zoy.org/wtfpl/
 *
 */
-
+/*
 ;(function( $ ){
 
   'use strict';
@@ -78,5 +78,7 @@
       });
     });
   };
+
 // Works with either jQuery or Zepto
-})( window.jQuery || window.Zepto );
+
+*/

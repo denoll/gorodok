@@ -40,37 +40,26 @@ if (!empty($m_kw)) {
 }
 
 ?>
-<style type="text/css">
-    .help-block {
-        margin: 0px !important;
-    }
+<?php echo $this->render('_category', [
+	'cat' => $cat,
+	'cur_cat' => $cur_cat,
+	'first_child' => $first_child,
+]); ?>
 
-    .form-control {
-        height: 35px;
-    }
-</style>
-<!--<div class="goods-index">-->
-    <?php/* echo $this->render('_category',[
-        'cat'=>$cat,
-        'cur_cat'=>$cur_cat,
-        'first_child'=>$first_child,
-    ]); */?>
+<?php if ($items) {
+	echo $this->render('_search', [
+		'model' => $searchModel,
+		'first_child' => $first_child,
+	]);
+	echo ListView::widget([
+		'dataProvider' => $dataProvider,
+		'itemView' => '_item',
+		'layout' => '<div class="sorter-block"><i class="small-text">Сортировать:</i> {sorter} {summary} {pager}</div> {items} {pager}',
+	]);
+} else { ?>
+	<div class="alert alert-success fade in">
+		<strong>Ничего не найдено!</strong>
+	</div>
+<?php } ?>
 
-    <?php if ($items) { ?>
-        <?php echo $this->render('_search', [
-            'model' => $searchModel,
-            'first_child'=>$first_child,
-        ]); ?>
-        <?= ListView::widget([
-            'dataProvider' => $dataProvider,
-            'itemView' => '_item',
-            'layout' => '<div class="sorter-block"><i class="small-text">Сортировать:</i> {sorter} {summary} {pager}</div> {items} {pager}',
-        ]); ?>
-    <?php } else { ?>
-        <div class="alert alert-success fade in">
-            <strong>Ничего не найдено!</strong>
-        </div>
-    <?php } ?>
-
-<!--</div>-->
 

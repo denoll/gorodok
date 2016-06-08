@@ -34,7 +34,7 @@ $y = (($period%10==1)&&($period%100!=11))?'года':'лет'
         <div class="col-sm-10">
             <h3>
                 <strong style="font-size: 1em; font-style: italic;">
-                    <?=$user['surname'] . ' ' . $user['name'] . ' ' . $user['patronym']?>
+                    <?=$user['username']?>
                 </strong>
             </h3>
             <p><i class="small-text">Тел:</i> <strong><?=$user['tel']?></strong>,  <i class="small-text">E-mail:</i> <strong><?=$user['email']?></strong></p>
