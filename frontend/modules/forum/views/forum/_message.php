@@ -21,7 +21,7 @@ if ($model['status'] == 0) {
     $display = true;
 }
 
-$fio = ($model['idAuthor']['name'] != '' && $model['idAuthor']['surname'] != '') ? $model['idAuthor']['name'].' '.$model['idAuthor']['surname'] : $model['idAuthor']['username']
+$fio = $model['idAuthor']['username'];
 
 ?>
 <?php if ($display) { ?>

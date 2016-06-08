@@ -15,9 +15,7 @@
 
 		<?php $form = ActiveForm::begin(['id' => 'change-login', 'class' => '']); ?>
 
-		<?= $form->field($user, 'name')->textInput()->label('<i>Введите имя</i>') ?>
-		<?= $form->field($user, 'surname')->textInput()->label('<i>Введите фамилию</i>') ?>
-		<?= $form->field($user, 'patronym')->textInput()->label('<i>Введите отчество</i>') ?>
+		<?= $form->field($user, 'username')->textInput()->label('<i>Введите свои имя и фамилию</i>') ?>
 
 		<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right', 'name' => 'change-password-button']) ?>
 

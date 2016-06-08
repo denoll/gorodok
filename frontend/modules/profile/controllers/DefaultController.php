@@ -195,9 +195,7 @@ class DefaultController extends Controller
 		$post = $pst['User'];
 		if ($user->load($pst)) {
 			if ($user->validate()) {
-				$user->name = $post['name'];
-				$user->surname = $post['surname'];
-				$user->patronym = $post['patronym'];
+				$user->name = strip_tags($post['username']);
 				$user->save();
 				Yii::$app->session->setFlash('success', 'Фамилия Имя Отчество успешно установлены.');
 			} else {

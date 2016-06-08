@@ -48,10 +48,10 @@ $user = Yii::$app->user->getIdentity();
                 <?php } ?>
             </div>
             <?php if ($model['company']) { ?>
-                <h4><i class="small-text" style="font-size: 0.7em;">Продавец:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['username'] ?></strong></h4>
-                <h4><i class="small-text" style="font-size: 0.7em;">Контактное лицо:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['fio'] ?></strong></h4>
+                <h4><i class="small-text" style="font-size: 0.7em;">Продавец:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['company_name'] ?></strong></h4>
+                <h4><i class="small-text" style="font-size: 0.7em;">Контактное лицо:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['username'] ?></strong></h4>
             <?php } else { ?>
-                <h4><i class="small-text" style="font-size: 0.7em;">Продавец:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['fio'] ?></strong></h4>
+                <h4><i class="small-text" style="font-size: 0.7em;">Продавец:</i><strong style="font-size: 0.9em; font-style: italic;"><?= $model['username'] ?></strong></h4>
             <?php } ?>
             <p style="margin: 2px;"><i class="small-text">Тел:</i> <strong><?= $model['tel'] == '' ? ' - не указан': $model['tel'] ?></strong></p>
 
