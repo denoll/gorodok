@@ -32,6 +32,12 @@ class UserAuthRealization extends User
 		if (!empty($client)) {
 			$attributes = $client->getUserAttributes();
 			switch ($client->getName()){
+				case 'google':
+					$this->attributes = [
+						'id' => $attributes['id'],
+						'username' => ($attributes['first_name'] || $attributes['last_name']) ? implode(' ', [$attributes['first_name'], $attributes['last_name']]) : $attributes['email'],
+						'email' => $attributes['email'],
+					]; break;
 				case 'yandex':
 					$this->attributes = [
 						'id' => $attributes['id'],

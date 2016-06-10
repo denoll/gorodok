@@ -13,25 +13,29 @@ use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use \yii\bootstrap\Widget;
+use yii\caching\DbDependency;
+use common\widgets\Arrays;
 
 
 class AfishaSidebarWidget extends Widget
 {
+	public $count_item = 5;
+
 	public function init()
 	{
-		$model = Afisha::find()
-			->with('cat')
-			->where(['status' => 1])
-			->andWhere('(publish < NOW() AND (unpublish < NOW()OR unpublish IS NULL))')
-			->asArray()
-			->orderBy(['publish' => SORT_DESC])
-			->limit(5)
-			->all();
+		parent::init();
+	}
+
+	public function run()
+	{
+		$model = $this->getData();
 
 		$path = Url::to('/afisha/afisha/view');
 		echo '<div class="panel panel-u" style="margin-top: 10px;">';
 		echo '<div class="panel-heading">';
-		echo '<h3 class="panel-title" style="color: #fff; display: block;">Афиша</h3>';
+		echo '<h3 class="panel-title" style="color: #fff; display: block;">';
+		echo Html::a('Афиша','/afisha/afisha/index',['class'=>'header-link']);
+		echo '</h3>';
 		echo '</div>';
 		echo '<div class="posts panel-body" style=" padding: 7px;">';
 		foreach ($model as $item) {
@@ -54,5 +58,21 @@ class AfishaSidebarWidget extends Widget
 		}
 		echo '</div>';
 		echo '</div>';
+	}
+
+	private function getData()
+	{
+		$dependency = new DbDependency();
+		$dependency->sql = 'SELECT MAX(updated_at) FROM afisha WHERE status = 1';
+		return Afisha::getDb()->cache(function ($db) {
+			return Afisha::find()
+				->with('cat')
+				->where(['status' => 1])
+				->andWhere('(publish < NOW() AND (unpublish < NOW()OR unpublish IS NULL))')
+				->asArray()
+				->orderBy(['publish' => SORT_DESC])
+				->limit($this->count_item)
+				->all();
+		}, Arrays::CASH_TIME, $dependency);
 	}
 }

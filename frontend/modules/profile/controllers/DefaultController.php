@@ -7,6 +7,7 @@ use Yii;
 use common\models\users\User;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,9 +84,9 @@ class DefaultController extends Controller
 		if ($user->load($pst)) {
 
 			if ($user->validate()) {
-				$user->username = $post['username'];
+				$user->username = strip_tags($post['username']);
 				$user->save();
-				Yii::$app->session->setFlash('success', 'Новый логин успешно установлен.');
+				Yii::$app->session->setFlash('success', 'Ваши данные успешно изменены.');
 			} else {
 				// данные не корректны: $errors - массив содержащий сообщения об ошибках
 				Yii::$app->session->setFlash('danger', 'Данные не изменены. <pre>' . $this->errors($user->errors) . '</pre>');

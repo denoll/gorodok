@@ -3,6 +3,7 @@
 namespace app\modules\banners\controllers;
 
 
+use common\models\users\User;
 use Yii;
 use common\models\banners\Banner;
 use common\models\banners\BannerItem;
@@ -88,7 +89,7 @@ class BannerController extends Controller
 			return $this->render('update', [
 				'model' => $model,
 				'bannerItemsProvider' => $bannerItemsProvider,
-				'banner_users' => BannerUsers::find()->where(['status' => 1])->asArray()->all(),
+				'banner_users' => User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(),
 				'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
 			]);
 		}

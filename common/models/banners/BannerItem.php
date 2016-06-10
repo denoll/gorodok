@@ -86,7 +86,6 @@ class BannerItem extends ActiveRecord
 			[['banner_key'], 'string', 'max' => 32],
 			[['path', 'url', 'caption'], 'string', 'max' => 255],
 			[['id_adv_company'], 'exist', 'skipOnError' => true, 'targetClass' => BannerAdv::className(), 'targetAttribute' => ['id_adv_company' => 'id']],
-			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => BannerUsers::className(), 'targetAttribute' => ['id_user' => 'id']],
 			[['banner_key'], 'exist', 'skipOnError' => true, 'targetClass' => Banner::className(), 'targetAttribute' => ['banner_key' => 'key']],
 			[['bannerImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 		];

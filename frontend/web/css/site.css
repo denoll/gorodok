@@ -1127,3 +1127,91 @@ ul.sorter > li a{
 .up-ul span{
     color: #000088;
 }
+/*
+Widgets
+*/
+.header-link:hover,
+.header-link:active{
+    text-decoration: none;
+    color: #fff;
+}
+.header-link:after{
+    content: '\27A4';
+    padding-left: 5px;
+    font-size: 0.95em;
+}
+
+/*
+Top block
+*/
+
+.navbar-brand {
+    float: left;
+    font-size: 18px;
+    height: 80px;
+    line-height: 20px;
+    padding: 15px;
+}
+
+.block-top{
+    min-height: 80px;
+    position: relative;
+}
+
+.block-top img{
+    max-height: 80px;
+}
+
+.btn-letters{
+    position: absolute;
+    display: block;
+    padding: 2px 0px;
+    margin: 9px 0;
+    height:82%;
+    width: 91%;
+    min-height: 64px;
+    line-height: 64px;
+    text-align: center;
+    color:#7E0000;
+    font-size: 1.1em;
+    border: 1px double #7E0000;
+    box-shadow:
+            0 0 0 1px hsl(0, 0%, 60%),
+            0 0 0 2px hsl(0, 0%, 70%),
+            0 0 0 4px hsl(0, 0%, 80%);
+}
+.btn-letters:hover{
+    text-decoration: none;
+    box-shadow:
+            0 0 0 1px hsl(0, 0%, 50%),
+            0 0 0 2px hsl(0, 0%, 60%),
+            0 0 0 4px hsl(0, 0%, 70%),
+            0 0 0 6px hsl(0, 0%, 80%),
+            0 0 0 8px hsl(0, 0%, 90%);
+
+}
+.btn-letters:enabled,
+.btn-letters:active{
+    box-shadow:
+            0 0 0 1px hsl(0, 0%, 60%);
+}
+
+.block-top .banner-base{
+    margin-bottom: 0px;
+}
+
+.banner-header {
+    margin-top: 15px;
+    margin-bottom: 7px;
+    color: #606060;
+    font-size: 1.3em;
+    font-style: normal;
+    font-weight: 600;
+    padding: 4px 0 6px;
+    text-align: left;
+}
+
+.banner-base{
+    margin-bottom: 10px;
+    border: 1px solid #c6c6c6; padding: 1px;
+}

@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Все блоки баннеров
             ],
             [
                 'class' => \common\grid\EnumColumn::className(),
-                'attribute' => 'id_banner_user',
+                'attribute' => 'id_user',
                 'enum' => ArrayHelper::map($banner_users, 'id', 'company_name'),
             ],
             [

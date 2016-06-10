@@ -20,8 +20,9 @@ $path = Url::current();
 
 if(!stristr($path, 'site')){
 
-    echo \frontend\widgets\NewsSidebarWidget::init();
-    echo \frontend\widgets\AfishaSidebarWidget::init();
+    echo \frontend\widgets\NewsSidebarWidget::widget();
+    echo \frontend\widgets\AfishaSidebarWidget::widget();
+    echo \frontend\widgets\LettersSidebarWidget::widget();
 
     if(stristr($path, '/profile/')||stristr($path, '/jobs/')||stristr($path, '/account/')){
         //echo $path;
@@ -102,63 +103,6 @@ if(!stristr($path, 'site')){
     if(stristr($path, '/news')){
 
     }
-    /*
-    if(stristr($path, 'profile/user-profile/update')){
-        echo ProfileLeftSidebar::showSidebar(7);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'profile/user-profile/my-photo')){
-        echo ProfileLeftSidebar::showSidebar(6);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'profile/user-profile/edit-photo')){
-        echo ProfileLeftSidebar::showSidebar(6);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'users/messages')){
-        echo ProfileLeftSidebar::showSidebar(5);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'users/index')){
-        echo ProfileLeftSidebar::showSidebar(1);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'users/profile')){
-        echo ProfileLeftSidebar::showSidebar(3);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'users/friends')){
-        echo ProfileLeftSidebar::showSidebar(3);
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'presentations')){
-        echo CategPres::init();
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'tests/default')||stristr($path, 'tests/result')){
-        echo ProfileLeftSidebar::showSidebar(4);
-    }
-    if(stristr($path, 'tests')){
-        echo CategTest::init();
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'news')){
-        echo CategNews::init();
-        echo TagsWidget::init();
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'page')){
-        echo CategPage::init();
-        echo TagsWidget::init();
-        echo NewsSidebarWidget::init();
-    }
-    if(stristr($path, 'tags')){
-        echo TagsWidget::init();
-        echo NewsSidebarWidget::init();
-    }
-
-*/
-    //echo NewsSidebarWidget::init();
 
     $show = true;
 

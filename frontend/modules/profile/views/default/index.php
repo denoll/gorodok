@@ -34,10 +34,10 @@ if(User::isCompany()){
                 <dd><?= $model['username'] ?>
 
                     <?= \yii\bootstrap\Modal::widget([
-                        'header' => '<i>'.$btn_change_username.'</i>',
+                        'header' => '<i>Изменить имя и фамилию</i>',
                         'id' => 'change-login-btn',
                         'toggleButton' => [
-                            'label' => '<i>'.$btn_change_username.'</i>',
+                            'label' => '<i>Изменить имя и фамилию</i>',
                             'class' => 'btn-u btn-brd rounded-2x btn-u-light-green btn-u-xs pull-right',
                             'style' => 'font-size: 0.8em; text-align:center; width:160px; padding: 2px 5px 4px 5px; line-height: 14px; margin-left:35px;',
                             'tag' => 'a',
@@ -60,23 +60,6 @@ if(User::isCompany()){
                             'tag' => 'a',
                             'data-target' => '#change-email-btn',
                             'href' => Url::home() . 'profile/change-email',
-                        ],
-                        'clientOptions' => false,
-                    ]); ?>
-                </dd>
-                <hr style="margin: 5px 0px;">
-                <dt>Ф.И.О.</dt>
-                <dd><?= $model['surname'] . ' ' . $model['name'] . ' ' . $model['patronym'] ?>
-                    <?= \yii\bootstrap\Modal::widget([
-                        'header' => '<i> изменить ФИО </i>',
-                        'id' => 'change-fio-btn',
-                        'toggleButton' => [
-                            'label' => '<i> изменить ФИО </i>',
-                            'class' => 'btn-u btn-brd rounded-2x btn-u-light-green btn-u-xs pull-right',
-                            'style' => 'font-size: 0.8em; text-align:center; width:160px; padding: 2px 5px 4px 5px; line-height: 14px; margin-left:35px;',
-                            'tag' => 'a',
-                            'data-target' => '#change-fio-btn',
-                            'href' => Url::home() . 'profile/change-fio',
                         ],
                         'clientOptions' => false,
                     ]); ?>

@@ -19,10 +19,10 @@ use common\models\banners\Banner;
 			<?= $form->field($model, 'stage')->dropDownList(Banner::bannerStages()) ?>
 		</div>
 		<div class="col-md-4">
-			<?= $form->field($model, 'col_size')->dropDownList(Banner::bannerColSize()) ?>
+			<?php echo $form->field($model, 'status')->checkbox() ?>
 		</div>
 		<div class="col-md-4">
-			<?php echo $form->field($model, 'status')->checkbox() ?>
+			<?//= $form->field($model, 'col_size')->dropDownList(Banner::bannerColSize()) ?>
 		</div>
 	</div>
 
