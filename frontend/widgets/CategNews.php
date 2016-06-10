@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use \yii\bootstrap\Widget;
 use yii\web\View;
 use common\models\news\NewsCat;
+use common\widgets\Arrays;
 
 class CategNews extends Widget
 {
@@ -21,24 +22,18 @@ class CategNews extends Widget
 
 	public function init()
 	{
-
+		parent::init();
 	}
 
 	public function run()
 	{
 		$level = empty($this->level) ? 0 : $this->level;
-		$cat = NewsCat::find()
-			->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
-			->where(['active' => 1, 'visible' => 1])
-			->asArray()
-			->orderBy('lft')
-			->orderBy('root')
-			->all();
+		$cat = $this->getData();
 		$this->registerCss();
 		echo '<div style="display: block; content: \' \'; padding: 2px; margin: 5px 0px; background-color: #d9d9d9;">';
 		echo '<div  style="margin: 0px 0px 2px 0px; width: 100%; display: block; background-color: #9C0000; padding: 7px 18px;">';
 		echo '<h3 style="margin: 0; color: #fff;">';
-		echo Html::a('<i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;Все новости', ['/news/news/index'], ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
+		echo Html::a('<i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;Все новости', '/news/news/index', ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
 		echo '</h3>';
 		echo '</div>';
 		echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
@@ -59,6 +54,19 @@ class CategNews extends Widget
 		echo '</div>';
 		echo '</div>';
 		$this->registerJs();
+	}
+
+	private function getData()
+	{
+		return NewsCat::getDb()->cache(function ($db) {
+			return NewsCat::find()
+				->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
+				->where(['active' => 1, 'visible' => 1])
+				->asArray()
+				->orderBy('lft')
+				->orderBy('root')
+				->all();
+		}, Arrays::CASH_TIME);
 	}
 
 	private function activeCategory()

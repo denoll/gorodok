@@ -7,12 +7,14 @@
  */
 
 namespace frontend\widgets;
+
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\web\View;
 use \yii\bootstrap\Widget;
 use common\models\realty\RealtyCat;
+use common\widgets\Arrays;
 
 class CategRealtyRentVMenu extends Widget
 {
@@ -20,27 +22,21 @@ class CategRealtyRentVMenu extends Widget
 
     public function init()
     {
-
+        parent::init();
     }
 
     public function run()
     {
         $level = empty($this->level) ? 0 : $this->level;
-        $cat = RealtyCat::find()
-            ->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
-            ->where(['active' => 1, 'visible' => 1])
-            ->asArray()
-            ->orderBy('lft')
-            ->orderBy('root')
-            ->all();
+        $cat = $this->getData();
         $this->registerCssLoc();
         echo '<div class="v-menu">';
         echo '<div class="v-menu-header">';
         echo '<h3 style="margin: 0; color: #fff; font-size: 1.2em;"><i class="fa fa-building"></i>&nbsp;&nbsp;Аренда недвижимости</h3>';
         echo '</div>';
         echo '<div  style="margin: 0px 0px 2px 0px; width: 100%; border: solid 1px #780000;">';
-        echo Html::a('Продажа', [Url::to('/realty/sale/index')], ['class' => 'btn-u btn-u-default', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
-        echo Html::a('Аренда', [Url::to('/realty/rent/index')], ['class' => 'btn-u btn-u-primary', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
+        echo Html::a('Продажа', ['/realty/sale/index'], ['class' => 'btn-u btn-u-default', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
+        echo Html::a('Аренда', ['/realty/rent/index'], ['class' => 'btn-u btn-u-primary', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
         echo '</div>';
         echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/realty/rent/create'], ['class' => 'btn-u btn-u-orange cat-button','style'=>'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
         echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
@@ -61,6 +57,19 @@ class CategRealtyRentVMenu extends Widget
         echo '</div>';
         echo '</div>';
         $this->registerJsLoc();
+    }
+
+    private function getData()
+    {
+        return RealtyCat::getDb()->cache(function () {
+            return RealtyCat::find()
+                ->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
+                ->where(['active' => 1, 'visible' => 1])
+                ->asArray()
+                ->orderBy('lft')
+                ->orderBy('root')
+                ->all();
+        }, Arrays::CASH_TIME);
     }
 
     private function activeCategory(){
@@ -147,7 +156,6 @@ class CategRealtyRentVMenu extends Widget
 });
 JS;
         $this->view->registerJsFile('/js/menu/ttmenu.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-        $this->view->registerJsFile('/js/menu/jquery.fitvids.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
         $this->view->registerJsFile('/js/menu/hovernav.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
         $this->view->registerJs($js, View::POS_END);
     }

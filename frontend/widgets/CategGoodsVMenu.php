@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use yii\web\View;
 use \yii\bootstrap\Widget;
 use common\models\goods\GoodsCat;
+use common\widgets\Arrays;
 
 class CategGoodsVMenu extends Widget
 {
@@ -22,27 +23,21 @@ class CategGoodsVMenu extends Widget
 
 	public function init()
 	{
-
+		parent::init();
 	}
 
 	public function run()
 	{
 		$level = empty($this->level) ? 0 : $this->level;
-		$cat = GoodsCat::find()
-			->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
-			->where(['active' => 1, 'visible' => 1])
-			->asArray()
-			->orderBy('lft')
-			->orderBy('root')
-			->all();
+		$cat = $this->getData();
 		$this->registerCssLoc();
 		echo '<div class="v-menu">';
 		echo '<div class="v-menu-header">';
 		echo '<h3 style="margin: 0; color: #fff;">';
-		echo Html::a('<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Каталог товаров', ['/goods/goods/index'], ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
+		echo Html::a('<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Каталог товаров', '/goods/goods/index', ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
 		echo '</h3>';
 		echo '</div>';
-		echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/goods/goods/create'], ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
+		echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', '/goods/goods/create', ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
 		echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
 		echo '<div class="navbar navbar-default" role="navigation" style="margin: 0;">';
 		echo '<div class="navbar-header">';
@@ -62,6 +57,20 @@ class CategGoodsVMenu extends Widget
 		echo '</div>';
 		$this->registerJsLoc();
 	}
+
+	private function getData()
+	{
+		return GoodsCat::getDb()->cache(function () {
+			return GoodsCat::find()
+				->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
+				->where(['active' => 1, 'visible' => 1])
+				->asArray()
+				->orderBy('lft')
+				->orderBy('root')
+				->all();
+		}, Arrays::CASH_TIME);
+	}
+
 
 	private function activeCategory()
 	{

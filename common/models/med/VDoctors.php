@@ -20,6 +20,7 @@ use Yii;
  * @property string $documents
  * @property string $created_at
  * @property string $username
+ * @property string $company_name
  * @property string $email
  * @property string $tel
  * @property string $fio
@@ -29,59 +30,60 @@ use Yii;
  */
 class VDoctors extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'v_doctors';
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'v_doctors';
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id_user', 'id_spec', 'status', 'confirmed', 'exp', 'receiving', 'u_status', 'company', 'doctor'], 'integer'],
-            [['price'], 'number'],
-            [['about'], 'string'],
-            [['updated_at', 'created_at'], 'safe'],
-            [['rank', 'address', 'documents', 'search_field','m_keyword','m_description'], 'string', 'max' => 255],
-            [['username', 'email', 'avatar','spec'], 'string', 'max' => 50],
-            [['tel'], 'string', 'max' => 15],
-            [['fio'], 'string', 'max' => 152],
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['id_user', 'id_spec', 'status', 'confirmed', 'exp', 'receiving', 'u_status', 'company', 'doctor'], 'integer'],
+			[['price'], 'number'],
+			[['about'], 'string'],
+			[['updated_at', 'created_at'], 'safe'],
+			[['rank', 'address', 'documents', 'search_field', 'm_keyword', 'm_description'], 'string', 'max' => 255],
+			[['username', 'company_name', 'email', 'avatar', 'spec'], 'string', 'max' => 50],
+			[['tel'], 'string', 'max' => 15],
+			[['fio'], 'string', 'max' => 152],
+		];
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id_user' => 'Id User',
-            'id_spec' => 'Id Spec',
-            'spec' => 'Специальность',
-            'price' => 'Стоимость приема',
-            'status' => 'Статус',
-            'doctor' => 'Доктор',
-            'confirmed' => 'Подтверден',
-            'rank' => 'Звание, уч. степень',
-            'about' => 'О себе',
-            'exp' => 'Стаж',
-            'receiving' => 'Веду прием',
-            'address' => 'Адрес для приема',
-            'updated_at' => 'Изменен',
-            'documents' => 'Документы',
-            'created_at' => 'Создан',
-            'username' => 'Логин',
-            'email' => 'Email',
-            'tel' => 'Телефон',
-            'fio' => 'Fio',
-            'u_status' => 'Статус',
-            'company' => 'Как организация',
-            'avatar' => 'Аватар',
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id_user' => 'Id User',
+			'id_spec' => 'Id Spec',
+			'spec' => 'Специальность',
+			'price' => 'Стоимость приема',
+			'status' => 'Статус',
+			'doctor' => 'Доктор',
+			'confirmed' => 'Подтверден',
+			'rank' => 'Звание, уч. степень',
+			'about' => 'О себе',
+			'exp' => 'Стаж',
+			'receiving' => 'Веду прием',
+			'address' => 'Адрес для приема',
+			'updated_at' => 'Изменен',
+			'documents' => 'Документы',
+			'created_at' => 'Создан',
+			'email' => 'Email',
+			'tel' => 'Телефон',
+			'fio' => 'Fio',
+			'username' => 'Автор',
+			'company_name' => 'Компания',
+			'u_status' => 'Статус',
+			'company' => 'Как организация',
+			'avatar' => 'Аватар',
+		];
+	}
 }

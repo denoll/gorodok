@@ -31,6 +31,7 @@ use Yii;
  * @property string $m_keyword
  * @property string $m_description
  * @property string $username
+ * @property string $company_name
  * @property string $email
  * @property string $tel
  * @property string $fio
@@ -60,7 +61,7 @@ class VRealtyRent extends \yii\db\ActiveRecord
             [['vip_date', 'adv_date', 'updated_at', 'created_at'], 'safe'],
             [['category'], 'string', 'max' => 60],
             [['alias'], 'string', 'max' => 70],
-            [['name', 'username', 'email'], 'string', 'max' => 50],
+            [['name', 'company_name', 'username', 'email'], 'string', 'max' => 50],
             [['main_img', 'm_keyword', 'm_description'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 15],
             [['fio'], 'string', 'max' => 152],
@@ -96,7 +97,8 @@ class VRealtyRent extends \yii\db\ActiveRecord
             'main_img' => 'Изображение',
             'm_keyword' => 'Ключевые слова',
             'm_description' => 'Мета описание',
-            'username' => 'Логин',
+            'username' => 'Автор',
+            'company_name' => 'Компания',
             'email' => 'Email',
             'tel' => 'Телефон',
             'fio' => 'ФИО',

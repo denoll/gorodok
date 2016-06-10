@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id_user
  * @property string $username
+ * @property string $company_name
  * @property string $email
  * @property string $tel
  * @property string $avatar
@@ -46,7 +47,7 @@ class VVacancy extends \yii\db\ActiveRecord
     {
         return [
             [['id_user', 'id', 'status', 'employment'], 'integer'],
-            [['username', 'email'], 'required'],
+            [['username', 'company_name', 'email'], 'required'],
             [['salary'], 'number'],
             [['created_at', 'updated_at', 'vip_date', 'top_date'], 'safe'],
             [['about_company'], 'string'],
@@ -67,7 +68,8 @@ class VVacancy extends \yii\db\ActiveRecord
     {
         return [
             'id_user' => 'Id User',
-            'username' => 'Название компании(логин)',
+            'username' => 'Автор',
+            'company_name' => 'Компания',
             'email' => 'Email',
             'tel' => 'Телефон',
             'avatar' => 'Аватар',

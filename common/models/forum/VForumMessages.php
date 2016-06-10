@@ -20,6 +20,7 @@ use Yii;
  * @property string $category
  * @property string $cat_alias
  * @property string $username
+ * @property string $company_name
  * @property string $avatar
  */
 class VForumMessages extends \yii\db\ActiveRecord
@@ -44,7 +45,7 @@ class VForumMessages extends \yii\db\ActiveRecord
             [['message'], 'string'],
             [['theme_name'], 'string', 'max' => 125],
             [['theme_alias'], 'string', 'max' => 130],
-            [['category', 'cat_alias', 'username', 'avatar'], 'string', 'max' => 50],
+            [['category', 'cat_alias', 'company_name', 'username', 'avatar'], 'string', 'max' => 50],
         ];
     }
 
@@ -66,7 +67,8 @@ class VForumMessages extends \yii\db\ActiveRecord
             'theme_alias' => 'Theme Alias',
             'category' => 'Категория',
             'cat_alias' => 'Cat Alias',
-            'username' => 'Логин',
+            'username' => 'Автор',
+            'company_name' => 'Компания',
             'avatar' => 'Аватар',
         ];
     }

@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use \yii\bootstrap\Widget;
 use yii\web\View;
 use common\models\letters\LettersCat;
+use common\widgets\Arrays;
 
 class CategLetters extends Widget
 {
@@ -21,24 +22,18 @@ class CategLetters extends Widget
 
 	public function init()
 	{
-
+		parent::init();
 	}
 
 	public function run()
 	{
 		$level = empty($this->level) ? 0 : $this->level;
-		$cat = LettersCat::find()
-			->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
-			->where(['active' => 1, 'visible' => 1])
-			->asArray()
-			->orderBy('lft')
-			->orderBy('root')
-			->all();
+		$cat = $this->getData();
 		$this->registerCssLoc();
 		echo '<div class="v-menu">';
 		echo '<div class="v-menu-header">';
 		echo '<h3 style="margin: 0; color: #fff;">';
-		echo Html::a('<i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;Все письма', ['/letters/letters/index'], ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
+		echo Html::a('<i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;Все письма', '/letters/letters/index', ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
 		echo '</h3>';
 		echo '</div>';
 		echo '<div  style="margin: 0px 0px 2px 0px; width: 100%; border: solid 1px #780000;">';
@@ -62,6 +57,19 @@ class CategLetters extends Widget
 		echo '</div>';
 		echo '</div>';
 		$this->registerJsLoc();
+	}
+
+	private function getData()
+	{
+		return LettersCat::getDb()->cache(function () {
+			return LettersCat::find()
+				->select(['id', 'root', 'lft', 'rgt', 'lvl', 'name', 'icon', 'alias'])
+				->where(['active' => 1, 'visible' => 1])
+				->asArray()
+				->orderBy('lft')
+				->orderBy('root')
+				->all();
+		}, Arrays::CASH_TIME);
 	}
 
 	private function activeCategory()

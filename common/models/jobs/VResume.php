@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id_user
  * @property string $username
+ * @property string $company_name
  * @property string $email
  * @property string $tel
  * @property string $fio
@@ -44,7 +45,7 @@ class VResume extends \yii\db\ActiveRecord
             [['salary'], 'number'],
             [['updated_at', 'created_at', 'vip_date', 'birthday'], 'safe'],
             [['skills', 'about', 'search_field'], 'string'],
-            [['username', 'email', 'description'], 'string', 'max' => 255],
+            [['company_name', 'username', 'email', 'description'], 'string', 'max' => 255],
             [['sex'], 'string', 'max' => 1],
             [['tel'], 'string', 'max' => 15],
             [['fio'], 'string', 'max' => 152],
@@ -60,7 +61,8 @@ class VResume extends \yii\db\ActiveRecord
     {
         return [
             'id_user' => 'Id User',
-            'username' => 'Логин',
+            'username' => 'Автор',
+            'company_name' => 'Компания',
             'email' => 'Email',
             'tel' => 'Телефон',
             'fio' => 'Fio',

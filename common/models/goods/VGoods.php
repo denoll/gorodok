@@ -22,6 +22,7 @@ use common\models\tags\Tags;
  * @property string $m_keyword
  * @property string $m_description
  * @property string $username
+ * @property string $company_name
  * @property string $email
  * @property string $tel
  * @property string $fio
@@ -50,7 +51,7 @@ class VGoods extends \yii\db\ActiveRecord
             [['description', 'search_field'], 'string'],
             [['vip_date', 'top_date', 'updated_at', 'created_at'], 'safe'],
             [['category', 'alias'], 'string', 'max' => 65],
-            [['name', 'main_img', 'username', 'email'], 'string', 'max' => 50],
+            [['name', 'company_name', 'main_img', 'username', 'email'], 'string', 'max' => 50],
             [['m_keyword', 'm_description'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 15],
             [['fio'], 'string', 'max' => 152],
@@ -78,7 +79,8 @@ class VGoods extends \yii\db\ActiveRecord
             'main_img' => 'Main Img',
             'm_keyword' => 'Ключевые слова',
             'm_description' => 'Мета описание',
-            'username' => 'Логин',
+            'username' => 'Автор',
+            'company_name' => 'Компания',
             'email' => 'Email',
             'tel' => 'Телефон',
             'fio' => 'Fio',
