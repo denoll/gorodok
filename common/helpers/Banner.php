@@ -75,8 +75,6 @@ class Banner extends Widget
 				$caption = Html::tag('div', $caption, ['class' => 'caption-ar']);
 			}
 			$options = ArrayHelper::getValue($item, 'options', []);
-		} else {
-			throw new InvalidConfigException('The "content" option is required.');
 		}
 		$content = implode("\n", [
 				Html::beginTag('div', ['class' => 'banner-base']),

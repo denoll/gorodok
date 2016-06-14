@@ -7,6 +7,7 @@ use common\models\banners\Banner;
 /* @var $this yii\web\View */
 /* @var $model common\models\banners\Banner */
 /* @var $form yii\bootstrap\ActiveForm */
+
 ?>
 
 <div class="widget-banner-form">

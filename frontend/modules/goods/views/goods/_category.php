@@ -13,7 +13,7 @@ use yii\helpers\Url;
     <div class="container-fluid">
         <div class="panel panel-default" style="margin-bottom: 5px;">
             <div class="panel-heading" style=" padding: 5px 5px 5px 12px;">
-                <h1 class="panel-title" style="display: inline-table;"><?= Html::encode($this->title) ?></h1>
+                <h1 class="panel-title"><?= Html::encode($this->title) ?></h1>
             </div>
             <?php if (!empty($first_child)) { ?>
             <div class="panel-body" style=" padding: 5px 12px 12px 12px;">

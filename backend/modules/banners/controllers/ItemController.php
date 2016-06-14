@@ -73,12 +73,7 @@ class ItemController extends Controller
 	public function actionCreate()
 	{
 		$model = new BannerItem();
-		if ($model->load(Yii::$app->request->post())) {
-			$model->bannerImage = UploadedFile::getInstance($model, 'bannerImage');
-			if(null !== $img_name = $model->upload()){
-				$model->path = $img_name;
-			}
-			$model->save();
+		if ($model->load(Yii::$app->request->post())&& $model->save()){
 			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
 			return $this->render('create', [
@@ -99,12 +94,7 @@ class ItemController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->findModel($id);
-		if ($model->load(Yii::$app->request->post())){
-			$model->bannerImage = UploadedFile::getInstance($model, 'bannerImage');
-			if(null !== $img_name = $model->upload()){
-				$model->path = $img_name;
-			}
-			$model->save();
+		if ($model->load(Yii::$app->request->post())&& $model->save()){
 			return $this->redirect(Url::previous());
 		} else {
 			return $this->render('update', [
@@ -113,6 +103,16 @@ class ItemController extends Controller
 				'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
 				'blocks' => Banner::find()->where(['status' => 1])->asArray()->all(),
 			]);
+		}
+	}
+
+	/**
+	 * @throws NotFoundHttpException
+	 */
+	public function actionAjaxUpload()
+	{   $model = new BannerItem();
+		if ($model->load(Yii::$app->request->post())) {
+			\Yii::$app->fileStorage->uploadFile($model, 'banners');
 		}
 	}
 

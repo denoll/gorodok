@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use \common\models\banners\BannerItem;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\banners\ItemSearch */
@@ -47,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filter' => false,
 				'value' => function($data){
 					if(!empty($data['path'])) {
-						return Html::img(BannerItem::bannerImgUrl() . $data['path'], [
+						return Html::img(\Yii::$app->fileStorage->fileUrl('banners',$data['path']), [
 							'alt' => 'Фото',
 							'style' => 'width:120px;'
 						]);

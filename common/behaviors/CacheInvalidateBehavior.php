@@ -1,6 +1,6 @@
 <?php
 /**
- * Eugine denoll <denoll@denoll.ru>
+ * denoll <denoll@denoll.ru>
  */
 
 namespace common\behaviors;
@@ -38,7 +38,7 @@ use yii\db\ActiveRecord;
 class CacheInvalidateBehavior extends Behavior
 {
     /**
-     * @var string Name of cache componentj
+     * @var string Name of cache component
      */
     public $cacheComponent = 'cache';
     /**

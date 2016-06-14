@@ -2,6 +2,7 @@
 
 namespace common\models\banners;
 
+use common\behaviors\FileStorageBehavior;
 use Yii;
 use \yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -71,7 +72,14 @@ class BannerItem extends ActiveRecord
 						];
 					}
 				]
-			]
+			],
+			'fileStorage' => [
+				'class' => FileStorageBehavior::className(),
+				'model' => $this,
+				'directory' => 'banners',
+				'file' => 'bannerImage',
+				'file_name' => 'path'
+			],
 		];
 	}
 
@@ -149,20 +157,21 @@ class BannerItem extends ActiveRecord
 		return trim($this->path);
 	}
 
-	public static function bannerImgDir($name = null)
+	public function bannerImgDir($name = null)
 	{
-		if($name){
-			$path = Url::to('@frt_dir/img/banners/'.$name);
-		}else{
+		if ($name) {
+			$path = Url::to('@frt_dir/img/banners/' . $name);
+		} else {
 			$path = Url::to('@frt_dir/img/banners/');
 		}
 		return $path;
 	}
+
 	public static function bannerImgUrl($name = null)
 	{
-		if($name){
-			$path = Url::to('@frt_url/img/banners/'.$name);
-		}else{
+		if ($name) {
+			$path = Url::to('@frt_url/img/banners/' . $name);
+		} else {
 			$path = Url::to('@frt_url/img/banners/');
 		}
 		return $path;
@@ -170,14 +179,7 @@ class BannerItem extends ActiveRecord
 
 	public function upload()
 	{
-		if ($this->validate() && $this->bannerImage) {
-			$img_name = md5($this->bannerImage->baseName) . '.' . $this->bannerImage->extension;
-			$this->bannerImage->saveAs(self::bannerImgDir($img_name));
-			$this->bannerImage = null;
-			return $img_name;
-		} else {
-			return null;
-		}
+		//return \Yii::$app->fileStorage->upload($this, $this->bannerImage);
 	}
 
 	/**

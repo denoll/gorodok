@@ -59,7 +59,6 @@ class BannerController extends Controller
 	public function actionCreate()
 	{
 		$model = new Banner();
-
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['update', 'id' => $model->key]);
 		} else {
