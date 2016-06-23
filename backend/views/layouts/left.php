@@ -44,8 +44,6 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-object-group"></i> Баннеры',['/banners/item/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-trello"></i> Блоки для баннеров',['/banners/banner/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-university"></i> Рекламные компании',['/banners/advert/index']) ?></li>
-					<li><?= Html::a('<i class="fa fa-file-text"></i> Счета',['/banners/account/index']) ?></li>
-					<li><?= Html::a('<i class="fa fa-users"></i> Рекламодатели',['/banners/users/index']) ?></li>
 				</ul>
 			</li>
 			<li>

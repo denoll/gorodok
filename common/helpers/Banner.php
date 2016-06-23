@@ -87,4 +87,5 @@ class Banner extends Widget
 
 		return Html::tag('div', $content, $options);
 	}
+	
 }

@@ -12,7 +12,9 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 use yii\web\UploadedFile;
+use yii\web\Response;
 
 /**
  * ItemController implements the CRUD actions for BannerItem model.
@@ -34,6 +36,21 @@ class ItemController extends Controller
 		];
 	}
 
+	public function actions()
+	{
+		return [
+			'upload' => [
+				'class' => 'denoll\filekit\actions\UploadAction',
+				'fileStorage' => 'bannerStorage',
+				'disableCsrf' => false,
+				'responseFormat' => Response::FORMAT_JSON,
+				'responsePathParam' => 'path',
+				'responseBaseUrlParam' => 'base_url',
+				'allowChangeFilestorage' => false,
+			],
+		];
+	}
+
 	/**
 	 * Lists all BannerItem models.
 	 * @return mixed
@@ -46,10 +63,15 @@ class ItemController extends Controller
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
-			'users' => User::find()->where(['status' => User::STATUS_ACTIVE, 'company'=>1])->asArray()->all(),
+			'users' => User::find()->where(['status' => User::STATUS_ACTIVE, 'company' => 1])->asArray()->all(),
 			'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
-			'blocks' => Banner::find()->where(['status' => 1])->asArray()->all(),
+			'blocks' => Banner::find()->asArray()->all(),
 		]);
+	}
+
+	public function actionDelSession()
+	{
+		Yii::$app->session->remove('_uploadedFiles');
 	}
 
 	/**
@@ -73,7 +95,7 @@ class ItemController extends Controller
 	public function actionCreate()
 	{
 		$model = new BannerItem();
-		if ($model->load(Yii::$app->request->post())&& $model->save()){
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
 			return $this->render('create', [
@@ -94,7 +116,7 @@ class ItemController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->findModel($id);
-		if ($model->load(Yii::$app->request->post())&& $model->save()){
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(Url::previous());
 		} else {
 			return $this->render('update', [
@@ -110,7 +132,8 @@ class ItemController extends Controller
 	 * @throws NotFoundHttpException
 	 */
 	public function actionAjaxUpload()
-	{   $model = new BannerItem();
+	{
+		$model = new BannerItem();
 		if ($model->load(Yii::$app->request->post())) {
 			\Yii::$app->fileStorage->uploadFile($model, 'banners');
 		}

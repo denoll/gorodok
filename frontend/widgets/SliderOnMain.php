@@ -32,11 +32,9 @@ class SliderOnMain extends Widget
 	{
 		if (empty($this->images) && empty($this->path)) {
 			$this->path = Url::to('@frt_url/img/slider/');
-			//$dependency = new DbDependency();
-			//$dependency->sql = 'SELECT MAX(id) FROM slider_main';
-			$this->images = SliderMain::getDb()->cache(function ($db) {
+			$this->images = SliderMain::getDb()->cache(function () {
 				return SliderMain::find()->asArray()->where(['status' => 1])->andWhere(['IS NOT', 'img', null])->orderBy('id DESC')->all();
-			}, Arrays::CASH_TIME /*,$dependency*/);
+			}, Arrays::CASH_TIME );
 		}
 		$this->registerCssLoc();
 		if (!empty($this->images[0])) {

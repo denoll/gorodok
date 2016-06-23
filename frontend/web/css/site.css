@@ -48,6 +48,51 @@ body {
     }
 }
 
+
+
+
+/* Super Large devices XL (large desktops, 1520px and down) */
+@media (max-width: 1520px) {
+    #banners_all_pages_top_hover_menu .banner-base{
+        margin-top: 3px;
+    }
+}
+
+/* Large devices lg (large desktops, 1200px and down) */
+@media (max-width: 1200px) {
+    #banners_all_pages_top_hover_menu .banner-base{
+        margin-top: 10px;
+    }
+}
+
+/* Medium devices md (desktops, 992px and down) */
+@media (max-width: 992px) {
+    #banners_all_pages_top_hover_menu .banner-base{
+        margin-top: 17px;
+    }
+}
+
+/* Small devices sm (tablets, 768px and down) */
+@media (max-width: 768px) {
+    #logo-header {
+        width: 200px !important;
+        margin: auto !important;
+    }
+    #banners_all_pages_top_hover_menu .banner-base{
+        margin-top: 15px;
+    }
+    .btn-letters{
+        width: 94% !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Left side */
+    #widget-tags-left{
+        display: none !important;
+    }
+}
+
+
 .jumbotron {
     text-align: center;
     background-color: transparent;

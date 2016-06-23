@@ -7,31 +7,54 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\banners\BannerAdv */
 /* @var $form yii\widgets\ActiveForm */
 
-if($model->isNewRecord){
-    $model->status = 1;
-    $model->click_price = 0;
-    $model->day_price = 0;
+if ($model->isNewRecord) {
+	$model->status = 1;
+	$model->click_price = 0;
+	$model->day_price = 0;
 }
 ?>
 
 <div class="banner-adv-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'status')->checkbox() ?>
+	<?= $form->field($model, 'status')->checkbox() ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+	<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'click_price')->textInput(['maxlength' => true]) ?>
+	<div class="row">
+		<div class="col-sm-3">
+			<?= $form->field($model, 'hit_price')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'click_price')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'day_price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'day_price')->textInput(['maxlength' => true]) ?>
+		</div>
+		<div class="col-sm-3">
+			<?= $form->field($model, 'hit_size')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'click_size')->textInput(['maxlength' => true]) ?>
+			<?= $form->field($model, 'day_size')->textInput(['maxlength' => true]) ?>
+		</div>
+		<div class="col-sm-3">
+			<div class="checkbox">
+				<?= $form->field($model, 'hit_status')->checkbox() ?>
+			</div>
+			<div class="checkbox">
+			<?= $form->field($model, 'click_status')->checkbox() ?>
+			</div>
+			<div class="checkbox">
+				<?= $form->field($model, 'day_status')->checkbox() ?>
+			</div>
+		</div>
 
-    <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
+	</div>
 
-    <div class="form-group">
-        <?php echo Html::submitButton('<i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить', ['class' => 'btn btn-success']) ?>
-    </div>
 
-    <?php ActiveForm::end(); ?>
+	<?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
+
+	<div class="form-group">
+		<?php echo Html::submitButton('<i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить', ['class' => 'btn btn-success']) ?>
+	</div>
+
+	<?php ActiveForm::end(); ?>
 
 </div>

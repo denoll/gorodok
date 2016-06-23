@@ -25,16 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'yii\grid\ActionColumn',
 				'template' => '{update} {delete}'
 			],
+			'name',
 			'key',
 			[
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'stage',
 				'enum' => Banner::bannerStages(),
-			],
-			[
-				'class' => \common\grid\EnumColumn::className(),
-				'attribute' => 'col_size',
-				'enum' => Banner::bannerColSize(),
 			],
 			[
 				'class' => \common\grid\EnumColumn::className(),

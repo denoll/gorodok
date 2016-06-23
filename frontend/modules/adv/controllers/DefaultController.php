@@ -10,14 +10,10 @@ class DefaultController extends Controller
 {
     public function actionIndex($id = null)
     {
-        if($id){
-            $id = base64_decode($id);
-            $model = BannerItem::findOne($id);
-            $model->updateCounters(['click_count' => 1]);
-            $model->save();
+        if(null != $model = BannerItem::bannerClick($id)){
             return $this->redirect($model->url);
         }else{
-            return $this->redirect(Url::home());
+            return $this->redirect(\Url::home());
         }
     }
 }

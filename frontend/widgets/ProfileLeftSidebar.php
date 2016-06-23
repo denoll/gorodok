@@ -92,7 +92,9 @@ class ProfileLeftSidebar extends Widget
 		echo '<li class="list-group-item ' . $a_0 . '">';
 		echo '<a href="' . Url::Home() . 'account/index"><i class="fa fa-ruble"></i>&nbsp;&nbsp;Взаиморасчеты </a>';
 		echo '</li>';
-
+		echo '<li class="list-group-item ' . $a_12 . '">';
+		echo '<a href="' . Url::Home() . 'adv/advert/my-ads"><i class="fa fa-map"></i>&nbsp;&nbsp;Мои рекламные баннеры</a>';
+		echo '</li>';
 		if (User::isCompany()) {
 			echo '<li class="list-group-item ' . $a_1 . '">';
 			echo '<a href="' . Url::Home() . 'profile/index"><i class="fa fa-user"></i>&nbsp;&nbsp;Профиль</a>';
@@ -134,7 +136,8 @@ class ProfileLeftSidebar extends Widget
 		echo '<li class="list-group-item ' . $a_11 . '">';
 		echo '<a href="' . Url::Home() . 'realty/rent/my-ads"><i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления об аренде недвижимости</a>';
 		echo '</li>';
-		//echo '<li class="list-group-item ' . $a_12 . '">';
+
+		//echo '<li class="list-group-item ' . $a_13 . '">';
 		//echo '<a href="' . Url::Home() . 'auto/my-ads"><i class="fa fa-car"></i>&nbsp;&nbsp;Мои объявления об авто</a>';
 		//echo '</li>';
 

@@ -7,7 +7,6 @@ use yii\helpers\Html;
 
 $this->title = 'Редактирование фото: ' . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Фото на главной', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="slider-main-update">

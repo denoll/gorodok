@@ -18,7 +18,11 @@ class ItemSearch extends BannerItem
 	public function rules()
 	{
 		return [
-			[['id', 'size', 'id_adv_company', 'id_user', 'status', 'order', 'created_at', 'updated_at', 'click_count', 'max_click'], 'integer'],
+			[['id', 'id_adv_company', 'id_user', 'status', 'order', 'created_at', 'updated_at', 'size',
+				'click_count', 'last_click', 'max_click',
+				'hit_count', 'last_hit', 'max_hit',
+				'day_count','last_day', 'max_day',
+			], 'integer'],
 			[['path', 'url', 'caption', 'start', 'stop', 'banner_key'], 'safe'],
 		];
 	}
@@ -68,7 +72,14 @@ class ItemSearch extends BannerItem
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 			'click_count' => $this->click_count,
+			'hit_count' => $this->hit_count,
+			'day_count' => $this->day_count,
 			'max_click' => $this->max_click,
+			'max_hit' => $this->max_hit,
+			'max_day' => $this->max_day,
+			'last_click' => $this->last_click,
+			'last_hit' => $this->last_hit,
+			'last_day' => $this->last_day,
 			'start' => $this->start,
 			'stop' => $this->stop,
 			'size' => $this->size,

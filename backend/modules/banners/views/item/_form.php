@@ -5,8 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\widgets\Arrays;
 use common\models\banners\BannerItem;
-use kartik\widgets\FileInput;
 use kartik\widgets\Select2;
+use yii\web\JsExpression;
+use kartik\widgets\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\banners\BannerItem */
@@ -20,8 +21,8 @@ if ($model->isNewRecord) {
 ?>
 
 <div class="banner-item-form">
-
-	<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+	<button name="del-session" onclick="delSession()">Удалить сессию</button>
+	<?php $form = ActiveForm::begin(); //['options' => ['enctype' => 'multipart/form-data']] ?>
 	<div class="form-group">
 		<?= Html::submitButton('<i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить', ['class' => 'btn btn-success']) ?>
 	</div>
@@ -31,6 +32,7 @@ if ($model->isNewRecord) {
 		</div>
 	</div>
 	<?= $form->errorSummary($model) ?>
+
 	<div class="row">
 		<div class="col-md-4">
 			<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name')) ?>
@@ -44,7 +46,7 @@ if ($model->isNewRecord) {
 				],
 			]); ?>
 
-			<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'key')) ?>
+			<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name')) ?>
 
 			<?= $form->field($model, 'size')->dropDownList(BannerItem::bannerSize()) ?>
 
@@ -52,7 +54,7 @@ if ($model->isNewRecord) {
 
 			<?= $form->field($model, 'caption')->textInput(['maxlength' => true]) ?>
 
-			<?= $form->field($model, 'status')->checkbox()->label('Активный') ?>
+			<?= $form->field($model, 'status')->dropDownList(\common\helpers\Arrays::statusBanner()) ?>
 
 			<?= $form->field($model, 'order')->textInput() ?>
 
@@ -60,33 +62,40 @@ if ($model->isNewRecord) {
 
 			<?= $form->field($model, 'max_click')->textInput() ?>
 
-			<?= $form->field($model, 'start')->textInput() ?>
-
-			<?= $form->field($model, 'stop')->textInput() ?>
-		</div>
-		<div class="col-md-4">
-			<?= $form->field($model, 'bannerImage')->widget(FileInput::classname(), [
-				'options' => ['accept' => 'image/*'],
+			<?= $form->field($model, 'start')->widget(DateTimePicker::classname(), [
+				'options' => ['placeholder' => 'Укажите дату и время ...'],
+				'value' => date('Y-m-d H:i:s'),
 				'pluginOptions' => [
-					'showPreview' => true,
-					'initialPreview'=>[
-						!empty($model->path) ? \Yii::$app->fileStorage->fileUrl('banners',$model->path) : false,
-					],
-					'initialPreviewAsData'=>true,
-					'initialPreviewConfig' => [
-						['caption' => $model->path],
-					],
-					'overwriteInitial'=>true,
+					'autoclose' => true,
 				]
 			]); ?>
+
+			<?= $form->field($model, 'stop')->widget(DateTimePicker::classname(), [
+				'options' => ['placeholder' => 'Укажите дату и время ...'],
+				'pluginOptions' => [
+					'autoclose' => true
+				]
+			]); ?>
+		</div>
+		<div class="col-md-4">
+			<?= $form->field($model, 'files')->widget(
+				'\denoll\filekit\widget\Upload',
+				[
+					'url' => ['upload'],
+					'sortable' => false,
+					'maxFileSize' => 1 * 1024 * 1024, // 1 MiB
+					//'maxNumberOfFiles' => 1,
+					'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+				]
+			); ?>
 			<br>
 
 			<?php
-			echo Yii::$app->fileStorage->hello();
+			echo Yii::$app->storage->hello();
 
 			//echo BannerItem::bannerImgDir($model->path);
 			if (!$model->isNewRecord && !empty($model->path)) {
-				echo Html::img(\Yii::$app->fileStorage->fileUrl('banners',$model->path));
+				echo Html::img(\Yii::$app->storage->fileUrl(null, $model->path));
 			}
 			?>
 		</div>
@@ -107,3 +116,22 @@ if ($model->isNewRecord) {
 	<?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$js = <<<JS
+	function delSession() {
+	  $.ajax({
+        type: "get",
+        url: "del-session",
+        cache: true,
+        dataType: "html",
+        success: function (data) {
+			
+           
+        }
+    });
+	}
+JS;
+
+$this->registerJs($js, \yii\web\View::POS_END);
+
+?>

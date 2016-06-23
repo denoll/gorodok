@@ -24,7 +24,7 @@ class TagsWidget extends Widget
 	public function run()
 	{
 		$tags = Tags::find()->where(['status' => 1])->limit(30)->orderBy('frequency DESC')->asArray()->all();
-		echo '<div class="panel panel-u" style="margin-top: 7px;">';
+		echo '<div id="widget-tags-left" class="panel panel-u" style="margin-top: 7px;">';
 		echo '<div class="panel-heading">';
 		echo '<h3 class="panel-title" style="color: #fff; display: block;"><i class="fa fa-tags"></i>&nbsp;&nbsp;Теги</h3>';
 		echo '</div>';

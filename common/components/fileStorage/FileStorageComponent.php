@@ -20,21 +20,24 @@ use Imagine\Gd;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 
-
+/**
+ * Class FileStorageComponent
+ * @package common\components\fileStorage
+ * @author denoll <denoll@denoll.ru>
+ *
+ * @param Model $model
+ * @param UploadedFile $file
+ * @param string $file_dir
+ * @param string $file_url
+ * @param string $file_name
+ * @param string $directory
+ *
+ * @param string $image_height
+ * @param string $image_width
+ * @param string $image_quality
+ */
 class FileStorageComponent extends Component
 {
-	/**
-	 * @param Model $model
-	 * @param UploadedFile $file
-	 * @param string $file_dir
-	 * @param string $file_url
-	 * @param string $file_name
-	 * @param string $directory
-	 *
-	 * @param string $image_height
-	 * @param string $image_width
-	 * @param string $image_quality
-	 */
 	public $model;
 	public $directory;
 	public $file;
@@ -56,7 +59,7 @@ class FileStorageComponent extends Component
 	 */
 	public function hello()
 	{
-		return $this->model->path;
+		return $this->fileDir();
 	}
 
 	/**
@@ -123,6 +126,8 @@ class FileStorageComponent extends Component
 			$path = Url::to($this->file_dir . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $name);
 		} elseif (empty($name) && !empty($directory)) {
 			$path = Url::to($this->file_dir . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR);
+		} elseif (!empty($name) && empty($directory)) {
+			$path = Url::to($this->file_dir . DIRECTORY_SEPARATOR . $name);
 		} else {
 			$path = Url::to($this->file_dir . DIRECTORY_SEPARATOR);
 		}
@@ -140,6 +145,8 @@ class FileStorageComponent extends Component
 			$path = Url::to($this->file_url . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $name);
 		} elseif (empty($name) && !empty($directory)) {
 			$path = Url::to($this->file_url . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR);
+		} elseif (!empty($name) && empty($directory)) {
+			$path = Url::to($this->file_url . DIRECTORY_SEPARATOR . $name);
 		} else {
 			$path = Url::to($this->file_url . DIRECTORY_SEPARATOR);
 		}

@@ -15,15 +15,13 @@ use common\models\banners\Banner;
 	<div class="row">
 		<div class="col-md-12">
 			<?php echo $form->field($model, 'key')->textInput(['maxlength' => 32]) ?>
+			<?php echo $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
 		</div>
 		<div class="col-md-4">
 			<?= $form->field($model, 'stage')->dropDownList(Banner::bannerStages()) ?>
 		</div>
 		<div class="col-md-4">
 			<?php echo $form->field($model, 'status')->checkbox() ?>
-		</div>
-		<div class="col-md-4">
-			<?//= $form->field($model, 'col_size')->dropDownList(Banner::bannerColSize()) ?>
 		</div>
 	</div>
 

@@ -70,6 +70,6 @@ $this->registerMetaTag(['content' => Html::encode('Городской порта
 		<div class="banner-header">
 			<span class="title-underblock title-bottom-border dark">Реклама</span>
 		</div>
-		<?= DbBanner::widget(['key' => 'banners_main_page_left']) ?>
+		<?= DbBanner::widget(['key' => 'banners_main_page_right']) ?>
 	</div>
 </div>

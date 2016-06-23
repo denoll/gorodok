@@ -3,9 +3,14 @@
 namespace common\models\banners;
 
 use common\behaviors\FileStorageBehavior;
+use common\helpers\WorkingDates;
+use common\models\users\Query;
+use common\models\users\UserAccount;
 use Yii;
 use \yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\UploadedFile;
+use denoll\filekit\behaviors\UploadBehavior;
 use common\behaviors\CacheInvalidateBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Url;
@@ -20,6 +25,7 @@ use common\models\users\User;
  * @property string $banner_key
  * @property integer $size
  * @property string $path
+ * @property string $base_url
  * @property string $url
  * @property string $caption
  * @property integer $status
@@ -27,7 +33,14 @@ use common\models\users\User;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $click_count
+ * @property integer $hit_count
  * @property integer $max_click
+ * @property integer $max_hit
+ * @property integer $last_hit
+ * @property integer $last_click
+ * @property integer $last_day
+ * @property integer $max_day
+ * @property integer $day_count
  * @property string $start
  * @property string $stop
  * @property UploadedFile $bannerImage
@@ -39,7 +52,11 @@ use common\models\users\User;
 class BannerItem extends ActiveRecord
 {
 
-	public $bannerImage;
+	const STATUS_DISABLE = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_VERIFICATION = 2;
+
+	public $files = array();
 
 	/**
 	 * @inheritdoc
@@ -60,7 +77,14 @@ class BannerItem extends ActiveRecord
 	public function behaviors()
 	{
 		return [
-			TimestampBehavior::className(),
+			[
+				'class' => TimestampBehavior::className(),
+				'attributes' => [
+					ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at','start'],
+					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+				],
+				'value' => new Expression('NOW()'),
+			],
 			'cacheInvalidate' => [
 				'class' => CacheInvalidateBehavior::className(),
 				'cacheComponent' => 'frontendCache',
@@ -73,13 +97,20 @@ class BannerItem extends ActiveRecord
 					}
 				]
 			],
-			'fileStorage' => [
+			'file' => [
+				'class' => UploadBehavior::className(),
+				'filesStorage' => 'bannerStorage',
+				'attribute' => 'files',
+				'pathAttribute' => 'path',
+				'baseUrlAttribute' => 'base_url',
+			],
+			/*'fileStorage' => [
 				'class' => FileStorageBehavior::className(),
 				'model' => $this,
 				'directory' => 'banners',
 				'file' => 'bannerImage',
 				'file_name' => 'path'
-			],
+			],*/
 		];
 	}
 
@@ -89,13 +120,18 @@ class BannerItem extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['id_adv_company', 'id_user', 'status', 'order', 'created_at', 'updated_at', 'click_count', 'max_click', 'size'], 'integer'],
+			[['id_adv_company', 'id_user', 'status', 'order', 'created_at', 'updated_at', 'size',
+				'click_count', 'last_click', 'max_click',
+				'hit_count', 'last_hit', 'max_hit',
+				'day_count','last_day', 'max_day',
+			], 'integer'],
 			[['start', 'stop'], 'safe'],
 			[['banner_key'], 'string', 'max' => 32],
-			[['path', 'url', 'caption'], 'string', 'max' => 255],
+			[['base_url', 'path', 'url', 'caption'], 'string', 'max' => 255],
 			[['id_adv_company'], 'exist', 'skipOnError' => true, 'targetClass' => BannerAdv::className(), 'targetAttribute' => ['id_adv_company' => 'id']],
 			[['banner_key'], 'exist', 'skipOnError' => true, 'targetClass' => Banner::className(), 'targetAttribute' => ['banner_key' => 'key']],
-			[['bannerImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+			//[['bannerImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+			[['files'], 'safe'],
 		];
 	}
 
@@ -118,11 +154,252 @@ class BannerItem extends ActiveRecord
 			'created_at' => 'Дата создания',
 			'updated_at' => 'Дата изменения',
 			'click_count' => 'Кол-во кликов',
+			'hit_count' => 'Кол-во показов',
+			'day_count' => 'Кол-во дней',
 			'max_click' => 'Максимальное кол-во кликов',
+			'max_hit' => 'Максимальное кол-во показов',
+			'max_day' => 'Максимальное кол-во дней',
+			'last_hit' => 'Последний оплаченый показ',
+			'last_click' => 'Последний оплаченый клик',
+			'last_day' => 'Последний оплаченый день',
 			'start' => 'Дата начала показа',
 			'stop' => 'Дата окончания показа',
-			'bannerImage' => 'Картинка баннера',
+			'files' => 'Картинка баннера',
 		];
+	}
+
+	/**
+	 * Выборка элементов баннеров по ключу
+	 * @param \common\models\banners\Banner $key Ключ
+	 * @return $this
+	 */
+	public static function findItemsByKey($key)
+	{
+		$statuses = self::find()->joinWith('advert')->where(['{{%banner_item}}.status' => 1, '{{%banner_item}}.banner_key'=>$key])->asArray()->one();
+		$query = self::find()
+			->joinWith('advert')
+			->joinWith('user')
+			->joinWith('banner')
+			->where([
+				'{{%banner_item}}.status' => 1,
+				'{{%banner}}.status' => Banner::STATUS_ACTIVE,
+				'{{%banner}}.key' => $key,
+			]);
+		if($statuses['advert']['day_status']){
+			$query->andWhere('user.account >= (banner_adv.day_price * banner_adv.day_size)');
+		}
+		if($statuses['advert']['click_status']){
+			$query->andWhere('user.account >= (banner_adv.click_price * banner_adv.click_size)');
+		}
+		if($statuses['advert']['hit_status']){
+			$query->andWhere('user.account >= (banner_adv.hit_price * banner_adv.hit_size)');
+		}
+		$query->orderBy(['order' => SORT_ASC]);
+		return $query;
+	}
+
+	/**
+	 * Получение эелемента баннера с добавлением рекламодателя и рекламной компании по ID элемента баннера
+	 * @param BannerItem $id
+	 * @return array|null|ActiveRecord
+	 */
+	public static function findItemById($id)
+	{
+		$statuses = self::find()->joinWith('advert')->where(['{{%banner_item}}.status' => 1, '{{%banner_item}}.id'=>$id])->asArray()->one();
+		$query = self::find()
+			->joinWith('advert')
+			->joinWith('user')
+			->where([
+				'{{%banner_item}}.status' => 1,
+				'{{%banner_item}}.id' => $id,
+			]);
+		if($statuses['advert']['day_status']){
+			$query->andWhere('user.account >= (banner_adv.day_price * banner_adv.day_size)');
+		}
+		if($statuses['advert']['click_status']){
+			$query->andWhere('user.account >= (banner_adv.click_price * banner_adv.click_size)');
+		}
+		if($statuses['advert']['hit_status']){
+			$query->andWhere('user.account >= (banner_adv.hit_price * banner_adv.hit_size)');
+		}
+		$query->orderBy(['order' => SORT_ASC]);
+		return $query->one();
+	}
+
+	/**
+	 * Действие на клик по баннеру
+	 * @param BannerItem $id
+	 * @return null|static
+	 */
+	public static function bannerClick($id = null)
+	{
+		if ($id) {
+			$id = base64_decode($id);
+			$model = self::findOne($id);
+			$model->updateCounters(['click_count' => 1]);
+			$model->save();
+			$item = self::findItemById($id);
+			if($item['advert']['click_status']){
+				self::writeOffPerClick($item);
+			}
+			return $model;
+		} else return null;
+	}
+
+	public static function writeOffPerClick($item)
+	{
+		$click = $item['last_click'] + $item['advert']['click_size'];
+		if($item['click_count'] >= $click){
+			$new_item = self::findOne($item['id']);
+			$new_item->last_click = $item['click_count'];
+			$new_item->save(false);
+			$account = new UserAccount();
+			$account->pay_out = $item['advert']['click_price'] * $item['advert']['click_size'];
+			$account->id_user = $item['user']['id'];
+			$account->invoice = 'ADV-CLICK-' . $item['id'] . '-' . rand(10000, 99999);
+			$account->date = new Expression('NOW()');
+			$account->description = 'Оплата за '.$item['advert']['click_size'].' переходов(кликов) по ссылке рекламного баннера №' . $item['id'] . '.';
+			$account->save(false);
+			User::paymentsSumUpdate($item['user']['id']);
+		}
+	}
+
+	public static function bannerHit(Array $id = null, Array $items = null)
+	{
+		if (!empty($id)) {
+			BannerItem::updateAllCounters(['hit_count' => 1], ['id' => $id]);
+			self::writeOffPerHit($items);
+
+		} else return null;
+	}
+
+	/**
+	 * @param $items
+	 */
+	public static function writeOffPerHit($items)
+	{
+		$flag = array();
+		foreach ($items as $item){
+			if($item['hit_status']){
+				$hit = $item['last_hit'] + $item['hit_size'];
+				if($item['hit_count'] >= $hit){
+					$flag[] = 1;
+					$accounts[] = [
+						$item['user_id'],
+						$item['hit_price'] * $item['hit_size'],
+						date('Y-m-d H:i:s'),
+						'ADV-HIT-' . $item['id'] . '-' . rand(10000, 99999),
+						'Списание за '.$item['hit_size'].' показов рекламного баннера №' . $item['id'] . '.'
+					];
+					$new_sum_out = $item['sum_out'] + $item['hit_price'] * $item['hit_size'];
+					$user_account[] = [
+						'user_id' => $item['user_id'],
+						'sum_out' => $new_sum_out,
+						'account' => $item['sum_in'] - $new_sum_out,
+					];
+					$last_items[] = [
+						'last_hit' => $item['hit_count'],
+						'id' => $item['id']
+					];
+					$items_id[] = $item['id'];
+				}
+			}
+		}
+		if(count($flag)>0) {
+			$str_ids = implode(',', $items_id);
+			$sql = 'UPDATE banner_item SET last_hit = CASE';
+			foreach ($last_items as $value){
+				$sql .= ' WHEN id = '. $value['id'] . ' THEN ' . $value['last_hit'];
+			}
+			$sql .= ' END WHERE id IN ('.$str_ids.')';
+			Yii::$app->db->createCommand($sql)->execute();
+			Yii::$app->db->createCommand()->batchInsert('user_account', ['id_user', 'pay_out', 'date', 'invoice', 'description'], $accounts)->execute();
+			Query::usersPayOut($user_account);
+		}
+	}
+
+	public static function bannerDay(Array $id = null, Array $items = null)
+	{
+		if (!empty($id)) {
+			foreach ($items as $i => $item){
+				$day_count = WorkingDates::getDayCountUpNow($item['start']);
+
+				if($day_count > 0 && $item['day_count'] != $day_count){
+					$flag[] = $i;
+					$day_counts[$i] = [
+						'day_count' => $day_count,
+						'id' => $item['id'],
+					];
+					$ids[$i] = $item['id'];
+				}
+			}
+			if(count($flag)>0){
+				$str_ids = implode(',', $ids);
+				$sql = 'UPDATE banner_item SET day_count = CASE';
+				foreach ($day_counts as $value){
+					$sql .= ' WHEN id = '. $value['id'] . ' THEN ' . $value['day_count'];
+				}
+				$sql .= ' END WHERE id IN ('.$str_ids.')';
+				Yii::$app->db->createCommand($sql)->execute();
+				self::writeOffPerDay($items);
+			}
+		} else return null;
+	}
+
+	public static function writeOffPerDay(Array $items = null)
+	{
+		if (!empty($items)) {
+			$flag = array();
+			foreach ($items as $item){
+				if($item['day_status']){
+					$day = $item['last_day'] + $item['day_size'];
+					if($item['day_count'] >= $day){
+						$flag[] = 1;
+						$accounts[] = [
+							$item['user_id'],
+							$item['day_price'] * $item['day_size'],
+							date('Y-m-d H:i:s'),
+							'ADV-DAY-' . $item['id'] . '-' . rand(10000, 99999),
+							'Списание за '.$item['day_size'].' дней показов рекламного баннера №' . $item['id'] . '.'
+						];
+						$new_sum_out = $item['sum_out'] + $item['day_price'] * $item['day_size'];
+						$user_account[] = [
+							'user_id' => $item['user_id'],
+							'sum_out' => $new_sum_out,
+							'account' => $item['sum_in'] - $new_sum_out,
+						];
+						$last_items[] = [
+							'last_day' => $item['day_count'],
+							'id' => $item['id']
+						];
+						$items_id[] = $item['id'];
+					}
+				}
+			}
+			if(count($flag)>0) {
+				$str_ids = implode(',', $items_id);
+				$sql = 'UPDATE banner_item SET last_day = CASE';
+				foreach ($last_items as $value){
+					$sql .= ' WHEN id = '. $value['id'] . ' THEN ' . $value['last_day'];
+				}
+				$sql .= ' END WHERE id IN ('.$str_ids.')';
+				Yii::$app->db->createCommand($sql)->execute();
+				Yii::$app->db->createCommand()->batchInsert('user_account', ['id_user', 'pay_out', 'date', 'invoice', 'description'], $accounts)->execute();
+				Query::usersPayOut($user_account);
+			}
+		} else return null;
+	}
+
+	/**
+	 * @param int $id
+	 * @return int|string
+	 */
+	public static function priceAdvert($id){
+		$advert = BannerAdv::findOne($id);
+		$day = $advert->day_status ? $advert->day_price * $advert->day_size : 0;
+		$hit = $advert->hit_status ? $advert->hit_price * $advert->hit_size : 0;
+		$click = $advert->click_status ? $advert->click_price * $advert->click_size : 0;
+		return $day + $hit + $click;
 	}
 
 	/**
@@ -138,7 +415,7 @@ class BannerItem extends ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(User::className(), ['id' => 'id_user'])->inverseOf('bannerItems');
+		return $this->hasOne(User::className(), ['id' => 'id_user']);
 	}
 
 	/**
@@ -155,31 +432,6 @@ class BannerItem extends ActiveRecord
 	public function getImageUrl()
 	{
 		return trim($this->path);
-	}
-
-	public function bannerImgDir($name = null)
-	{
-		if ($name) {
-			$path = Url::to('@frt_dir/img/banners/' . $name);
-		} else {
-			$path = Url::to('@frt_dir/img/banners/');
-		}
-		return $path;
-	}
-
-	public static function bannerImgUrl($name = null)
-	{
-		if ($name) {
-			$path = Url::to('@frt_url/img/banners/' . $name);
-		} else {
-			$path = Url::to('@frt_url/img/banners/');
-		}
-		return $path;
-	}
-
-	public function upload()
-	{
-		//return \Yii::$app->fileStorage->upload($this, $this->bannerImage);
 	}
 
 	/**

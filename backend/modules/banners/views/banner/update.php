@@ -76,13 +76,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Все блоки баннеров
                 'format' => 'raw',
                 'options' => ['width' => '120'],
                 'filter' => false,
-                'value' => function($data){
-                    if(!empty($data['path'])) {
-                        return Html::img(BannerItem::bannerImgUrl() . $data['path'], [
+                'value' => function ($data) {
+                    if (!empty($data['path'])) {
+                        return Html::img(\Yii::$app->storage->fileUrl(null, $data['path']), [
                             'alt' => 'Фото',
                             'style' => 'width:120px;'
                         ]);
-                    }else{
+                    } else {
                         return Html::img(Url::to('@frt_url/img/no-img.png'), [
                             'alt' => 'Фото',
                             'style' => 'width:120px;'

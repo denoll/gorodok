@@ -30,29 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'id_adv_company',
 				'enum' => ArrayHelper::map($advert, 'id', 'name'),
+				'format' => 'raw',
 			],
 			[
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'id_user',
 				'enum' => ArrayHelper::map($users, 'id', 'username'),
+				'format' => 'raw',
 			],
 			[
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'banner_key',
-				'enum' => ArrayHelper::map($blocks, 'key', 'key'),
+				'filter' => ArrayHelper::map($blocks, 'banner_key', 'name'),
+				'format' => 'raw',
 			],
 			[
 				'attribute' => 'path',
 				'format' => 'raw',
 				'options' => ['width' => '120'],
 				'filter' => false,
-				'value' => function($data){
-					if(!empty($data['path'])) {
-						return Html::img(\Yii::$app->fileStorage->fileUrl('banners',$data['path']), [
+				'value' => function ($data) {
+					if (!empty($data['path'])) {
+						return Html::img(\Yii::$app->storage->fileUrl(null, $data['path']), [
 							'alt' => 'Фото',
 							'style' => 'width:120px;'
 						]);
-					}else{
+					} else {
 						return Html::img(Url::to('@frt_url/img/no-img.png'), [
 							'alt' => 'Фото',
 							'style' => 'width:120px;'
@@ -68,20 +71,20 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'status',
-				'enum' => [
-					'Выключен',
-					'Включен',
-				],
+				'enum' => \common\helpers\Arrays::statusBanner(),
 			],
-			//'url:url',
-			//'caption',
-			//'order',
-			//'created_at',
-			//'updated_at',
 			'click_count',
-			'max_click',
+			'hit_count',
+			'day_count',
+			'last_click',
+			'last_hit',
+			'last_day',
+			//'max_click',
+			//'max_hit',
+			//'max_day',
 			'start',
 			'stop',
 		],
 	]); ?>
+	<br><br><br><br>
 </div>

@@ -5,6 +5,7 @@ namespace app\modules\goods\controllers;
 use common\behaviors\AuthBehavior;
 use common\models\CommonQuery;
 use common\models\goods\VGoods;
+use common\models\users\Query;
 use Yii;
 use common\models\goods\Goods;
 use common\models\goods\GoodsCat;
@@ -282,7 +283,7 @@ class GoodsController extends Controller
 					'service' => $u_account->description,
 					'description' => $u_account->description,
 				];
-				if ($model->save() && $u_account->save() && CommonQuery::userAccontUpdateSum($user->id)) {
+				if ($model->save() && $u_account->save() && Query::userPayOut($user->id, $u_account->pay_out)) {
 					$m_user = User::findOne($user->getId());
 					$payment['account'] = $m_user->account;
 					CommonQuery::sendPayOutEmail($user->id, $payment);
@@ -341,11 +342,12 @@ class GoodsController extends Controller
 					'description' => $u_account->description,
 				];
 
-				if ($model->save() && $u_account->save() && CommonQuery::userAccontUpdateSum($user->id)) {
-					$m_user = User::findOne($user->getId());
+				if ($model->save() && $u_account->save() && Query::userPayOut($user->id, $u_account->pay_out)) {
+					$m_user = User::findOne($user->id);
 					$payment['account'] = $m_user->account;
 					CommonQuery::sendPayOutEmail($user->id, $payment);
 					$arr = [
+
 						'account' => $m_user->account,
 						'pay' => $pay['goods_vip_pay'],
 						'date' => date('Y-m-d'),

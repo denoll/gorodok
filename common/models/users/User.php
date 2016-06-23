@@ -51,6 +51,7 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 {
 	const STATUS_DELETED = 0;
 	const STATUS_ACTIVE = 10;
+	const ROLE_ADMIN = 'admin';
 
 	public $old_password;
 	public $password;
@@ -166,7 +167,7 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 	{
 		if (!Yii::$app->user->isGuest) {
 			$user = Yii::$app->user->getIdentity();
-			$admin = \Yii::$app->authManager->getAssignment('admin', $user->getId());
+			$admin = \Yii::$app->authManager->getAssignment(self::ROLE_ADMIN, $user->getId());
 			return $admin; // возвращает false или true
 		} else {
 			return false;
@@ -184,8 +185,11 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 	}
 
 
-	// Payments update function
-
+	/**
+	 * Payments update function for one user
+	 * @param User $user_id
+	 * @return bool
+	 */
 	public static function paymentsSumUpdate($user_id){
 		$user = self::findOne($user_id);
 		$summ = UserAccount::find()->select('SUM(pay_in) as sum_in, SUM(pay_out) as sum_out')->where(['id_user'=>$user_id])->asArray()->one();
@@ -198,6 +202,8 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 			return false;
 		}
 	}
+	
+	
 
 	public function validatePassword($password)
 	{

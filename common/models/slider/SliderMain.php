@@ -10,6 +10,7 @@ use yii\helpers\Json;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
 use yii\web\UploadedFile;
+
 /**
  * This is the model class for table "slider_main".
  *
@@ -23,120 +24,140 @@ use yii\web\UploadedFile;
  */
 class SliderMain extends \yii\db\ActiveRecord
 {
-    public $image;
-    public $crop_info;
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'slider_main';
-    }
+	public $image;
+	public $crop_info;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id_user','name'], 'required'],
-            [['id_user','status'], 'integer'],
-            [['crop_info','image'], 'safe'],
-            [['name'], 'string', 'max' => 50],
-            [['img','thumbnail','description'], 'string', 'max' => 255],
-           /* [
-                ['image'],
-                'file',
-                //'skipOnEmpty' => false,
-                'extensions' => ['jpg', 'jpeg', 'png', 'gif'],
-                'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
-            ],*/
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'slider_main';
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'id_user' => 'Пользователь',
-            'status'=>'Статус',
-            'name' => 'Название',
-            'img' => 'Рисунок',
-            'thumbnail' => 'Миниатюра',
-            'description' => 'Описание',
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['id_user', 'name'], 'required'],
+			[['id_user', 'status'], 'integer'],
+			[['crop_info', 'image'], 'safe'],
+			[['name'], 'string', 'max' => 50],
+			[['img', 'thumbnail', 'description'], 'string', 'max' => 255],
+			/* [
+				 ['image'],
+				 'file',
+				 //'skipOnEmpty' => false,
+				 'extensions' => ['jpg', 'jpeg', 'png', 'gif'],
+				 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+			 ],*/
+		];
+	}
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'id_user']);
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'id_user' => 'Пользователь',
+			'status' => 'Статус',
+			'name' => 'Название',
+			'img' => 'Рисунок',
+			'thumbnail' => 'Миниатюра',
+			'description' => 'Описание',
+		];
+	}
 
-    public function afterSave($insert, $changedAttributes){
-        // open thumb
-        parent::afterSave($insert, $changedAttributes);
-        if ($this->image->tempName != '') {
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getUser()
+	{
+		return $this->hasOne(User::className(), ['id' => 'id_user']);
+	}
 
-            // open image
-            $image = Image::getImagine()->open($this->image->tempName);
+	/**
+	 * @param $id
+	 * @return int
+	 */
+	public static function changeStatus($id)
+	{
+		$id = (integer)$id;
+		$img = self::findOne($id);
+		if ($img->status == 1) {
+			$img->status = 0;
+		} else {
+			$img->status = 1;
+		}
+		if ($img->save()) {
+			return $img->status;
+		}
+	}
 
-            $variants = [
-                [
-                    'width' => 250,
-                    'height' => 250,
-                ],
-            ];
+	public function afterSave($insert, $changedAttributes)
+	{
+		// open thumb
+		parent::afterSave($insert, $changedAttributes);
+		if ($this->image->tempName != '') {
 
-            // rendering information about crop of ONE option
-            $cropInfo = Json::decode($this->crop_info)[0];
-            $cropInfo['dWidth'] = (int)$cropInfo['dWidth']; //new width image
-            $cropInfo['dHeight'] = (int)$cropInfo['dHeight']; //new height image
-            $cropInfo['x'] = $cropInfo['x']; //begin position of frame crop by X
-            $cropInfo['y'] = $cropInfo['y']; //begin position of frame crop by Y
+			// open image
+			$image = Image::getImagine()->open($this->image->tempName);
 
-            //delete old images
-            $oldImages = FileHelper::findFiles(Yii::getAlias('@frt_dir/img/slider/'), [
-                'only' => [
-                    $this->id_user.'_'.$this->id . '.*',
-                    'thumb_' .$this->id_user.'_'. $this->id . '.*',
-                ],
-            ]);
-            for ($i = 0; $i != count($oldImages); $i++) {
-                @unlink($oldImages[$i]);
-            }
-            //avatar image name
-            $imgName = $this->id_user.'_'.$this->id . '.' . $this->image->getExtension();
+			$variants = [
+				[
+					'width' => 250,
+					'height' => 250,
+				],
+			];
 
-            //saving thumbnail
-            $newSizeThumb = new Box($cropInfo['dWidth'], $cropInfo['dHeight']);
-            $cropSizeThumb = new Box(600, 400); //frame size of crop
-            $cropPointThumb = new Point($cropInfo['x'], $cropInfo['y']);
-            $pathThumbImage = Yii::getAlias('@frt_dir/img/slider/') . 'thumb_'. $imgName;
+			// rendering information about crop of ONE option
+			$cropInfo = Json::decode($this->crop_info)[0];
+			$cropInfo['dWidth'] = (int)$cropInfo['dWidth']; //new width image
+			$cropInfo['dHeight'] = (int)$cropInfo['dHeight']; //new height image
+			$cropInfo['x'] = $cropInfo['x']; //begin position of frame crop by X
+			$cropInfo['y'] = $cropInfo['y']; //begin position of frame crop by Y
 
-            $image->resize($newSizeThumb)
-                ->crop($cropPointThumb, $cropSizeThumb)
-                ->save($pathThumbImage, ['quality' => 100]);
-            //Save original image
-            $this->image->saveAs(Yii::getAlias('@frt_dir/img/slider/'). $imgName);
+			//delete old images
+			$oldImages = FileHelper::findFiles(Yii::getAlias('@frt_dir/img/slider/'), [
+				'only' => [
+					$this->id_user . '_' . $this->id . '.*',
+					'thumb_' . $this->id_user . '_' . $this->id . '.*',
+				],
+			]);
+			for ($i = 0; $i != count($oldImages); $i++) {
+				@unlink($oldImages[$i]);
+			}
+			//avatar image name
+			$imgName = $this->id_user . '_' . $this->id . '.' . $this->image->getExtension();
 
-            //save in database
-            $model = SliderMain::findOne($this->id);
-            $model->thumbnail = 'thumb_'.$imgName;
-            $model->img = $imgName;
+			//saving thumbnail
+			$newSizeThumb = new Box($cropInfo['dWidth'], $cropInfo['dHeight']);
+			$cropSizeThumb = new Box(600, 400); //frame size of crop
+			$cropPointThumb = new Point($cropInfo['x'], $cropInfo['y']);
+			$pathThumbImage = Yii::getAlias('@frt_dir/img/slider/') . 'thumb_' . $imgName;
 
-            if($model->save()){
-                Yii::$app->session->setFlash('success', 'Новая картинка успешно установлена.');
-                return true;
-            }else{
-                Yii::$app->session->setFlash('danger', 'Картинка не изменена.');
-                return false;
-            }
-        }
-    }
+			$image->resize($newSizeThumb)
+				->crop($cropPointThumb, $cropSizeThumb)
+				->save($pathThumbImage, ['quality' => 100]);
+			//Save original image
+			$this->image->saveAs(Yii::getAlias('@frt_dir/img/slider/') . $imgName);
+
+			//save in database
+			$model = SliderMain::findOne($this->id);
+			$model->thumbnail = 'thumb_' . $imgName;
+			$model->img = $imgName;
+
+			if ($model->save()) {
+				Yii::$app->session->setFlash('success', 'Новая картинка успешно установлена.');
+				return true;
+			} else {
+				Yii::$app->session->setFlash('danger', 'Картинка не изменена.');
+				return false;
+			}
+		}
+	}
 }

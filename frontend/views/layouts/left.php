@@ -24,9 +24,12 @@ $is_doctor = $this->params['is_doctor'];
 
 if (!stristr($path, 'site')) {
 
-	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/')) {
+	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/') || stristr($path, '/adv/advert')) {
 		if (stristr($path, 'account/')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 0]);
+		}
+		if (stristr($path, '/adv/advert')) {
+			echo ProfileLeftSidebar::widget(['activeElement' => 12]);
 		}
 		if (stristr($path, 'profile/index') || stristr($path, 'profile/change-avatar')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 1]);

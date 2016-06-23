@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\banners\AdvertSearch */
@@ -20,12 +20,52 @@ $this->params['breadcrumbs'][] = $this->title;
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns' => [
-			['class' => 'yii\grid\ActionColumn'],
+			[
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{update} {delete}',
+				'options' => ['width' => '60'],
+			],
 			'name',
-			'click_price',
-			'day_price',
-			'description',
-			'id',
+			[
+				'attribute' => 'hit_price',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'click_price',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'day_price',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'hit_status',
+				'format' => 'boolean',
+				'filter' => \common\helpers\Arrays::statusYesNo(),
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'click_status',
+				'filter' => \common\helpers\Arrays::statusYesNo(),
+				'format' => 'boolean',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'day_status',
+				'filter' => \common\helpers\Arrays::statusYesNo(),
+				'format' => 'boolean',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'status',
+				'filter' => \common\helpers\Arrays::statusYesNo(),
+				'format' => 'boolean',
+				'options' => ['width' => '80'],
+			],
+			[
+				'attribute' => 'id',
+				'options' => ['width' => '60'],
+			],
 		],
 	]); ?>
 </div>
