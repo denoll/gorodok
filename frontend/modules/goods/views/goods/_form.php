@@ -41,17 +41,17 @@ $label = \app\helpers\Texts::TEXT_CORRECT_IMAGE;
     <div class="col-sm-6">
         <?= $form->field($model, 'image')->widget(Cropbox::className(), [
             'attributeCropInfo' => 'crop_info',
-            'pluginOptions' => [
-                'width' => Arrays::IMG_SIZE_WIDTH + 100,
-                'height' => Arrays::IMG_SIZE_HEIGHT + 100,
-                'variants' => [
+            'optionsCropbox' => [
+                'boxWidth' => Arrays::IMG_SIZE_WIDTH + 100,
+                'boxHeight' => Arrays::IMG_SIZE_HEIGHT + 100,
+                'cropSettings' => [
                     [
                         'width' => Arrays::IMG_SIZE_WIDTH,
                         'height' => Arrays::IMG_SIZE_HEIGHT,
                     ],
                 ],
             ],
-            'previewImagesUrl' => [
+            'previewUrl' => [
                 Yii::getAlias('@frt_url/img/goods/') . $model['main_img']
             ],
         ])->label($label); ?>

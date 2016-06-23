@@ -6,6 +6,7 @@ use kartik\tree\TreeViewInput;
 use kartik\widgets\Select2;
 use bupy7\cropbox\Cropbox;
 use common\models\goods\GoodsCat;
+use common\widgets\Arrays;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\goods\Goods */
@@ -64,17 +65,17 @@ use common\models\goods\GoodsCat;
 			<div class="col-sm-3">
 				<?= $form->field($model, 'image')->widget(Cropbox::className(), [
 					'attributeCropInfo' => 'crop_info',
-					'pluginOptions' => [
-						'width' => \common\widgets\Arrays::IMG_SIZE_WIDTH + 50,
-						'height' => \common\widgets\Arrays::IMG_SIZE_HEIGHT + 50,
-						'variants' => [
+					'optionsCropbox' => [
+						'boxWidth' => Arrays::IMG_SIZE_WIDTH + 100,
+						'boxHeight' => Arrays::IMG_SIZE_HEIGHT + 100,
+						'cropSettings' => [
 							[
-								'width' => \common\widgets\Arrays::IMG_SIZE_WIDTH,
-								'height' => \common\widgets\Arrays::IMG_SIZE_HEIGHT,
+								'width' => Arrays::IMG_SIZE_WIDTH,
+								'height' => Arrays::IMG_SIZE_HEIGHT,
 							],
 						],
 					],
-					'previewImagesUrl' => [
+					'previewUrl' => [
 						Yii::getAlias('@frt_url/img/goods/') . $model['main_img']
 					],
 				])->label($label); ?>

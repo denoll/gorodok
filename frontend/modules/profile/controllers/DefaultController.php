@@ -113,15 +113,15 @@ class DefaultController extends Controller
 
 					// rendering information about crop of ONE option
 					$cropInfo = Json::decode($post['User']['crop_info'])[0];
-					if((int)$cropInfo['dWidth'] == 0 || (int)$cropInfo['dHeight'] == 0){
-						$cropInfo['dWidth'] = Arrays::IMG_SIZE_WIDTH; //new width image
-						$cropInfo['dHeight'] = Arrays::IMG_SIZE_HEIGHT; //new height image
+					if((int)$cropInfo['dw'] == 0 || (int)$cropInfo['dh'] == 0){
+						$cropInfo['dw'] = Arrays::IMG_SIZE_WIDTH; //new width image
+						$cropInfo['dh'] = Arrays::IMG_SIZE_HEIGHT; //new height image
 					}else{
-						$cropInfo['dWidth'] = (int)$cropInfo['dWidth']; //new width image
-						$cropInfo['dHeight'] = (int)$cropInfo['dHeight']; //new height image
+						$cropInfo['dw'] = (int)$cropInfo['dw']; //new width image
+						$cropInfo['dh'] = (int)$cropInfo['dh']; //new height image
 					}
-					$cropInfo['x'] = $cropInfo['x']; //begin position of frame crop by X
-					$cropInfo['y'] = $cropInfo['y']; //begin position of frame crop by Y
+					$cropInfo['x'] = abs($cropInfo['x']); //begin position of frame crop by X
+					$cropInfo['y'] = abs($cropInfo['y']); //begin position of frame crop by Y
 
 					//delete old images
 					$oldImages = FileHelper::findFiles(Yii::getAlias('@frt_dir/img/avatars/'), [
@@ -137,7 +137,7 @@ class DefaultController extends Controller
 					$imgName = $model->id . '.' . $_image->getExtension();
 
 					//saving thumbnail
-					$newSizeThumb = new Box($cropInfo['dWidth'], $cropInfo['dHeight']);
+					$newSizeThumb = new Box($cropInfo['dw'], $cropInfo['dh']);
 					$cropSizeThumb = new Box(Arrays::IMG_SIZE_WIDTH, Arrays::IMG_SIZE_HEIGHT); //frame size of crop
 					$cropPointThumb = new Point($cropInfo['x'], $cropInfo['y']);
 					$pathThumbImage = Yii::getAlias('@frt_dir/img/avatars/') . $imgName;

@@ -31,17 +31,17 @@ $labels = $model->attributeLabels();
 
                     <?= $form->field($model, 'image')->widget(Cropbox::className(), [
                         'attributeCropInfo' => 'crop_info',
-                        'pluginOptions' => [
-                            'width' => \common\widgets\Arrays::IMG_SIZE_WIDTH,
-                            'height' => \common\widgets\Arrays::IMG_SIZE_HEIGHT,
-                            'variants' => [
+                        'optionsCropbox' => [
+                            'boxWidth' => \common\widgets\Arrays::IMG_SIZE_WIDTH,
+                            'boxHeight' => \common\widgets\Arrays::IMG_SIZE_HEIGHT,
+                            'cropSettings' => [
                                 [
                                     'width' => \common\widgets\Arrays::IMG_SIZE_WIDTH,
                                     'height' => \common\widgets\Arrays::IMG_SIZE_HEIGHT,
                                 ],
                             ],
                         ],
-                        'previewImagesUrl' => [
+                        'previewUrl' => [
                             Yii::getAlias('@frt_url/img/avatars/') . $model['avatar']
                         ],
                     ])->label($label); ?>
