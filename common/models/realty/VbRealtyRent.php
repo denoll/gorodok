@@ -28,6 +28,7 @@ use Yii;
  * @property string $updated_at
  * @property string $created_at
  * @property string $main_img
+ * @property string $base_url
  * @property string $m_keyword
  * @property string $m_description
  * @property string $username
@@ -62,7 +63,7 @@ class VbRealtyRent extends \yii\db\ActiveRecord
             [['category'], 'string', 'max' => 60],
             [['alias'], 'string', 'max' => 70],
             [['name', 'company_name', 'username', 'email'], 'string', 'max' => 50],
-            [['main_img', 'm_keyword', 'm_description'], 'string', 'max' => 255],
+            [['base_url', 'main_img', 'm_keyword', 'm_description'], 'string', 'max' => 255],
             [['tel'], 'string', 'max' => 15],
             [['fio'], 'string', 'max' => 152],
         ];

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filter' => false,
 				'value' => function ($data) {
 					if (!empty($data['path'])) {
-						return Html::img(\Yii::$app->storage->fileUrl(null, $data['path']), [
+						return Html::img($data['base_url'] .'/'.$data['path'], [
 							'alt' => 'Фото',
 							'style' => 'width:120px;'
 						]);

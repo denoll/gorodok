@@ -76,7 +76,7 @@ class DbBanner extends BannerHelper
 				$items[$k]['start'] = $item['start'];
 				$items[$k]['stop'] = $item['stop'];
 				if ($item->path) {
-					$img = Html::img(\Yii::$app->storage->fileUrl(null,$item->path), ['style' => 'width: 100%;']);
+					$img = Html::img($item->base_url.'/'.$item->path, ['style' => 'width: 100%;']);
 					if ($item->url) {
 						$link = Url::to(['/adv/default/index', 'id' => base64_encode($item->id)]);
 						$items[$k]['content'] = Html::a($img, $link, ['target' => '_blank', 'class' => 'animated fadeInDown']);

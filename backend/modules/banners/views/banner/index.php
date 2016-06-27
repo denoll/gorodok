@@ -35,12 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'status',
-				'enum' => [
-					'Выключен',
-					'Включен',
-				],
+				'enum' => Banner::bannerStatuses(),
 				'label'=>'Статус блока'
 			],
+			'height',
+			'width'
 		],
 	]); ?>
 

@@ -18,10 +18,15 @@ use common\models\banners\Banner;
 			<?php echo $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
 		</div>
 		<div class="col-md-4">
-			<?= $form->field($model, 'stage')->dropDownList(Banner::bannerStages()) ?>
+			<?php echo $form->field($model, 'height')->textInput(['maxlength' => 4]) ?>
+			<?php echo $form->field($model, 'width')->textInput(['maxlength' => 4]) ?>
 		</div>
 		<div class="col-md-4">
-			<?php echo $form->field($model, 'status')->checkbox() ?>
+			<?= $form->field($model, 'stage')->dropDownList(Banner::bannerStages()) ?>
+			<?php echo $form->field($model, 'status')->dropDownList(Banner::bannerStatuses()) ?>
+		</div>
+		<div class="col-md-4">
+			
 		</div>
 	</div>
 

@@ -12,10 +12,9 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Session;
-use yii\web\UploadedFile;
 use yii\web\Response;
-
+use yii\imagine\Image;
+use Imagine\Image\Point;
 /**
  * ItemController implements the CRUD actions for BannerItem model.
  */
@@ -44,9 +43,14 @@ class ItemController extends Controller
 				'fileStorage' => 'bannerStorage',
 				'disableCsrf' => false,
 				'responseFormat' => Response::FORMAT_JSON,
-				'responsePathParam' => 'path',
-				'responseBaseUrlParam' => 'base_url',
-				'allowChangeFilestorage' => false,
+				'on afterSave' => function($event) {
+					/* @var $file \League\Flysystem\File */
+					$file = $event->file;
+					$post = Yii::$app->request->post('BannerItem');
+					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
+					Image::thumbnail($path, (int)$post['height'], (int)$post['width'])
+						->save($path, ['quality' => 80]);
+				}
 			],
 		];
 	}
@@ -101,8 +105,8 @@ class ItemController extends Controller
 			return $this->render('create', [
 				'model' => $model,
 				'users' => User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(),
-				'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
-				'blocks' => Banner::find()->where(['status' => 1])->asArray()->all(),
+				'advert' => BannerAdv::find()->where(['status' => BannerAdv::STATUS_ACTIVE])->orWhere(['status' => BannerAdv::STATUS_ONLY_STAFF])->asArray()->all(),
+				'blocks' => Banner::find()->where(['status' => Banner::STATUS_ACTIVE])->orWhere(['status' => Banner::STATUS_ONLY_STAFF])->asArray()->all(),
 			]);
 		}
 	}
@@ -122,21 +126,23 @@ class ItemController extends Controller
 			return $this->render('update', [
 				'model' => $model,
 				'users' => User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(),
-				'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
-				'blocks' => Banner::find()->where(['status' => 1])->asArray()->all(),
+				'advert' => BannerAdv::find()->where(['status' => BannerAdv::STATUS_ACTIVE])->orWhere(['status' => BannerAdv::STATUS_ONLY_STAFF])->asArray()->all(),
+				'blocks' => Banner::find()->where(['status' => Banner::STATUS_ACTIVE])->orWhere(['status' => Banner::STATUS_ONLY_STAFF])->asArray()->all(),
 			]);
 		}
 	}
 
 	/**
-	 * @throws NotFoundHttpException
+	 * @param string $key
 	 */
-	public function actionAjaxUpload()
+	public function actionGetSize($key)
 	{
-		$model = new BannerItem();
-		if ($model->load(Yii::$app->request->post())) {
-			\Yii::$app->fileStorage->uploadFile($model, 'banners');
-		}
+		$model = Banner::findOne($key);
+		$arr = [
+			'height' => $model->height,
+			'width' => $model->width
+		];
+		echo json_encode($arr);
 	}
 
 	/**

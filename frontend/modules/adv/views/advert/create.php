@@ -48,9 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="col-md-6">
 				<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name')) ?>
 
-				<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name')) ?>
+				<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите расположение баннера']) ?>
 
-				<?= $form->field($model, 'url')->textInput(['maxlength' => true, 'placeholder'=>'http://адрес ссылки с вашего баннера']) ?>
+				<?= $form->field($model, 'url')->textInput(['maxlength' => true, 'placeholder' => 'http://адрес ссылки с вашего баннера']) ?>
 
 				<?= $form->field($model, 'start')->widget(DateTimePicker::classname(), [
 					'options' => ['placeholder' => 'Укажите дату и время ...'],
@@ -80,6 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<br>
 			</div>
 		</div>
+		<?= $form->field($model, 'height')->hiddenInput()->label(false) ?>
+		<?= $form->field($model, 'width')->hiddenInput()->label(false) ?>
 		<div class="form-group">
 			<?= Html::submitButton('<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Отправить на проверку', ['class' => 'btn btn-success']) ?>
 		</div>
@@ -92,25 +94,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	</div>
 </div>
-	<?php
-	$js = <<<JS
-	function delSession() {
+<?php
+$js = <<<JS
+	function getSize() {
+		var banner_key = $('#banneritem-banner_key :selected').val();
 	  $.ajax({
         type: "get",
-        url: "del-session",
+        url: "get-size",
+        data: "key=" + banner_key,
         cache: true,
-        dataType: "html",
+        dataType: "json",
         success: function (data) {
-			
-           
+			$('#banneritem-height').val(data.height);
+           	$('#banneritem-width').val(data.width);
         }
     });
 	}
 JS;
 
-	$this->registerJs($js, \yii\web\View::POS_END);
+$this->registerJs($js, \yii\web\View::POS_END);
 
-	?>
+?>
 
 
 

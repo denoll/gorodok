@@ -16,19 +16,24 @@ use yii\web\NotFoundHttpException;
 use yii\web\Session;
 use yii\web\UploadedFile;
 use yii\web\Response;
+use yii\imagine\Image;
+use Imagine\Image\Point;
 
 class AdvertController extends Controller
 {
+
+	public $banner_height;
+	public $banner_width;
 
 	public function behaviors()
 	{
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only' => ['my-ads','view','create','delete','upload'],
+				'only' => ['my-ads','view','create','upload'],
 				'rules' => [
 					[
-						'actions' => ['my-ads','view','create','delete','upload'],
+						'actions' => ['my-ads','view','create','upload'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -48,15 +53,25 @@ class AdvertController extends Controller
 	 */
 	public function actions()
 	{
+
+
 		return [
 			'upload' => [
 				'class' => 'denoll\filekit\actions\UploadAction',
 				'fileStorage' => 'bannerStorage',
 				'disableCsrf' => false,
 				'responseFormat' => Response::FORMAT_JSON,
-				'responsePathParam' => 'path',
-				'responseBaseUrlParam' => 'base_url',
-				'allowChangeFilestorage' => false,
+				'on beforeSave' => function($event){
+
+				},
+				'on afterSave' => function($event) {
+					/* @var $file \League\Flysystem\File */
+					$file = $event->file;
+					$post = Yii::$app->request->post('BannerItem');
+					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
+					Image::thumbnail($path, (int)$post['height'], (int)$post['width'])
+						->save($path, ['quality' => 80]);
+				}
 			],
 		];
 	}
@@ -120,14 +135,13 @@ class AdvertController extends Controller
 				$model->size = 12;
 				$model->start = date('Y-m-d H:i:s');
 				$model->save();
-
 				return $this->redirect(['view', 'id' => $model->id]);
 			}
 		} else {
 			return $this->render('create', [
 				'model' => $model,
-				'advert' => BannerAdv::find()->where(['status' => 1])->asArray()->all(),
-				'blocks' => Banner::find()->where(['status' => 1])->asArray()->all(),
+				'advert' => BannerAdv::find()->where(['status' => BannerAdv::STATUS_ACTIVE])->asArray()->all(),
+				'blocks' => Banner::find()->where(['status' => Banner::STATUS_ACTIVE])->asArray()->all(),
 			]);
 		}
 	}
@@ -139,22 +153,27 @@ class AdvertController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$user = Yii::$app->user->getIdentity();
-		$model = BannerItem::find()->where(['id'=>$id,'id_user' => $user->getId()])->one();
-		$model->delete();
-		return $this->redirect(['my-ads']);
+		if(!Yii::$app->user->isGuest){
+			$user = Yii::$app->user->getIdentity();
+			$model = BannerItem::find()->where(['id'=>$id,'id_user' => $user->getId()])->one();
+			$model->delete();
+			return $this->redirect(['my-ads']);
+		}
 	}
 
 
 	/**
-	 * @throws NotFoundHttpException
+	 * @param string $key
 	 */
-	public function actionAjaxUpload()
+	public function actionGetSize($key)
 	{
-		$model = new BannerItem();
-		if ($model->load(Yii::$app->request->post())) {
-			\Yii::$app->fileStorage->uploadFile($model, 'banners');
-		}
+		$model = Banner::findOne($key);
+
+		$arr = [
+			'height' => $model->height,
+			'width' => $model->width
+		];
+		echo json_encode($arr);
 	}
 
 	/**

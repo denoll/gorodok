@@ -25,6 +25,10 @@ use Yii;
  */
 class BannerAdv extends \yii\db\ActiveRecord
 {
+	const STATUS_DRAFT = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_ONLY_STAFF = 2;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -74,5 +78,27 @@ class BannerAdv extends \yii\db\ActiveRecord
 	public function getBannerItems()
 	{
 		return $this->hasMany(BannerItem::className(), ['id_adv_company' => 'id'])->inverseOf('idAdvCompany');
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function advertStatuses()
+	{
+		return [
+			self::STATUS_ACTIVE => 'Активно',
+			self::STATUS_DRAFT => 'Выключено',
+			self::STATUS_ONLY_STAFF => 'Видно только администратору ',
+		];
+	}
+
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	public static function getAdvertStatus($id)
+	{
+		$status = self::bannerStatuses();
+		return $status[$id];
 	}
 }

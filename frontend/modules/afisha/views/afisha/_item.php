@@ -11,13 +11,13 @@ use \common\widgets\Arrays;
         <div class="container-fluid" style="border: 1px solid #D9D9D9; padding: 1px; 10px; margin: 0px;">
             <div class="col-sm-3 side_left sm-margin-bottom-20">
                 <div class="thumbnail" style="padding: 1px; margin: 15px 0px 17px 0px;">
-                    <?= Html::a(Avatar::imgAfisha($model['thumbnail'], '100%'), [Url::to('/afisha/afisha/view'),'cat'=>$model['cat']['alias'], 'id' => $model['alias']]) ?>
+                    <?= Html::a(Avatar::imgAfisha($model['thumbnail'], '100%'), ['/afisha/afisha/view','cat'=>$model['cat']['alias'], 'id' => $model['alias']]) ?>
                 </div>
             </div>
             <div class="col-md-9">
 
                 <h2 style="font-size: 1.25em; margin: 3px 0px;">
-                    <?= Html::a(Html::encode($model['title']), [Url::to('/afisha/afisha/view'),'cat'=>$model['cat']['alias'], 'id' => $model['alias']]) ?>
+                    <?= Html::a(Html::encode($model['title']), ['/afisha/afisha/view','cat'=>$model['cat']['alias'], 'id' => $model['alias']]) ?>
                 </h2>
                 <p style="margin: 2px 0;">
                     <strong class="small-text">Дата:&nbsp;<?= \Yii::$app->formatter->asDate($model['date_in'], 'long') ?></strong>

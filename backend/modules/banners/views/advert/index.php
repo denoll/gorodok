@@ -25,6 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '{update} {delete}',
 				'options' => ['width' => '60'],
 			],
+			[
+				'class' => \common\grid\EnumColumn::className(),
+				'attribute' => 'status',
+				'enum' => \common\models\banners\BannerAdv::advertStatuses(),
+				'label'=>'Статус'
+			],
 			'name',
 			[
 				'attribute' => 'hit_price',
@@ -56,12 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'boolean',
 				'options' => ['width' => '80'],
 			],
-			[
-				'attribute' => 'status',
-				'filter' => \common\helpers\Arrays::statusYesNo(),
-				'format' => 'boolean',
-				'options' => ['width' => '80'],
-			],
+
 			[
 				'attribute' => 'id',
 				'options' => ['width' => '60'],

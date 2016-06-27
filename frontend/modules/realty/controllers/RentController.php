@@ -19,6 +19,10 @@ use common\widgets\Arrays;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use yii\web\Response;
+use yii\imagine\Image;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
 
 /**
  * RealtyController implements the CRUD actions for Realty model.
@@ -30,10 +34,10 @@ class RentController extends Controller
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only' => ['change-status', 'change-up', 'change-vip', 'my-ads', 'create', 'update', 'delete', 'delete-images', 'delete-image'],
+				'only' => ['change-status', 'change-up', 'change-vip', 'my-ads', 'create', 'update', 'delete'],
 				'rules' => [
 					[
-						'actions' => ['change-status', 'change-up', 'change-vip', 'my-ads', 'create', 'update', 'delete', 'delete-images', 'delete-image'],
+						'actions' => ['change-status', 'change-up', 'change-vip', 'my-ads', 'create', 'update', 'delete'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -62,6 +66,19 @@ class RentController extends Controller
 	public function actions()
 	{
 		return [
+			'upload' => [
+				'class' => 'denoll\filekit\actions\UploadAction',
+				'fileStorage' => 'realtyRentStorage',
+				'disableCsrf' => true,
+				'responseFormat' => Response::FORMAT_JSON,
+				'on afterSave' => function ($event) {
+					/* @var $file \League\Flysystem\File */
+					$file = $event->file;
+					$path = Url::to('@frt_dir/img/realty_rent/' . $file->getPath());
+					Image::thumbnail($path, 600, 400)
+						->save($path, ['quality' => 80]);
+				}
+			],
 			'error' => [
 				'class' => 'yii\web\ErrorAction',
 			],
@@ -133,19 +150,17 @@ class RentController extends Controller
 	public function actionCreate()
 	{
 		$model = new RealtyRent(['scenario' => 'create']);
-		if ($model->load(Yii::$app->request->post())) {
+		$post = Yii::$app->request->post();
+		if ($model->load($post)) {
+			empty($post['RealtyRent']['distance']) ? $model->distance = 0 : $model->distance = $post['RealtyRent']['distance'];
 			$model->id_user = Yii::$app->user->identity->getId();
 			$model->status = 1;
-			$model->images = \yii\web\UploadedFile::getInstances($model, 'images');
-			if ($model->validate()) {
-				if ($model->save(false) && $model->upload()) {
-					\Yii::$app->session->setFlash('success', 'Объявление успешно создано.');
-					CommonQuery::sendCreateAdsEmail(Yii::$app->user->identity->getId(), $model, Url::to('@frt_url/realty/rent/my-ads'));
-					return $this->redirect(['update', 'id' => $model->id]);
-				} else {
-					\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление создать не удалось.<br>Пожалуйста повторите попытку.');
-
-				}
+			if ($model->save(false)) {
+				\Yii::$app->session->setFlash('success', 'Объявление успешно создано.');
+				CommonQuery::sendCreateAdsEmail(Yii::$app->user->identity->getId(), $model, Url::to('@frt_url/realty/rent/my-ads'));
+				return $this->redirect(['my-ads', 'id' => $model->id]);
+			} else {
+				\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление создать не удалось.<br>Пожалуйста повторите попытку.');
 			}
 			return $this->render('create', ['model' => $model,]);
 		} else {
@@ -165,15 +180,13 @@ class RentController extends Controller
 	{
 		$user = Yii::$app->user->getIdentity();
 		$model = RealtyRent::find()->where(['id' => $id, 'id_user' => $user->getId()])->one();
-		if ($model->load(Yii::$app->request->post())) {
-			$model->images = \yii\web\UploadedFile::getInstances($model, 'images');
-			if ($model->validate()) {
-				if ($model->save() && $model->upload()) {
-					\Yii::$app->session->setFlash('success', 'Изменения успешно внесены.');
-					//return $this->redirect(['my-ads', 'id' => $model->id]);
-				} else {
-					\Yii::$app->session->setFlash('danger', 'По каким-то причинам сохранить изменения не удалось.<br>Пожалуйста повторите попытку.');
-				}
+		$post = Yii::$app->request->post();
+		if ($model->load($post)) {
+			empty($post['RealtyRent']['distance']) ? $model->distance = 0 : $model->distance = $post['RealtyRent']['distance'];
+			if ($model->save()) {
+				\Yii::$app->session->setFlash('success', 'Изменения успешно внесены.');
+			} else {
+				\Yii::$app->session->setFlash('danger', 'По каким-то причинам сохранить изменения не удалось.<br>Пожалуйста повторите попытку.');
 			}
 			return $this->render('update', ['model' => $model,]);
 		} else {
@@ -187,41 +200,14 @@ class RentController extends Controller
 	{
 		$user_id = Yii::$app->user->identity->getId();
 		$model = RealtyRent::findOne(['id' => $id, 'id_user' => $user_id]);
-		if (RealtyRent::deleteImages($id, $user_id)) {
-			if ($model->delete()) {
-				CommonQuery::sendDeleteAdsEmail($user_id, $model, Url::to('@frt_url/realty/rent/my-ads'));
-				return $this->redirect(['my-ads']);
-			} else {
-				\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
-			}
+		if ($model->delete()) {
+			CommonQuery::sendDeleteAdsEmail($user_id, $model, Url::to('@frt_url/realty/rent/my-ads'));
+			return $this->redirect(['my-ads']);
 		} else {
-			\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление не было удалено.<br>Пожалуйста повторите попытку.');
-			return $this->redirect(['update', 'id' => $id]);
+			\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
 		}
 	}
-
-	public function actionDeleteImages($id)
-	{
-		$user_id = Yii::$app->user->identity->getId();
-		if (RealtyRent::deleteImages($id, $user_id)) {
-			return $this->redirect(['update', 'id' => $id]);
-		} else {
-			\Yii::$app->session->setFlash('danger', 'По каким-то причинам картинки не были удалены.<br>Пожалуйста повторите попытку.');
-			return $this->redirect(['update', 'id' => $id]);
-		}
-	}
-
-	public function actionDeleteImage($id, $id_ads)
-	{
-		$user_id = Yii::$app->user->identity->getId();
-		if (RealtyRent::deleteImage($id, $id_ads, $user_id)) {
-			return $this->redirect(['update', 'id' => $id_ads]);
-		} else {
-			\Yii::$app->session->setFlash('danger', 'По каким-то причинам картинка не была удалена.<br>Пожалуйста повторите попытку.');
-			return $this->redirect(['update', 'id' => $id_ads]);
-		}
-	}
-
+	
 	/**
 	 * Lists all Service models.
 	 * @return mixed

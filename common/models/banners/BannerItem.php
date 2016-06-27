@@ -57,6 +57,8 @@ class BannerItem extends ActiveRecord
 	const STATUS_VERIFICATION = 2;
 
 	public $files = array();
+	public $height = 450;
+	public $width = 200;
 
 	/**
 	 * @inheritdoc
@@ -124,9 +126,11 @@ class BannerItem extends ActiveRecord
 				'click_count', 'last_click', 'max_click',
 				'hit_count', 'last_hit', 'max_hit',
 				'day_count','last_day', 'max_day',
+				'height', 'width',
 			], 'integer'],
 			[['start', 'stop'], 'safe'],
 			[['banner_key'], 'string', 'max' => 32],
+			[['banner_key', 'id_adv_company'], 'required'],
 			[['base_url', 'path', 'url', 'caption'], 'string', 'max' => 255],
 			[['id_adv_company'], 'exist', 'skipOnError' => true, 'targetClass' => BannerAdv::className(), 'targetAttribute' => ['id_adv_company' => 'id']],
 			[['banner_key'], 'exist', 'skipOnError' => true, 'targetClass' => Banner::className(), 'targetAttribute' => ['banner_key' => 'key']],
@@ -175,24 +179,30 @@ class BannerItem extends ActiveRecord
 	 */
 	public static function findItemsByKey($key)
 	{
-		$statuses = self::find()->joinWith('advert')->where(['{{%banner_item}}.status' => 1, '{{%banner_item}}.banner_key'=>$key])->asArray()->one();
+		$statuses = self::find()->joinWith('advert')
+			->where(['{{%banner_item}}.status' => self::STATUS_ACTIVE, '{{%banner_item}}.banner_key'=>$key])
+			->asArray()->all();
 		$query = self::find()
 			->joinWith('advert')
 			->joinWith('user')
 			->joinWith('banner')
 			->where([
-				'{{%banner_item}}.status' => 1,
-				'{{%banner}}.status' => Banner::STATUS_ACTIVE,
+				'{{%banner_item}}.status' => self::STATUS_ACTIVE,
 				'{{%banner}}.key' => $key,
+			])
+			->andWhere([
+				'<>','{{%banner}}.status',Banner::STATUS_DRAFT,
 			]);
-		if($statuses['advert']['day_status']){
-			$query->andWhere('user.account >= (banner_adv.day_price * banner_adv.day_size)');
-		}
-		if($statuses['advert']['click_status']){
-			$query->andWhere('user.account >= (banner_adv.click_price * banner_adv.click_size)');
-		}
-		if($statuses['advert']['hit_status']){
-			$query->andWhere('user.account >= (banner_adv.hit_price * banner_adv.hit_size)');
+		foreach ($statuses as $status){
+			if($status['advert']['day_status'] != 0 && !empty($status['advert']['day_price'])){
+				$query->andWhere('user.account >= (banner_adv.day_price * banner_adv.day_size)');
+			}
+			if($status['advert']['click_status'] != 0 && !empty($status['advert']['click_price'])){
+				$query->andWhere('user.account >= (banner_adv.click_price * banner_adv.click_size)');
+			}
+			if($status['advert']['hit_status'] != 0 && !empty($status['advert']['hit_price'])){
+				$query->andWhere('user.account >= (banner_adv.hit_price * banner_adv.hit_size)');
+			}
 		}
 		$query->orderBy(['order' => SORT_ASC]);
 		return $query;

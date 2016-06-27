@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 
 if ($model->isNewRecord) {
 	$model->status = 1;
+	$model->hit_price = 0;
 	$model->click_price = 0;
 	$model->day_price = 0;
 }
@@ -18,7 +19,7 @@ if ($model->isNewRecord) {
 
 	<?php $form = ActiveForm::begin(); ?>
 
-	<?= $form->field($model, 'status')->checkbox() ?>
+	<?= $form->field($model, 'status')->dropDownList(\common\models\banners\BannerAdv::advertStatuses()) ?>
 
 	<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

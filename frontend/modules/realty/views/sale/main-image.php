@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         'previewImagesUrl' => [
-                            Yii::getAlias('@frt_url/img/goods/') . $model['main_img']
+                            Yii::getAlias('@frt_url/img/goods/') . $model['img']
                         ],
                     ])->label($label); ?>
                     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'change-password-button']) ?>

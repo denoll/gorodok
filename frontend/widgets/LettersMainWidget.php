@@ -34,12 +34,11 @@ class LettersMainWidget extends Widget
 			echo '</th>';
 			foreach ($letters as $item) {
 				echo '<tr>';
-				$path = '/letters/letters/view';
 				echo '<td class="table-img">';
-				echo Html::a(Avatar::imgLetters($item['thumbnail'], '80px; border: 1px solid #c6c6c6; padding: 1px;'), [$path, 'id' => $item['alias']]);
+				echo Html::a(Avatar::imgLetters($item['thumbnail'], '80px; border: 1px solid #c6c6c6; padding: 1px;'), ['/letters/letters/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']]);
 				echo '</td>';
 				echo '<td>';
-				echo Html::a($item['title'], [$path, 'id' => $item['alias']], ['class' => '', 'style' => 'margin-left: 0px;', 'title' => 'Подробнее']);
+				echo Html::a($item['title'], ['/letters/letters/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']], ['class' => '', 'style' => 'margin-left: 0px;', 'title' => 'Подробнее']);
 				echo '<br><i class="small-text" >Категория:</i> ' . Html::a($item['cat']['name'], ['/letters/letters/index/', 'cat' => $item['cat']['alias']]);
 				echo '<ul class="list-inline"><li class="tag-sign" style="margin-right: 5px;">Теги: </li>';
 				foreach ($item['tags'] as $tag) {

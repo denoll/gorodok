@@ -88,8 +88,8 @@ use common\widgets\Arrays;
 			<?= $form->field($model, 'image')->widget(Cropbox::className(), [
 				'attributeCropInfo' => 'crop_info',
 				'optionsCropbox' => [
-					'boxWidth' => Arrays::IMG_SIZE_WIDTH + 100,
-					'boxHeight' => Arrays::IMG_SIZE_HEIGHT + 100,
+					'boxWidth' => Arrays::IMG_SIZE_WIDTH,
+					'boxHeight' => Arrays::IMG_SIZE_HEIGHT,
 					'cropSettings' => [
 						[
 							'width' => Arrays::IMG_SIZE_WIDTH,

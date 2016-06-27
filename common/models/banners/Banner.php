@@ -13,6 +13,8 @@ use Yii;
  * @property integer $status
  * @property integer $stage
  * @property integer $col_size
+ * @property integer $height
+ * @property integer $width
  *
  * @property BannerItem[] $items
  */
@@ -20,6 +22,7 @@ class Banner extends \yii\db\ActiveRecord
 {
 	const STATUS_DRAFT = 0;
 	const STATUS_ACTIVE = 1;
+	const STATUS_ONLY_STAFF = 2;
 
 	const STAGE_VERTICAL = '0';
 	const STAGE_HORIZONTAL = '1';
@@ -61,7 +64,7 @@ class Banner extends \yii\db\ActiveRecord
 		return [
 			[['key'], 'required'],
 			[['key'], 'unique'],
-			[['status', 'stage', 'col_size'], 'integer'],
+			[['status', 'stage', 'col_size', 'height', 'width'], 'integer'],
 			[['key'], 'string', 'max' => 32],
 			[['name'], 'string', 'max' => 255]
 		];
@@ -78,6 +81,8 @@ class Banner extends \yii\db\ActiveRecord
 			'status' => 'Включен',
 			'stage' => 'Положение блока',
 			'col_size' => 'Размер колонки',
+			'height' => 'Высота изображения',
+			'width' => 'Длинна изображения',
 		];
 	}
 
@@ -98,6 +103,28 @@ class Banner extends \yii\db\ActiveRecord
 			self::STAGE_VERTICAL => 'Вертикальное',
 			self::STAGE_HORIZONTAL => 'Горизонтальное',
 		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function bannerStatuses()
+	{
+		return [
+			self::STATUS_ACTIVE => 'Активно',
+			self::STATUS_DRAFT => 'Выключено',
+			self::STATUS_ONLY_STAFF => 'Видно только администратору ',
+		];
+	}
+
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	public static function getBannerStatus($id)
+	{
+		$status = self::bannerStatuses();
+		return $status[$id];
 	}
 
 	/**

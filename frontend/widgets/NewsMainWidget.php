@@ -31,13 +31,12 @@ class NewsMainWidget extends Widget
 			echo '<table class="main-table news">';
 			foreach ($news as $item) {
 				echo '<tr>';
-				$path = '/news/news/view';
 				echo '<td class="news-img" style="padding: 0px; width: 115px;">';
-				echo Html::a(Avatar::imgNews($item['thumbnail'], '95px; border: 1px solid #c6c6c6; padding: 1px;'), [$path, 'id' => $item['alias']]);
+				echo Html::a(Avatar::imgNews($item['thumbnail'], '95px; border: 1px solid #c6c6c6; padding: 1px;'), ['/news/news/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']]);
 				echo '</td>';
 				echo '<td style="padding: 0px;">';
-				echo Html::a($item['title'], [$path, 'id' => $item['alias']], ['class' => '', 'style' => 'margin-left: 0px;', 'title' => 'Подробнее']);
-				echo '<br><i class="small-text" >Категория:</i> ' . Html::a($item['cat']['name'], ['/news/news/index/', 'cat' => $item['cat']['alias']]);
+				echo Html::a($item['title'], ['/news/news/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']], ['class' => '', 'style' => 'margin-left: 0px;', 'title' => 'Подробнее']);
+				echo '<br><i class="small-text" >Категория:</i> ' . Html::a($item['cat']['name'], ['/news/news/index', 'cat' => $item['cat']['alias']]);
 				echo '<ul class="list-inline"><li class="tag-sign" style="margin-right: 5px;">Теги: </li>';
 				foreach ($item['tags'] as $tag) {
 					echo '<li class="tag-name">';

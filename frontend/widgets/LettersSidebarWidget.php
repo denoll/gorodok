@@ -33,23 +33,22 @@ class LettersSidebarWidget extends Widget
 		echo '<div class="panel panel-u" style="margin-top: 10px;">';
 		echo '<div class="panel-heading">';
 		echo '<h3 class="panel-title" style="color: #fff; display: block;">';
-		echo Html::a('Коллективные письма','/letters/letters/index',['class'=>'header-link']);
+		echo Html::a('Коллективные письма',['/letters/letters/index'],['class'=>'header-link']);
 		echo '</h3>';
 		echo '</div>';
 		echo '<div class="posts panel-body" style=" padding: 7px;">';
 		foreach ($model as $item) {
+			if ($item['thumbnail'] != null) {
+				$img = Html::img(Url::to('@frt_url/img/letters/') . $item['thumbnail'], ['style' => '']);
+			} else {
+				$img = Html::img(Url::to('@frt_url/img/no-img.png'), ['style' => '']);
+			}
 			echo '<dl class="dl-horizontal">';
 			echo '<dt>';
-			echo '<a href="' . $path . '?id=' . $item['alias'] . '">';
-			if ($item['thumbnail'] != null) {
-				echo Html::img(Url::to('@frt_url/img/letters/') . $item['thumbnail'], ['style' => '']);
-			} else {
-				echo Html::img(Url::to('@frt_url/img/no-img.png'), ['style' => '']);
-			}
-			echo '</a>';
+			echo Html::a($img, ['/letters/letters/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']]);
 			echo '</dt>';
 			echo '<dd>';
-			echo Html::a($item['title'], [$path, 'id' => $item['alias']], ['style' => 'font-size: 0.9em;']);
+			echo Html::a($item['title'], ['/letters/letters/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']], ['style' => 'font-size: 0.9em;']);
 			echo '<br><i style="font-size: 0.9em; color: #aaa;">с&nbsp;' . Yii::$app->formatter->asDate($item['date_in'], 'long') . '</i>';
 			echo '<br><i style="font-size: 0.9em; color: #aaa;">' . $item['cat']['name'] . '</i>';
 			echo '</dd>';

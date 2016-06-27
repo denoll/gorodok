@@ -80,11 +80,15 @@ class AfishaSearch extends Afisha
         if(!empty($cat)){
             AfishaCat::setSessionCategoryTree($cat);
             $leaves = AfishaCat::getLeavesNodesByAlias($cat);
-            foreach($leaves as $leav){
-                $cat_id[] = $leav['id'];
+            $cur_cat = AfishaCat::findOne(['alias'=>$cat]);
+            $cat_id[] = $cur_cat->id;
+            if (!empty($leaves[0])) {
+                foreach ($leaves as $leave) {
+                    $cat_id[] = $leave['id'];
+                }
             }
-            $cats = implode(',',$cat_id);
-            $query->andWhere('id_cat IN ('.$cats.')');
+            $cats = implode(',', $cat_id);
+            $query->andWhere('id_cat IN (' . $cats . ')');
         }
 
         $query->andFilterWhere([
