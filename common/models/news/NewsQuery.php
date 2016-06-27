@@ -12,4 +12,12 @@ class NewsQuery extends \yii\db\ActiveQuery
             TaggableQueryBehavior::className(),
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function roots()
+    {
+        return AfishaCat::find()->where(['lvl' => 0, 'active' => 1, 'disabled' => 0, 'visible' => 1])->orderBy('root, lft');
+    }
 }

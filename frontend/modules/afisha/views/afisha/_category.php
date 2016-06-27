@@ -25,7 +25,7 @@ use yii\helpers\Url;
                     <?php } ?>
                 </ul>
             </div>
-            <?php }else{ $category = \common\models\afisha\AfishaCat::find()->where(['lvl'=>0, 'active'=>1, 'disabled'=>0, 'visible'=>1])->orderBy('root, lft')->asArray()->all(); ?>
+            <?php }else{ $category = \common\models\afisha\AfishaCat::getAllRootsNodes(); ?>
                 <div class="panel-body" style=" padding: 5px 12px 12px 12px;">
                     <label class="small-text">Категории:</label>
                     <ul class="list-inline" style="margin-bottom: 0;">
