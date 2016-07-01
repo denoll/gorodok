@@ -56,10 +56,9 @@ class LettersMainWidget extends Widget
 
 	private function getData()
 	{
-		$dependency = new DbDependency();
-		$dependency->sql = 'SELECT MAX(updated_at) FROM letters WHERE status = 1';
-		return Letters::getDb()->cache(function ($db) {
-			return Letters::find('SELECT title, alias, id, cat.name, cat.alias, ')
+		$data = Yii::$app->cache->get('letters_on_main');
+		if(!$data){
+			$data = Letters::find('SELECT title, alias, id, cat.name, cat.alias, ')
 				->select('title,alias,id,publish,thumbnail,id_cat')
 				->with('tags')
 				->with('cat')
@@ -69,7 +68,9 @@ class LettersMainWidget extends Widget
 				->orderBy(['publish' => SORT_DESC])
 				->limit($this->count_item)
 				->all();
-		}, Arrays::CASH_TIME, $dependency);
+			Yii::$app->cache->set('letters_on_main',$data, Arrays::CASH_TIME);
+		}
+		return $data;
 	}
 }
 

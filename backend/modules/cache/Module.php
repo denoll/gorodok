@@ -2,14 +2,34 @@
 
 namespace app\modules\cache;
 
+use app\modules\rbac\components\AccessControl;
+
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\cache\controllers';
+	public $controllerNamespace = 'app\modules\cache\controllers';
 
-    public function init()
-    {
-        parent::init();
+	public function behaviors()
+	{
+		return [
+			'access' => [
+				'class' => AccessControl::className(),
+				'denyCallback' => function ($rule, $action) {
+					return $action->controller->redirect(\Yii::getAlias('@frt_url'));
+				},
+				'rules' => [
+					[
+						'allow' => true,
+						'roles' => ['admin'],
+					],
+				],
+			],
+		];
+	}
 
-        // custom initialization code goes here
-    }
+	public function init()
+	{
+		parent::init();
+
+		// custom initialization code goes here
+	}
 }

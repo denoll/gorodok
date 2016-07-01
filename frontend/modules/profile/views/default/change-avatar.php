@@ -5,13 +5,10 @@ use kartik\widgets\ActiveForm;
 use bupy7\cropbox\Cropbox;
 use common\models\users\User;
 
-if(User::isCompany()){
-    $this->title = 'Изменение логотипа:  ' . $model->username;
-    $label = \app\helpers\Texts::TEXT_CORRECT_LOGO;
-}else{
-    $this->title = 'Изменение Аватара:  ' . $model->username;
-    $label = \app\helpers\Texts::TEXT_CORRECT_AVATAR;
-}
+
+$this->title = 'Изменение Аватара:  ' . $model->username;
+$label = \app\helpers\Texts::TEXT_CORRECT_AVATAR;
+
 $this->params['left'] = true;
 $this->params['right'] = true;
 $this->params['breadcrumbs'][] = ['label' => 'Профиль пользователя', 'url' => ['index']];

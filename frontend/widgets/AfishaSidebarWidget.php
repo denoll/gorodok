@@ -59,10 +59,9 @@ class AfishaSidebarWidget extends Widget
 
 	private function getData()
 	{
-		$dependency = new DbDependency();
-		$dependency->sql = 'SELECT MAX(updated_at) FROM afisha WHERE status = 1';
-		return Afisha::getDb()->cache(function ($db) {
-			return Afisha::find()
+		$data = Yii::$app->cache->get('afisha_sidebar');
+		if(!$data){
+			$data = Afisha::find()
 				->with('cat')
 				->where(['status' => 1])
 				->andWhere('(publish < NOW() AND (unpublish < NOW()OR unpublish IS NULL))')
@@ -70,6 +69,8 @@ class AfishaSidebarWidget extends Widget
 				->orderBy(['publish' => SORT_DESC])
 				->limit($this->count_item)
 				->all();
-		}, Arrays::CASH_TIME, $dependency);
+			Yii::$app->cache->set('afisha_sidebar',$data, Arrays::CASH_TIME);
+		}
+		return $data;
 	}
 }

@@ -53,10 +53,9 @@ class NewsMainWidget extends Widget
 
 	private function getData()
 	{
-		$dependency = new DbDependency();
-		$dependency->sql = 'SELECT MAX(modifyed_at) FROM news';
-		return News::getDb()->cache(function () {
-			return News::find()
+		$data = Yii::$app->cache->get('news_on_main');
+		if(!$data){
+			$data =  News::find()
 				->select('title,alias,id,publish,thumbnail,id_cat')
 				->with('tags')
 				->with('cat')
@@ -66,7 +65,9 @@ class NewsMainWidget extends Widget
 				->orderBy(['publish' => SORT_DESC])
 				->limit($this->count_item)
 				->all();
-		}, Arrays::CASH_TIME, $dependency);
+			Yii::$app->cache->set('news_on_main',$data, Arrays::CASH_TIME);
+		}
+		return $data;
 	}
 }
 

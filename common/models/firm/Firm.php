@@ -2,11 +2,13 @@
 
 namespace common\models\firm;
 
+use common\models\users\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-use yii\web\UploadedFile;
+use denoll\filekit\behaviors\UploadBehavior;
+
 /**
  * This is the model class for table "firm".
  *
@@ -33,96 +35,107 @@ use yii\web\UploadedFile;
  */
 class Firm extends \yii\db\ActiveRecord
 {
-    public $image;
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => new Expression('NOW()'),
-            ],
-        ];
-    }
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'firm';
-    }
+	const STATUS_DISABLE = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_VERIFICATION = 2;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id_cat', 'id_user', 'status', 'show_requisites'], 'integer'],
-            [['description'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 100],
-            [['lat','lon'], 'string', 'max' => 100],
-            [['tel', 'email', 'site', 'logo', 'address', 'mk', 'md'], 'string', 'max' => 255],
-            [['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => FirmCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
-        ];
-    }
+	const HEIGHT = 250;
+	const WIDTH = 250;
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'id_cat' => 'Категория',
-            'id_user' => 'Пользователь',
-            'image' => 'Логотип',
-            'status' => 'Статус',
-            'show_requisites' => 'Показывать реквизиты',
-            'name' => 'Название компании',
-            'tel' => 'Телефон',
-            'email' => 'Email',
-            'site' => 'Сайт',
-            'logo' => 'Логотип',
-            'address' => 'Адрес',
-            'lat' => 'Широта',
-            'lon' => 'Долгота',
-            'description' => 'Описание',
-            'created_at' => 'Дата создания',
-            'updated_at' => 'Дата изменения',
-            'mk' => 'Ключевые слова',
-            'md' => 'Мета описание',
-        ];
-    }
+	public $files = array();
+	public $image;
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCat()
-    {
-        return $this->hasOne(FirmCat::className(), ['id' => 'id_cat'])->inverseOf('firms');
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors()
+	{
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'attributes' => [
+					ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+				],
+				'value' => new Expression('NOW()'),
+			],
+			'file' => [
+				'class' => UploadBehavior::className(),
+				'filesStorage' => 'firmStorage',
+				'attribute' => 'image',
+				'pathAttribute' => 'logo',
+				'baseUrlAttribute' => 'base_url',
+			],
+		];
+	}
 
-    public function upload()
-    {
-        if ($this->validate()) {
-            if($this->image->tempName != ''){
-                $file_name = $this->image->baseName . '.' . $this->image->extension;
-                $this->image->saveAs(Url::to('@frt_dir/img/logo/') . $file_name);
-                return $file_name;
-            }else{
-                return $this->isNewRecord ?  null : $this->logo;
-            }
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'firm';
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['id_cat', 'name'], 'required'],
+			[['id_cat', 'id_user', 'status', 'show_requisites'], 'integer'],
+			[['description'], 'string'],
+			[['created_at', 'updated_at', 'image'], 'safe'],
+			[['name'], 'string', 'max' => 100],
+			[['lat', 'lon'], 'string', 'max' => 100],
+			[['base_url', 'logo'], 'string', 'max' => 255],
+			[['tel', 'email', 'site', 'address', 'mk', 'md'], 'string', 'max' => 255],
+			[['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => FirmCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'id_cat' => 'Категория',
+			'id_user' => 'Пользователь',
+			'image' => 'Логотип',
+			'status' => 'Статус',
+			'show_requisites' => 'Показывать данные о компании в каталоге "Полезные адреса"',
+			'name' => 'Название компании',
+			'tel' => 'Телефон',
+			'email' => 'Email',
+			'site' => 'Сайт',
+			'logo' => 'Логотип',
+			'address' => 'Адрес',
+			'lat' => 'Широта',
+			'lon' => 'Долгота',
+			'description' => 'Описание',
+			'created_at' => 'Дата создания',
+			'updated_at' => 'Дата изменения',
+			'mk' => 'Ключевые слова',
+			'md' => 'Мета описание',
+		];
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCat()
+	{
+		return $this->hasOne(FirmCat::className(), ['id' => 'id_cat'])->inverseOf('firms');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getUsers()
+	{
+		return $this->hasOne(User::className(), ['id' => 'id_user'])->select(['id','username','status','company_name','company'])->andWhere(['company'=>1, 'status' => User::STATUS_ACTIVE]);
+	}
 }

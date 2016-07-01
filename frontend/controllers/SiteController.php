@@ -222,7 +222,7 @@ class SiteController extends Controller
 				if ($user = $model->signup()) {
 					if($user->company&&Yii::$app->user->login($user, 3600 * 24 * 30)){
 						CommonQuery::sendCreateUserEmail(\Yii::$app->user->identity);
-						return $this->redirect('signup-company');
+						return $this->redirect(['/firm/firm/update']);
 					}elseif(Yii::$app->user->login($user, 3600 * 24 * 30)) {
 						$user =Yii::$app->user->identity;
 						if($user->tel){

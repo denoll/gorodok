@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\FileInput;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\firm\Firm */
@@ -13,7 +13,7 @@ if ($model->isNewRecord) {
 	$model->id_user = Yii::$app->user->id;
 }
 $categories = \yii\helpers\ArrayHelper::map(\common\models\firm\FirmCat::find()->where(['status' => 1])->orderBy('order')->all(), 'id', 'name');
-$users = \yii\helpers\ArrayHelper::map(\common\models\users\User::find()->active()->andWhere(['company'=>1])->all(), 'id', 'username');
+$users = \yii\helpers\ArrayHelper::map(\common\models\users\User::find()->active()->andWhere(['company' => 1])->all(), 'id', 'username');
 
 ?>
 
@@ -34,16 +34,33 @@ $users = \yii\helpers\ArrayHelper::map(\common\models\users\User::find()->active
 			<?= $form->field($model, 'site')->textInput(['maxlength' => true]) ?>
 		</div>
 		<div class="col-md-6">
-			<div class="col-sm-6">
-				<?
-				echo $form->field($model, 'image')->widget(FileInput::classname(), [
-				'options' => ['accept' => 'image/*'],
-				]);
-				?>
+
+			<?= $form->field($model, 'image')->widget(
+				'\denoll\filekit\widget\Upload',
+				[
+					'url' => ['/firm/firm/upload'],
+					'sortable' => false,
+					'maxFileSize' => 2 * 1024 * 1024, // 1 MiB
+					'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+				]
+			)->label('Логотип'); ?>
+			<hr>
+			<div class="row">
+				<div class="col-sm-6">
+					<?= $form->field($model, 'lat')->textInput(['maxlength' => true]) ?>
+				</div>
+				<div class="col-sm-6">
+					<?= $form->field($model, 'lon')->textInput(['maxlength' => true]) ?>
+				</div>
 			</div>
-			<div class="col-sm-6">
-				<?= !$model->isNewRecord && !empty($model->logo) ? Html::img(Yii::getAlias('@frt_dir/img/logo/').$model->logo) : '' ?>
-			</div>
+			<?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+			<?= \common\widgets\yamaps\SetYaMap::widget([
+				'lat' => $model->lat,
+				'lon' => $model->lon,
+				'firm_name' => $model->name,
+				'address' => $model->address,
+				'zoom' => 16,
+			]); ?>
 		</div>
 	</div>
 
@@ -61,5 +78,5 @@ $users = \yii\helpers\ArrayHelper::map(\common\models\users\User::find()->active
 	</div>
 
 	<?php ActiveForm::end(); ?>
-
+	<br><br><br>
 </div>

@@ -17,6 +17,7 @@ $menuItems = [
 		['label' => 'Вакансии', 'url' => ['/jobs/vacancy/index']],
 	],],
 	//['label' => 'Врачи', 'url' => ['/med/doctors/index'], 'options' => ['class' => 'main_menu_li']],
+	['label' => 'Полезные адреса', 'url' => ['/firm/firm/index'], 'options' => ['class' => 'main_menu_li']],
 	['label' => 'Товары', 'url' => ['/goods/goods/index'], 'options' => ['class' => 'main_menu_li']],
 	['label' => 'Услуги', 'url' => ['/service/service/index'], 'options' => ['class' => 'main_menu_li'], 'items' => [
 		['label' => 'Оказание услуг', 'url' => ['/service/service/index']],

@@ -41,7 +41,7 @@ class FirmSearch extends Firm
      */
     public function search($params)
     {
-        $query = Firm::find();
+        $query = Firm::find()->with(['users','cat']);
 
         // add conditions that should always apply here
 

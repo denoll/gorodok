@@ -24,7 +24,7 @@ $is_doctor = $this->params['is_doctor'];
 
 if (!stristr($path, 'site')) {
 
-	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/') || stristr($path, '/adv/advert')) {
+	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/') || stristr($path, '/adv/advert') ||stristr($path, '/firm/update')) {
 		if (stristr($path, 'account/')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 0]);
 		}
@@ -34,7 +34,7 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, 'profile/index') || stristr($path, 'profile/change-avatar')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 1]);
 		}
-		if (stristr($path, 'profile/company')) {
+		if (stristr($path, 'firm/update')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 2]);
 		}
 		if (stristr($path, 'jobs/job-profile/index') || stristr($path, 'jobs/index') || stristr($path, 'jobs/edu') || stristr($path, 'jobs/exp')) {
@@ -107,6 +107,9 @@ if (!stristr($path, 'site')) {
 	if (stristr($path, '/afisha')) {
 		echo \frontend\widgets\CategAfisha::widget();
 		echo \frontend\widgets\TagsWidget::widget();
+	}
+	if (stristr($path, '/firm') && !stristr($path, '/firm/update')) {
+		echo \frontend\widgets\CategFirm::widget();
 	}
 	if (stristr($path, '/news')) {
 		echo \frontend\widgets\CategNews::widget();

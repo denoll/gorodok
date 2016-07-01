@@ -57,10 +57,9 @@ class NewsSidebarWidget extends Widget
 
 	private function getData()
 	{
-		$dependency = new DbDependency();
-		$dependency->sql = 'SELECT MAX(modifyed_at) FROM news';
-		return News::getDb()->cache(function ($news) {
-			return News::find()//получаем массив с новостями
+		$data = Yii::$app->cache->get('news_sidebar');
+		if(!$data){
+			$data = News::find()//получаем массив с новостями
 			->select('title,alias,id,publish,thumbnail,id_cat')
 				->with('cat')
 				->asArray()
@@ -69,6 +68,8 @@ class NewsSidebarWidget extends Widget
 				->orderBy(['publish' => SORT_DESC])
 				->limit($this->count_item)
 				->all();
-		}, Arrays::CASH_TIME, $dependency);
+			Yii::$app->cache->set('news_sidebar',$data, Arrays::CASH_TIME);
+		}
+		return $data;
 	}
 }

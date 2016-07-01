@@ -2,7 +2,7 @@
 namespace frontend\models;
 
 use common\models\users\User;
-use common\models\users\Company;
+use common\models\firm\Firm;
 use yii\base\Model;
 use Yii;
 use yii\bootstrap\Html;
@@ -93,18 +93,13 @@ class SignupForm extends Model
 			$user->generateAuthKey();
 			if ($user->save()) {
 				if ($this->company == 1) {
-					$company = new Company();
-					$company->id_user = $user->id;
-					if(!empty($this->company_name)){
-						$company->name = $this->company_name;
-						$company->legal_name = $this->company_name;
-					}else{
+					if(empty($this->company_name)){
 						Yii::$app->session->setFlash('error', '
 							<h3><strong style="color: red;">Внимание!!!</strong><br>Вы не внесли название компании.</h3>
-							<p>Некоторые функции будут недоступны. Обязательно заполните ' . Html::a('Данные о компании','/profile/company',['class'=>'btn-u btn-u-orange']).'</p>
+							<p>Рекомендуем Вам заполнить актуальное <strong style="color: darkred">"Название компании"</strong> на этой странице.</p>
+							<p class="small_text" style="color: #0000aa; font-style: italic;">Зарегистрированные на сайте компании без указания актуального названия будут удалятся.</p>
 						');
 					}
-					$company->save();
 				}
 				return $user;
 			}

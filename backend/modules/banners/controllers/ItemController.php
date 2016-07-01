@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\imagine\Image;
 use Imagine\Image\Point;
+
 /**
  * ItemController implements the CRUD actions for BannerItem model.
  */
@@ -48,7 +49,7 @@ class ItemController extends Controller
 					$file = $event->file;
 					$post = Yii::$app->request->post('BannerItem');
 					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
-					Image::thumbnail($path, (int)$post['height'], (int)$post['width'])
+					Image::thumbnail($path, (int)$post['width'],(int)$post['height'])
 						->save($path, ['quality' => 80]);
 				}
 			],

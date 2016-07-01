@@ -70,7 +70,7 @@ if ($model->isNewRecord) {
 				[
 					'url' => ['upload'],
 					'sortable' => false,
-					'maxFileSize' => 1 * 1024 * 1024, // 1 MiB
+					'maxFileSize' => 2 * 1024 * 1024, // 1 MiB
 					'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
 				]
 			); ?>

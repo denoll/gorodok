@@ -76,11 +76,7 @@ class ProfileLeftSidebar extends Widget
 		echo '<div class="profile_avatar">';
 		echo '<div class="avatar thumbnail" style="position: relative; margin: 5px 0px;">';
 		echo Avatar::init('100%');
-		if (User::isCompany()) {
-			echo Html::a('редактировать логотип', ['/profile/change-avatar'], ['class' => 'btn btn-xs btn-default', 'style' => 'position: absolute; bottom: 5px; left:5px; z-index: 2;']);
-		} else {
-			echo Html::a('редактировать аватар', ['/profile/change-avatar'], ['class' => 'btn btn-xs btn-default', 'style' => 'position: absolute; bottom: 5px; left:5px; z-index: 2;']);
-		}
+		echo Html::a('редактировать аватар', ['/profile/change-avatar'], ['class' => 'btn btn-xs btn-default', 'style' => 'position: absolute; bottom: 5px; left:5px; z-index: 2;']);
 
 		echo '</div>';
 		echo '</div>';
@@ -100,7 +96,7 @@ class ProfileLeftSidebar extends Widget
 			echo '<a href="' . Url::Home() . 'profile/index"><i class="fa fa-user"></i>&nbsp;&nbsp;Профиль</a>';
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_2 . '">';
-			echo '<a href="' . Url::Home() . 'profile/company"><i class="fa fa-bank"></i>&nbsp;&nbsp;Данные компании</a>';
+			echo '<a href="' . Url::Home() . 'firm/firm/update"><i class="fa fa-bank"></i>&nbsp;&nbsp;Данные компании</a>';
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_3 . '">';
 			echo '<a href="' . Url::Home() . 'jobs/vacancy/my-vacancy"><i class="fa  fa-suitcase "></i>&nbsp;&nbsp;Вакансии компании</a>';

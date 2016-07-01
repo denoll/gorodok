@@ -56,10 +56,9 @@ class AfishaMainWidget extends Widget
 
 	private function getData()
 	{
-		$dependency = new DbDependency();
-		$dependency->sql = 'SELECT MAX(updated_at) FROM afisha WHERE status = 1';
-		return Afisha::getDb()->cache(function () {
-			return Afisha::find()
+		$data = Yii::$app->cache->get('afisha_on_main');
+		if(!$data){
+			$data = Afisha::find()
 				->select('title,alias,id,publish,thumbnail,id_cat')
 				->with('tags')
 				->with('cat')
@@ -69,6 +68,8 @@ class AfishaMainWidget extends Widget
 				->orderBy(['publish' => SORT_DESC])
 				->limit($this->count_item)
 				->all();
-		}, Arrays::CASH_TIME, $dependency);
+			Yii::$app->cache->set('afisha_on_main',$data, Arrays::CASH_TIME);
+		}
+		return $data;
 	}
 }

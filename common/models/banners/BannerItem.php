@@ -7,6 +7,7 @@ use common\helpers\WorkingDates;
 use common\models\users\Query;
 use common\models\users\UserAccount;
 use Yii;
+use yii\helpers\Html;
 use \yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\web\UploadedFile;
@@ -179,13 +180,8 @@ class BannerItem extends ActiveRecord
 	 */
 	public static function findItemsByKey($key)
 	{
-		$statuses = self::find()->joinWith('advert')
-			->where(['{{%banner_item}}.status' => self::STATUS_ACTIVE, '{{%banner_item}}.banner_key'=>$key])
-			->asArray()->all();
 		$query = self::find()
-			->joinWith('advert')
-			->joinWith('user')
-			->joinWith('banner')
+			->joinWith(['advert','user','banner'])
 			->where([
 				'{{%banner_item}}.status' => self::STATUS_ACTIVE,
 				'{{%banner}}.key' => $key,
@@ -193,19 +189,60 @@ class BannerItem extends ActiveRecord
 			->andWhere([
 				'<>','{{%banner}}.status',Banner::STATUS_DRAFT,
 			]);
-		foreach ($statuses as $status){
-			if($status['advert']['day_status'] != 0 && !empty($status['advert']['day_price'])){
-				$query->andWhere('user.account >= (banner_adv.day_price * banner_adv.day_size)');
+		$query->orderBy(['order' => SORT_ASC]);
+		$model = $query->asArray()->all();
+
+		foreach ($model as $k => $item){
+			if($item['advert']['hit_status'] && $item['user']['account'] < ($item['advert']['hit_price']*$item['advert']['hit_size'])){
+				continue;
 			}
-			if($status['advert']['click_status'] != 0 && !empty($status['advert']['click_price'])){
-				$query->andWhere('user.account >= (banner_adv.click_price * banner_adv.click_size)');
+			if($item['advert']['click_status'] && $item['user']['account'] < ($item['advert']['click_price']*$item['advert']['click_size'])){
+				continue;
 			}
-			if($status['advert']['hit_status'] != 0 && !empty($status['advert']['hit_price'])){
-				$query->andWhere('user.account >= (banner_adv.hit_price * banner_adv.hit_size)');
+			if($item['advert']['day_status'] && $item['user']['account'] < ($item['advert']['day_price']*$item['advert']['day_size'])){
+				continue;
+			}
+
+			$items[$k]['id'] = $item['id'];
+			$items[$k]['user_id'] = $item['user']['id'];
+			$items[$k]['sum_in'] = $item['user']['sum_in'];
+			$items[$k]['sum_out'] = $item['user']['sum_out'];
+			$items[$k]['account'] = $item['user']['account'];
+
+			$items[$k]['hit_status'] = $item['advert']['hit_status'];
+			$items[$k]['hit_count'] = $item['hit_count'];
+			$items[$k]['last_hit'] = $item['last_hit'];
+			$items[$k]['hit_price'] = $item['advert']['hit_price'];
+			$items[$k]['hit_size'] = $item['advert']['hit_size'];
+
+			$items[$k]['click_status'] = $item['advert']['click_status'];
+			$items[$k]['click_count'] = $item['click_count'];
+			$items[$k]['click_price'] = $item['advert']['click_price'];
+			$items[$k]['click_size'] = $item['advert']['click_size'];
+			$items[$k]['last_click'] = $item['last_click'];
+
+			$items[$k]['day_status'] = $item['advert']['day_status'];
+			$items[$k]['day_count'] = $item['day_count'];
+			$items[$k]['day_price'] = $item['advert']['day_price'];
+			$items[$k]['day_size'] = $item['advert']['day_size'];
+			$items[$k]['last_day'] = $item['last_day'];
+
+			$items[$k]['start'] = $item['start'];
+			$items[$k]['stop'] = $item['stop'];
+			if ($item['path']) {
+				$items[$k]['img'] = Html::img($item['base_url'].'/'.$item['path'], ['style' => 'width: 100%;']);
+				if ($item['url']) {
+					$items[$k]['link'] = Url::to(['/adv/default/index', 'id' => base64_encode($item['id'])]);
+					$items[$k]['content'] = Html::a($items[$k]['img'], $items[$k]['link'], ['target' => '_blank', 'class' => 'animated fadeInDown']);
+				} else {
+					$items[$k]['content'] = $items[$k]['img'];
+				}
+			}
+			if ($item['size']) {
+				$items[$k]['size'] = $item['size'];
 			}
 		}
-		$query->orderBy(['order' => SORT_ASC]);
-		return $query;
+		return $items;
 	}
 
 	/**
@@ -425,7 +462,7 @@ class BannerItem extends ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(User::className(), ['id' => 'id_user']);
+		return $this->hasOne(User::className(), ['id' => 'id_user'])->select(['id','username','email','account','sum_in','sum_out','status']);
 	}
 
 	/**
