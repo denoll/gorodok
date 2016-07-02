@@ -4,6 +4,7 @@ namespace app\modules\banners\controllers;
 
 use common\models\banners\Banner;
 use common\models\banners\BannerAdv;
+use common\models\CommonQuery;
 use common\models\users\User;
 use Yii;
 use common\models\banners\BannerItem;
@@ -121,7 +122,14 @@ class ItemController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->findModel($id);
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		$last_status = $model->status;
+		if ($model->load(Yii::$app->request->post())) {
+			$model->save();
+			$new_status = $model->status;
+			if($last_status !== $new_status){
+				$link = Url::to('@frt_url/adv/advert/my-ads');
+				CommonQuery::sendUpdateBannerEmail($model, $link);
+			}
 			return $this->redirect(Url::previous());
 		} else {
 			return $this->render('update', [

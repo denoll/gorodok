@@ -10,11 +10,9 @@ use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use common\models\banners\Banner;
 use common\models\banners\BannerAdv;
-use common\models\users\User;
+use common\models\CommonQuery;
 use common\models\banners\BannerItem;
 use yii\web\NotFoundHttpException;
-use yii\web\Session;
-use yii\web\UploadedFile;
 use yii\web\Response;
 use yii\imagine\Image;
 use Imagine\Image\Point;
@@ -135,6 +133,7 @@ class AdvertController extends Controller
 				$model->size = 12;
 				$model->start = date('Y-m-d H:i:s');
 				$model->save();
+				CommonQuery::sendCreateBannerEmail($model);
 				return $this->redirect(['view', 'id' => $model->id]);
 			}
 		} else {
@@ -156,7 +155,9 @@ class AdvertController extends Controller
 		if(!Yii::$app->user->isGuest){
 			$user = Yii::$app->user->getIdentity();
 			$model = BannerItem::find()->where(['id'=>$id,'id_user' => $user->getId()])->one();
-			$model->delete();
+			if($model->delete()){
+				CommonQuery::sendDeleteBannerEmail($model);
+			}
 			return $this->redirect(['my-ads']);
 		}
 	}

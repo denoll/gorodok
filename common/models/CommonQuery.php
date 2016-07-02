@@ -8,10 +8,12 @@
 
 namespace common\models;
 
+use common\models\banners\BannerItem;
 use \common\models\users\UserAccount;
 use common\widgets\Arrays;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\bootstrap\Html;
 use yii\helpers\FileHelper;
 use common\models\users\User as CurUser;
 
@@ -257,6 +259,105 @@ class CommonQuery extends ActiveRecord
 			<br><strong>Email: '.$current_user->email.'</strong>
 			<br>На сайте '.Yii::$app->name.' удалил объявление №:<strong>'.$ads['id'].'</strong>
 			<br>Дата удаления: <strong>'. $current_date .'.</strong>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about create banner.
+	 * @param BannerItem $model
+	 * @return boolean
+	 */
+	public static function sendCreateBannerEmail($model, $link = null){
+		$user_id = $model->id_user;
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/createBannerEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Создан новый рекламный баннер №: '.$model['id'].' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Пользователь '.$current_user->username.' на сайте '.Yii::$app->name.' создал новый рекламный баннер №:'.$model['id'])
+			->setHtmlBody('Пользователь <strong>'.$current_user->username.'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' создал новый рекламный баннер №:<strong>'.$model['id'].'</strong>
+			<br>Дата создания: <strong>'. $current_date .'.</strong>
+			<p>Номер баннера: <strong>'. $model->id .'</strong></p>
+			<p>Статус баннера: <strong>'.\common\helpers\Arrays::getStatusBanner($model->status).'</strong></p>
+			<p>Рекламная компания баннера: <strong>'. $model->advert->name.'</strong></p>
+			<p>Место размещения баннера: <strong>'.$model->banner->name .'</strong></p> 
+			<p>Изображение баннера: <div style="display: block;">'. Html::img($model->base_url.'/'.$model->path).'</div></p>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about update status banner.
+	 * @param BannerItem $model
+	 * @return boolean
+	 */
+	public static function sendUpdateBannerEmail($model, $link = null){
+		$user_id = $model->id_user;
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/updateBannerEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Изменен статус Вашего рекламного баннера №: '.$model['id'].' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Рекламный баннер пользователя '.$current_user->username.' №:'.$model['id']. ' изменил свой статус.')
+			->setHtmlBody('Рекламный баннер пользователя <strong>'.$current_user->username.'</strong> №: <strong>'.$model['id'].'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' изменил свой статус на: <strong>'.\common\helpers\Arrays::getStatusBanner($model->status).'</strong>
+			<br>Дата создания: <strong>'. $current_date .'.</strong>
+			<p>Номер баннера: <strong>'. $model->id .'</strong></p>
+			<p>Рекламная компания баннера: <strong>'. $model->advert->name.'</strong></p>
+			<p>Место размещения баннера: <strong>'.$model->banner->name .'</strong></p> 
+			<p>Изображение баннера: <div style="display: block;">'. Html::img($model->base_url.'/'.$model->path).'</div></p>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about delete banner.
+	 * @param BannerItem $model
+	 * @return boolean
+	 */
+	public static function sendDeleteBannerEmail($model, $link = null){
+		$user_id = $model->id_user;
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/deleteBannerEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Удален рекламный баннер №: '.$model['id'].' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Пользователь '.$current_user->username.' на сайте '.Yii::$app->name.' удалил рекламный баннер №:'.$model['id'])
+			->setHtmlBody('Пользователь <strong>'.$current_user->username.'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' удалил рекламный баннер №:<strong>'.$model['id'].'</strong>
+			<br>Дата удаления: <strong>'. $current_date .'.</strong>
+			<p>Номер баннера: <strong>'. $model->id .'</strong></p>
+			<p>Рекламная компания баннера: <strong>'. $model->advert->name.'</strong></p>
+			<p>Место размещения баннера: <strong>'.$model->banner->name .'</strong></p>')
 			->send();
 	}
 
