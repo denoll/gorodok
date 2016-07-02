@@ -39,7 +39,7 @@ class Goods extends ActiveRecord
 {
     public $image;
     public $crop_info;
-    public $verifyCode;
+    public $reCaptcha;
     public $readonly;
     /**
      * @inheritdoc
@@ -99,9 +99,14 @@ class Goods extends ActiveRecord
                 'mimeTypes' => ['image/jpeg', 'image/pjpeg', 'image/png', 'image/gif'],
             ],
             [['description','name','main_img'],'filter', 'filter'=>'strip_tags'],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha', 'on' => 'create'],
+            [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        return $scenarios;
     }
 
     public function validateReadonly()
@@ -138,7 +143,7 @@ class Goods extends ActiveRecord
             'updated_at' => 'Изменено',
             'm_keyword' => 'Ключевые слова',
             'm_description' => 'Мета описание',
-            'verifyCode' => 'Введите проверочный код, докажите что Вы не робот.',
+            'reCaptcha' => 'Докажите что Вы не робот.',
         ];
     }
 

@@ -44,7 +44,7 @@ use Imagine\Image\Point;
 class RealtyRent extends \yii\db\ActiveRecord
 {
 	public $images;
-	public $verifyCode;
+	public $reCaptcha;
 	public $readonly;
 
 	public function behaviors()
@@ -99,7 +99,7 @@ class RealtyRent extends \yii\db\ActiveRecord
 			[['main_img', 'address', 'm_keyword', 'm_description'], 'string', 'max' => 255],
 			[['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => RealtyCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
-			['verifyCode', 'captcha', 'on' => 'create'],
+			[['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
 		];
 	}
 
@@ -153,6 +153,7 @@ class RealtyRent extends \yii\db\ActiveRecord
 			'adv_date' => 'Реклама',
 			'm_keyword' => 'Ключевые слова',
 			'm_description' => 'Мета описание',
+			'reCaptcha' => 'Докажите что Вы не робот.',
 		];
 	}
 

@@ -89,17 +89,17 @@ $label = 'Выберите картинку или фото и подгонит�
     <div class="col-sm-6">
         <?= $form->field($model, 'image')->widget(Cropbox::className(), [
             'attributeCropInfo' => 'crop_info',
-            'pluginOptions' => [
-                'width' => 350,
-                'height' => 350,
-                'variants' => [
+            'optionsCropbox' => [
+                'boxWidth' => Arrays::IMG_SIZE_WIDTH,
+                'boxHeight' => Arrays::IMG_SIZE_HEIGHT,
+                'cropSettings' => [
                     [
-                        'width' => 250,
-                        'height' => 250,
+                        'width' => Arrays::IMG_SIZE_WIDTH,
+                        'height' => Arrays::IMG_SIZE_HEIGHT,
                     ],
                 ],
             ],
-            'previewImagesUrl' => [
+            'previewUrl' => [
                 Yii::getAlias('@frt_url/img/letters/') . $model['thumbnail']
             ],
         ])->label($label); ?>
@@ -121,10 +121,9 @@ $label = 'Выберите картинку или фото и подгонит�
     </div>
     <div class="col-sm-12">
         <?php if ($model->isNewRecord) { ?>
-            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                'captchaAction' => '/site/captcha',
-                'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-4" style="margin: 5px 0px;">{input}</div></div>',
-            ]) ?>
+            <?= $form->field($model, 'reCaptcha')->widget(
+                \himiklab\yii2\recaptcha\ReCaptcha::className()
+            ) ?>
         <?php } ?>
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Подать письмо на публикацию' : 'Сохранить изменения', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

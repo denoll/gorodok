@@ -205,9 +205,10 @@ class RentController extends Controller
 			return $this->redirect(['my-ads']);
 		} else {
 			\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
+			return $this->redirect(['update', 'id' => $id]);
 		}
 	}
-	
+
 	/**
 	 * Lists all Service models.
 	 * @return mixed

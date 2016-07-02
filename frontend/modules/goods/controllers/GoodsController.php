@@ -66,10 +66,6 @@ class GoodsController extends Controller
 			'error' => [
 				'class' => 'yii\web\ErrorAction',
 			],
-			'captcha' => [
-				'class' => 'yii\captcha\CaptchaAction',
-				'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-			],
 		];
 	}
 
@@ -140,7 +136,7 @@ class GoodsController extends Controller
 			]);
 			return $this->redirect('/site/signup');
 		}
-		$model = new Goods(['scenario' => 'create']);
+		$model = new Goods(['scenario' => 'create']);//
 		if ($model->load(Yii::$app->request->post())) {
 			$model->id_user = Yii::$app->user->identity->getId();
 			$model->status = 1;

@@ -127,7 +127,7 @@ class UserController extends Controller
 		$user = $this->findModel($id);
 		if ($user->company) {
 			$firm = Firm::findOne(['id_user' => $id]);
-			$firm->delete();
+			if(!empty($firm)) $firm->delete();
 		}
 		$user->delete();
 		return $this->redirect(['index']);

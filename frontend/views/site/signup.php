@@ -76,7 +76,7 @@ $this->title = 'Регистрация';
 					<div class="col-sm-12 no-side" style="display: block; content: ' ';">
 						<i>Докажите что Вы не робот :-)</i>
 
-						<div class="g-recaptcha" data-sitekey="<? //= \common\widgets\captcha\Captcha::getKey() ?>"></div>
+						<div class="g-recaptcha" data-sitekey="<?= \common\widgets\captcha\Captcha::getKey() ?>"></div>
 						<br>
 					</div>
 					<div class="col-sm-12 no-side" style="padding: 3px;">
@@ -100,7 +100,7 @@ $this->title = 'Регистрация';
 		</div>
 	</div>
 </div>
-<!--<script src='https://www.google.com/recaptcha/api.js?hl=<?= \common\widgets\captcha\Captcha::getLanguage() ?>'></script>-->
+<script src='https://www.google.com/recaptcha/api.js?hl=<?= \common\widgets\captcha\Captcha::getLanguage() ?>'></script>
 <?php
 $this->registerCss('.form-group{margin-bottom: 0px;}');
 $this->registerJsFile('/js/signup.js', ['depends' => [\yii\web\YiiAsset::className()]]);

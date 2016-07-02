@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $status = 'style="display: none;"';
                                 $text = 'Сейчас объявление видно только мне';
                             } else {
+                                $status = 'style="display: block;"';
                                 $text = 'Сейчас объявление видно всем';
                             }
                             echo '<span ' . $status . ' onclick="changeUp(' . $item['id'] . ')" id="up-btn-' . $item['id'] . '" class="btn-u btn-u-sm btn-block btn-u-orange ads-btn" title="Поднять объявление на верх"><i class="fa fa-arrow-up"></i>&nbsp;&nbsp;Поднять объявление на верх (стоимость: ' . $pay['goods_up_pay'] . ' руб.)</span>';

@@ -25,7 +25,6 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 
 
-
 /**
  * RealtyController implements the CRUD actions for Realty model.
  */
@@ -73,13 +72,13 @@ class SaleController extends Controller
 				'fileStorage' => 'realtySaleStorage',
 				'disableCsrf' => true,
 				'responseFormat' => Response::FORMAT_JSON,
-				'on afterSave' => function($event) {
+				'on afterSave' => function ($event) {
 					/* @var $file \League\Flysystem\File */
 					$file = $event->file;
-					$path = Url::to('@frt_dir/img/realty_sale/'.$file->getPath());
+					$path = Url::to('@frt_dir/img/realty_sale/' . $file->getPath());
 					Image::thumbnail($path, 600, 400)
 						->save($path, ['quality' => 80]);
-               }
+				}
 			],
 
 			'error' => [
@@ -186,11 +185,11 @@ class SaleController extends Controller
 		$post = Yii::$app->request->post();
 		if ($model->load($post)) {
 			empty($post['RealtySale']['distance']) ? $model->distance = 0 : $model->distance = $post['RealtyRent']['distance'];
-				if ($model->save()) {
-					\Yii::$app->session->setFlash('success', 'Изменения успешно внесены.');
-				} else {
-					\Yii::$app->session->setFlash('danger', 'По каким-то причинам сохранить изменения не удалось.<br>Пожалуйста повторите попытку.');
-				}
+			if ($model->save()) {
+				\Yii::$app->session->setFlash('success', 'Изменения успешно внесены.');
+			} else {
+				\Yii::$app->session->setFlash('danger', 'По каким-то причинам сохранить изменения не удалось.<br>Пожалуйста повторите попытку.');
+			}
 			return $this->render('update', ['model' => $model,]);
 		} else {
 			return $this->render('update', [
@@ -203,15 +202,12 @@ class SaleController extends Controller
 	{
 		$user_id = Yii::$app->user->identity->getId();
 		$model = RealtySale::findOne(['id' => $id, 'id_user' => $user_id]);
-		if (RealtySale::deleteImages($id, $user_id)) {
-			if ($model->delete()) {
-				CommonQuery::sendDeleteAdsEmail($user_id, $model, Url::to('@frt_url/realty/sale/my-ads'));
-				return $this->redirect(['my-ads']);
-			} else {
-				\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
-			}
+
+		if ($model->delete()) {
+			CommonQuery::sendDeleteAdsEmail($user_id, $model, Url::to('@frt_url/realty/sale/my-ads'));
+			return $this->redirect(['my-ads']);
 		} else {
-			\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление не было удалено.<br>Пожалуйста повторите попытку.');
+			\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
 			return $this->redirect(['update', 'id' => $id]);
 		}
 	}

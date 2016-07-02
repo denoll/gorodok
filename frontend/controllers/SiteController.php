@@ -215,12 +215,11 @@ class SiteController extends Controller
 	{
 		$model = new SignupForm();
 		if ($model->load(Yii::$app->request->post())) {
-			//$captcha = new Captcha();
-			$response = true; //$captcha->init(Yii::$app->request->post());
-
+			$captcha = new Captcha();
+			$response = $captcha->init(Yii::$app->request->post());
 			if ($response) {
 				if ($user = $model->signup()) {
-					if($user->company&&Yii::$app->user->login($user, 3600 * 24 * 30)){
+					if($user->company && Yii::$app->user->login($user, 3600 * 24 * 30)){
 						CommonQuery::sendCreateUserEmail(\Yii::$app->user->identity);
 						return $this->redirect(['/firm/firm/update']);
 					}elseif(Yii::$app->user->login($user, 3600 * 24 * 30)) {

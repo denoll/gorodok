@@ -59,7 +59,7 @@ class Letters extends \yii\db\ActiveRecord
     var $img_f;
     public $image;
     public $crop_info;
-    public $verifyCode;
+    public $reCaptcha;
 
     /**
      * @inheritdoc
@@ -131,9 +131,7 @@ class Letters extends \yii\db\ActiveRecord
                 'extensions' => ['jpg', 'jpeg', 'png', 'gif'],
                 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
             ],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha', 'on' => 'create'],
-
+            [['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
         ];
     }
     /**
@@ -205,7 +203,7 @@ class Letters extends \yii\db\ActiveRecord
             'thumbnail' => 'Миниатюра',
             'img_f' => 'Изображения',
             'image' => 'Миниатюра (размеры: 250х250)',
-            'verifyCode'=>'Докажите что Вы не робот. Повторите символы ниже в поле рядом.',
+            'reCaptcha' => 'Докажите что Вы не робот.',
         ];
     }
     /**
