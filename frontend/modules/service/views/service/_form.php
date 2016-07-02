@@ -10,7 +10,7 @@ use yii\captcha\Captcha;
 use yii\web\View;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $model common\models\goods\Goods */
+/* @var $model common\models\service\Service */
 /* @var $form yii\widgets\ActiveForm */
 $this->params['left'] = true;
 $label = 'Выберите новое фото и подгоните выбраный файл под размер с помощью колесика мышки.';

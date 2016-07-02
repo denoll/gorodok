@@ -23,8 +23,8 @@ $period = Arrays::getConst();
 				<h1 class="panel-title" style="margin: 0px; font-size: 1.2em;"><?= Html::encode($this->title) ?></h1>
 			</div>
 			<div class="panel-body">
-				<?= Html::a('Мои услуги', [Url::home() . 'service/my-ads'], ['class' => 'btn-u btn-u-dark-blue']) ?>
-				<?= Html::a('<i class="fa fa-plus"></i>  Добавить объявление об услуге', [Url::home() . 'service/create'], ['class' => 'btn-u btn-u-dark']) ?>
+				<?= Html::a('Мои услуги', ['/service/service/my-ads'], ['class' => 'btn-u btn-u-dark-blue']) ?>
+				<?= Html::a('<i class="fa fa-plus"></i>  Добавить объявление об услуге', [Url::home() . '/service/service/create'], ['class' => 'btn-u btn-u-dark']) ?>
 				<?= LinkPager::widget([
 					'pagination' => $pages,
 				]); ?>
@@ -35,7 +35,7 @@ $period = Arrays::getConst();
 					<?php foreach ($model as $item) { ?>
 						<div class="inner-results">
 
-							<h3 style="margin:0px;"><?= Html::a($item['name'], [Url::home() . 'service/view', 'id' => $item['id']], []) ?></h3>
+							<h3 style="margin:0px;"><?= Html::a($item['name'], ['/service/service/view', 'id' => $item['id']], []) ?></h3>
 
 							<div class="btn-group" style="margin: 5px 0px;">
 								<?php
@@ -50,8 +50,8 @@ $period = Arrays::getConst();
 								echo '<span onclick="changeStatus(' . $item['id'] . ')" id="status-btn-' . $item['id'] . '" class="btn-u btn-u-sm  btn-u-green" title="Изменить статус на - Видно только мне">' . $text . '</span>';
 								?>
 								<?php
-								echo Html::a('Редактировать', [Url::home() . 'service/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
-								echo Html::a('Удалить', [Url::home() . 'service/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
+								echo Html::a('Редактировать', ['/service/service/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
+								echo Html::a('Удалить', ['/service/service/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
 									'confirm' => 'Вы действительно хотите удалить это объявление?',
 									'method' => 'post',
 								]]);

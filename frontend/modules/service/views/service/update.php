@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\goods\Goods */
+/* @var $model common\models\service\Service */
 
 $this->title = 'Изменение объявления: ' . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Мои объявления', 'url' => ['my-ads']];

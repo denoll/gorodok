@@ -75,14 +75,14 @@ if (!stristr($path, 'site')) {
 		}
 	}
 	if (stristr($path, '/service') || stristr($path, '/set-service')) {
-		if (stristr($path, '/service/update') || stristr($path, '/service/create') || stristr($path, '/service/my-ads')) {
+		if (stristr($path, 'service/get/update') || stristr($path, 'service/get/create') || stristr($path, 'service/get/my-ads')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 9]);
 		}
-		if (stristr($path, '/service')) {
+		if (stristr($path, '/service/get')) {
 			echo \frontend\widgets\CategServiceVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
 		}
-		if (stristr($path, '/set-service')) {
+		if (stristr($path, '/service/set')) {
 			echo \frontend\widgets\CategSetServiceVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
 		}
@@ -123,8 +123,8 @@ if (!stristr($path, 'site')) {
 		echo \frontend\widgets\CategForum::widget();
 		echo \frontend\widgets\TagsWidget::widget();
 	}
-	if (stristr($path, '/letters')) {
-		if (stristr($path, '/letters/letters/my-letters') || stristr($path, '/letters/letters/create') || stristr($path, '/letters/letters/update')) {
+	if (stristr($path, 'letters')) {
+		if (stristr($path, '/letters/my-letters') || stristr($path, '/letters/create') || stristr($path, '/letters/update')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 7]);
 		}
 		echo \frontend\widgets\CategLetters::widget();

@@ -2,6 +2,7 @@
 
 namespace common\models\service;
 
+use Imagine\Filter\Basic\Crop;
 use Yii;
 use common\models\users\User;
 use yii\behaviors\TimestampBehavior;
@@ -28,12 +29,18 @@ use common\widgets\Arrays;
  * @property string $cost
  * @property string $description
  * @property integer $status
+ * @property integer $buy
  * @property string $vip_date
  * @property string $top_date
  * @property string $created_at
  * @property string $updated_at
  * @property string $m_keyword
  * @property string $m_description
+ * @property string $my_img
+ *
+ *
+ * @property Image $image
+ * @property Crop $crop_info
  */
 class Service extends ActiveRecord
 {

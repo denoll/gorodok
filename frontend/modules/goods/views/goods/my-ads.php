@@ -49,8 +49,8 @@ $period = Arrays::getConst();
 									echo '<span onclick="changeStatus(' . $item['id'] . ')" id="status-btn-' . $item['id'] . '" class="btn-u btn-u-sm  btn-u-green" title="Изменить статус на - Видно только мне">' . $text . '</span>';
 									?>
 									<?php
-									echo Html::a('Редактировать', [Url::home() . 'goods/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
-									echo Html::a('Удалить', [Url::home() . 'goods/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
+									echo Html::a('Редактировать', ['/goods/goods/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
+									echo Html::a('Удалить', ['/goods/goods/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
 										'confirm' => 'Вы действительно хотите удалить это объявление?',
 										'method' => 'post',
 									]]);

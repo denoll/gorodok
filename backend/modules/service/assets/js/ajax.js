@@ -1,12 +1,12 @@
 /*
-* Ajax запросы для модуля Users
+* Ajax запросы для модуля Service
 * */
 
 function changeStatus(id){
     var status = "#status_"+id;
     $.ajax({
         type: "post",
-        url: "/goods/goods/change-status",
+        url: "/service/service/change-status",
         data: "id=" + id,
         cache: true,
         dataType: "text",

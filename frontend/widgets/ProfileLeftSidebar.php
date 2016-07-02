@@ -93,44 +93,44 @@ class ProfileLeftSidebar extends Widget
 		echo '</li>';
 		if (User::isCompany()) {
 			echo '<li class="list-group-item ' . $a_1 . '">';
-			echo '<a href="' . Url::Home() . 'profile/index"><i class="fa fa-user"></i>&nbsp;&nbsp;Профиль</a>';
+			echo Html::a('<i class="fa fa-user"></i>&nbsp;&nbsp;Профиль', ['/profile/index']);
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_2 . '">';
-			echo '<a href="' . Url::Home() . 'firm/firm/update"><i class="fa fa-bank"></i>&nbsp;&nbsp;Данные компании</a>';
+			echo Html::a('<i class="fa fa-bank"></i>&nbsp;&nbsp;Данные компании', ['/firm/firm/update']);
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_3 . '">';
-			echo '<a href="' . Url::Home() . 'jobs/vacancy/my-vacancy"><i class="fa  fa-suitcase "></i>&nbsp;&nbsp;Вакансии компании</a>';
+			echo Html::a('<i class="fa  fa-suitcase "></i>&nbsp;&nbsp;Вакансии компании', ['/jobs/vacancy/my-vacancy']);
 			echo '</li>';
 		} else {
 			echo '<li class="list-group-item ' . $a_1 . '">';
-			echo '<a href="' . Url::Home() . 'profile/index"><i class="fa fa-user"></i>&nbsp;&nbsp;Мой профиль</a>';
+			echo Html::a('<i class="fa fa-user"></i>&nbsp;&nbsp;Мой профиль', ['/profile/index']);
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_4 . '">';
-			echo '<a href="' . Url::Home() . 'jobs/job-profile/index"><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Расширенные сведения о себе</a>';
+			echo Html::a('<i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Расширенные сведения о себе', ['/jobs/job-profile/index']);
 			echo '</li>';
 			echo '<li class="list-group-item ' . $a_5 . '">';
-			echo '<a href="' . Url::Home() . 'jobs/resume/my-resume"><i class="fa fa-inbox"></i>&nbsp;&nbsp;Мои резюме</a>';
+			echo Html::a('<i class="fa fa-inbox"></i>&nbsp;&nbsp;Мои резюме', ['/jobs/resume/my-resume']);
 			echo '</li>';
 		}
 		if ($user->doctor) {
 			echo '<li class="list-group-item ' . $a_6 . '">';
-			echo '<a href="' . Url::Home() . 'med/doctors/update"><i class="fa fa-user-md"></i>&nbsp;&nbsp;Мои мед. данные</a>';
+			echo Html::a('<i class="fa fa-user-md"></i>&nbsp;&nbsp;Мои мед. данные', ['/med/doctors/update']);
 			echo '</li>';
 		}
 		echo '<li class="list-group-item ' . $a_7 . '">';
-		echo '<a href="' . Url::Home() . 'letters/letters/my-letters"><i class="fa fa-envelope-o "></i>&nbsp;&nbsp;Мои письма</a>';
+		echo Html::a('<i class="fa fa-envelope-o "></i>&nbsp;&nbsp;Мои коллективные письма', ['/letters/letters/my-letters']);
 		echo '</li>';
 		echo '<li class="list-group-item ' . $a_8 . '">';
-		echo '<a href="' . Url::Home() . 'goods/my-ads"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Мои объявления о товарах</a>';
+		echo Html::a('<i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Мои объявления о товарах', ['/goods/goods/my-ads']);
 		echo '</li>';
 		echo '<li class="list-group-item ' . $a_9 . '">';
-		echo '<a href="' . Url::Home() . 'service/my-ads"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Мои объявления об услугах</a>';
+		echo Html::a('<i class="fa fa-wrench"></i>&nbsp;&nbsp;Мои объявления об услугах', ['/service/service/my-ads']);
 		echo '</li>';
 		echo '<li class="list-group-item ' . $a_10 . '">';
-		echo '<a href="' . Url::Home() . 'realty/sale/my-ads"><i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления о продаже недвижимости</a>';
+		echo Html::a('<i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления о продаже недвижимости', ['/realty/sale/my-ads']);
 		echo '</li>';
 		echo '<li class="list-group-item ' . $a_11 . '">';
-		echo '<a href="' . Url::Home() . 'realty/rent/my-ads"><i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления об аренде недвижимости</a>';
+		echo Html::a('<i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления об аренде недвижимости', ['/realty/rent/my-ads']);
 		echo '</li>';
 
 		//echo '<li class="list-group-item ' . $a_13 . '">';

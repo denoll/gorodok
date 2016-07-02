@@ -47,8 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             echo '<span onclick="changeStatus(' . $item['id'] . ')" id="status-btn-' . $item['id'] . '" class="btn-u btn-u-sm  btn-u-green" title="Изменить статус на - Видно только мне">' . $text . '</span>';
                             ?>
                             <?php
-                            echo Html::a('Редактировать', [Url::home() . '/realty/rent/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
-                            echo Html::a('Удалить', [Url::home() . '/realty/rent/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
+                            echo Html::a('Редактировать', ['/realty/rent/update', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-default']);
+                            echo Html::a('Удалить', ['/realty/rent/delete', 'id' => $item['id']], ['class' => 'btn-u btn-u-sm  btn-u-danger', 'data' => [
                                 'confirm' => 'Вы действительно хотите удалить это объявление?',
                                 'method' => 'post',
                             ]]);

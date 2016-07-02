@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\goods\assets;
+namespace app\modules\service\assets;
 
 use yii\web\AssetBundle;
 
@@ -9,13 +9,13 @@ use yii\web\AssetBundle;
  * Class GoodsAsset
  * @package assets
  */
-class GoodsAsset extends AssetBundle
+class ServiceAsset extends AssetBundle
 {
 
     /**
      * @var string
      */
-    public $sourcePath = '@backend/modules/goods/assets';
+    public $sourcePath = '@backend/modules/service/assets';
 
     /**
      * @var array

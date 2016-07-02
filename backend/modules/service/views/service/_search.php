@@ -10,62 +10,57 @@ use common\widgets\Arrays;
 /* @var $form yii\widgets\ActiveForm */
 
 $get_cat = Yii::$app->request->get('cat');
-
-$data = \yii\helpers\ArrayHelper::map(Arrays::getGoodsCat(), 'alias', 'name');
-$status = [
-    '1'=>'Опубликованные',
-    '0'=>'Не опубликованные',
-];
-
+if (!empty($first_child)) {
+	$data = \yii\helpers\ArrayHelper::map($first_child, 'alias', 'name');
+} else {
+	$data = false;
+}
 ?>
+<style type="text/css">
+	.help-block {
+		margin: 0px !important;
+	}
 
-<div class="widget lazur-bg style1 container-fluid">
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+	.form-control {
+		height: 35px;
+	}
+</style>
 
-    <div class="filter">
-        <div class="filter_element col-md-12 side_left" style="margin-top: 5px;">
-            <div class="input-group" style="margin-top: 10px;">
-                <?= $form->field($model, 'search_field', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Введите название товара, категорию или их часть ...']])->label(false) ?>
-                <span class="input-group-btn"><?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;Найти', ['class' => 'btn btn-primary']) ?></span>
-            </div>
-        </div>
-        <?php if ($data) { ?>
+<div class="service-search">
+	<?php $form = ActiveForm::begin([
+		'action' => empty($get_cat) ? ['index'] : ['index', 'cat' => $get_cat],
+		'method' => 'get',
+	]); ?>
+
+	<div class="filter">
+		<div class="filter_element col-md-12 side_left" style="margin-top: 5px;">
+			<div class="input-group">
+				<?= $form->field($model, 'search_field', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Введите искомую информацию или ее часть ...']])->label(false) ?>
+				<span class="input-group-btn"><?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;Найти', ['class' => 'btn btn-default']) ?></span>
+			</div>
+		</div>
+		<?php /* if ($data) { ?>
             <div class="filter_element col-sm-6 side_left">
                 <?= $form->field($model, 'cat')->widget(Select2::classname(), [
                     'data' => $data,
                     'hideSearch' => false,
-                    'options' => ['placeholder' => 'Выбор категории...'],
+                    'options' => ['placeholder' => 'Выбор подкатегории...'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Категория'); ?>
+                ])->label('Подкатегория'); ?>
             </div>
-        <?php } ?>
-        <div class="filter_element col-sm-3 side_left">
-            <label class="control-label" for="el-salary">Стоимость:</label>
-            <table id="el-salary">
-                <tr>
-                    <td><?= $form->field($model, 'cost_min', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'от']])->label(false) ?></td>
-                    <td><?= $form->field($model, 'cost_max', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'до']])->label(false) ?></td>
-                </tr>
-            </table>
-        </div>
-        <div class="filter_element col-md-3 " style="margin-top: 5px;">
-            <div class="input-group">
+        <?php }*/ ?>
+		<div class="filter_element col-sm-4 side_left">
+			<label class="control-label" for="el-salary">Стоимость:</label>
+			<table id="el-salary">
+				<tr>
+					<td><?= $form->field($model, 'cost_min', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'от']])->label(false) ?></td>
+					<td><?= $form->field($model, 'cost_max', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'до']])->label(false) ?></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 
-                    <?= $form->field($model, 'status')->widget(Select2::classname(), [
-                        'data' => $status,
-                        'hideSearch' => true,
-                        'options' => ['placeholder' => 'Выбор статуса...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label('Подкатегория'); ?>
-            </div>
-        </div>
-    </div>
-
+	<?php ActiveForm::end(); ?>
 </div>
