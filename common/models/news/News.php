@@ -241,7 +241,7 @@ class News extends \yii\db\ActiveRecord
 
             $image->resize($newSizeThumb)
                 ->crop($cropPointThumb, $cropSizeThumb)
-                ->save($pathThumbImage, ['quality' => 100]);
+                ->save($pathThumbImage, ['quality' => 70]);
             //Save original image
             $this->image->saveAs(Yii::getAlias('@frt_dir/img/news/'). $imgName);
 

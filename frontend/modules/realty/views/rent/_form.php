@@ -196,21 +196,21 @@ $label = \app\helpers\Texts::TEXT_CORRECT_IMAGE;
 		?>
 		<hr>
 	</div>
-	<div class="col-sm-12">
+	<div class="col-md-5">
 		<?php if ($model->isNewRecord) { ?>
 			<?= $form->field($model, 'reCaptcha')->widget(
 				\himiklab\yii2\recaptcha\ReCaptcha::className()
 			) ?>
 		<?php } ?>
+	</div>
+	<div class="col-md-7">
+		<div class="tag-box tag-box-v4">
+			<?= app\widgets\DbText::widget(['key' => 'text_polzovatelskoe_soglashenie']) ?>
+		</div>
+	</div>
+	<div class="col-md-12">
 		<div class="form-group">
-			<?= Html::submitButton($model->isNewRecord ? 'Сохранить объявление' : 'Сохранить изменения', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-			<?= Html::a('Вернуться ко всем моим объявлениям', ['my-ads'], ['class' => 'btn btn-default']) ?>
-			<?php if (!$model->isNewRecord) {
-				echo \yii\helpers\Html::a('Удалить', ['delete', 'id' => $model->id], ['class' => 'btn btn-danger', 'data' => [
-					'confirm' => 'Вы действительно хотите удалить объявление?',
-					'method' => 'post',
-				],]);
-			} ?>
+			<?= Html::submitButton($model->isNewRecord ? 'Сохранить объявление' : 'Сохранить изменения', ['class' => $model->isNewRecord ? 'btn btn-block btn-success' : 'btn btn-block btn-primary']) ?>
 		</div>
 	</div>
 

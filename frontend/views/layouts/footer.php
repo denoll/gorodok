@@ -40,6 +40,7 @@ use yii\helpers\Html;
 					<ul class="list-unstyled link-list">
 						<li><?= Html::a('О сайте ', ['/page/page/view','id'=>'about']) ?><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('Как пользоваться ', ['/page/page/index','cat'=>'kak-polzovatsa-sajtom']) ?><i class="fa fa-angle-right"></i></li>
+						<li><?= Html::a('Пользовательское соглашение ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'polzovatelskoe-soglasenie']) ?><i class="fa fa-angle-right"></i></li>
 						<li><a href="#">Часто задаваемые вопросы</a><i class="fa fa-angle-right"></i></li>
 						<li><a href="#">Обратная связь</a><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('Реклама на сайте ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'reklama-na-sajte']) ?><i class="fa fa-angle-right"></i></li>

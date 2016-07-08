@@ -14,6 +14,7 @@ use frontend\widgets\CategPres;
 use frontend\widgets\TagsWidget;
 //use frontend\widgets\NewsSidebarWidget;
 use frontend\widgets\ProfileLeftSidebar;
+use common\widgets\DbBanner;
 
 $show = false;
 
@@ -24,7 +25,7 @@ $is_doctor = $this->params['is_doctor'];
 
 if (!stristr($path, 'site')) {
 
-	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/') || stristr($path, '/adv/advert') ||stristr($path, '/firm/update')) {
+	if (stristr($path, '/profile/') || stristr($path, '/jobs/') || stristr($path, '/account/') || stristr($path, '/adv/advert') || stristr($path, '/firm/update')) {
 		if (stristr($path, 'account/')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 0]);
 		}
@@ -47,15 +48,15 @@ if (!stristr($path, 'site')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 5]);
 		}
 		if (stristr($path, 'jobs/resume/index') || stristr($path, 'jobs/resume/view')) {
-			echo CategJob::widget(['cats'=>\common\widgets\Arrays::getJobCat(), 'for'=>'res']);
+			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'res']);
 		}
 		if (stristr($path, 'jobs/vacancy/index') || stristr($path, 'jobs/vacancy/view')) {
-			echo CategJob::widget(['cats'=>\common\widgets\Arrays::getJobCat(), 'for'=>'vac']);
+			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'vac']);
 		}
 	}
 	if (stristr($path, '/med/doctors')) {
 		if (stristr($path, '/med/doctors/index') || stristr($path, '/med/doctors/view')) {
-			echo \frontend\widgets\CategMed::widget(['cats'=>\common\widgets\Arrays::getMedCat()]);
+			echo \frontend\widgets\CategMed::widget(['cats' => \common\widgets\Arrays::getMedCat()]);
 		}
 		if (stristr($path, '/med/doctors/update') || stristr($path, '/med/doctors/create') || stristr($path, '/med/doctors/my-serv')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 6]);
@@ -114,6 +115,8 @@ if (!stristr($path, 'site')) {
 	if (stristr($path, '/news')) {
 		echo \frontend\widgets\CategNews::widget();
 		echo \frontend\widgets\TagsWidget::widget();
+		echo DbBanner::widget(['key' => 'left_side_news_page_big']);
+		echo DbBanner::widget(['key' => 'left_side_news_page_small']);
 	}
 	if (stristr($path, '/page')) {
 		echo \frontend\widgets\CategPage::widget();

@@ -62,6 +62,13 @@ use yii\bootstrap\NavBar;
 				</ul>
 			</li>
 			<li>
+				<a href="#"><i class="fa fa-hand-peace-o"></i><span class="nav-label"> Конкурсы</span><span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level collapse">
+					<li><?= Html::a('<i class="fa fa-hand-peace-o"></i> Конкурсы',['/konkurs/konkurs/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-puzzle-piece"></i> Элементы',['/konkurs/item/index']) ?></li>
+				</ul>
+			</li>
+			<li>
 				<a href="#"><i class="fa fa-newspaper-o"></i><span class="nav-label">Новости</span><span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse">
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Категории новостей',['/news/news-category/index']) ?></li>

@@ -195,14 +195,14 @@ use common\widgets\Arrays;
     <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'short_text')->widget(CKEditor::className(),[
-        'editorOptions' => [
+        'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions(['elfinder', 'path' => 'afisha/editor'], [
             'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
             'inline' => false, //по умолчанию false
-        ],
+        ]),
     ]); ?>
 
     <?= $form->field($model, 'text')->widget(CKEditor::className(),[
-        'editorOptions' => ElFinder::ckeditorOptions(['elfinder','path'=>'afisha'],  [
+        'editorOptions' => \mihaildev\elfinder\ElFinder::ckeditorOptions(['elfinder', 'path' => 'afisha/editor'], [
             'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
             'inline' => false, //по умолчанию false
         ]),

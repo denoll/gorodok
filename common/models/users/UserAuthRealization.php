@@ -32,6 +32,12 @@ class UserAuthRealization extends User
 		if (!empty($client)) {
 			$attributes = $client->getUserAttributes();
 			switch ($client->getName()){
+				case 'facebook' :
+					$this->attributes = [
+						'id' => $attributes['id'],
+						'username' => ($attributes['first_name'] || $attributes['last_name']) ? implode(' ', [$attributes['first_name'], $attributes['last_name']]) : $attributes['email'],
+						'email' => $attributes['email'],
+					]; break;
 				case 'google':
 					$this->attributes = [
 						'id' => $attributes['id'],
@@ -120,7 +126,7 @@ class UserAuthRealization extends User
 						}
 					}else{
 						Yii::$app->getSession()->setFlash('error', [
-							'<h2>К сожалению регистрация через <strong>'.$client->getTitle.'</strong> не удалась. </h2>
+							'<h2>К сожалению регистрация через <strong>'.$client->title.'</strong> не удалась. </h2>
 							<p>Скорее всего у Вас не указан <strong>Email</strong> в этом сервисе, или Вы запретили к нему доступ.</p>
 							<p>Попробуйте авторизоваться через другие сервисы, либо пройдите стандартную регистрацию на сайте.</p>
 							',

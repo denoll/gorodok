@@ -48,10 +48,10 @@ class FirmSearchFront extends Firm
 		if(!empty($cat)){
 			$_cat = FirmCat::find()->select(['id','slug','name'])->where(['slug'=>$cat])->asArray()->one();
 			Yii::$app->session->set('current_cat', $_cat);
-			$query = Firm::find()->with(['users', 'cat'])->where(['id_cat'=>$_cat['id']]);
+			$query = Firm::find()->with(['users', 'cat'])->where(['status'=>Firm::STATUS_ACTIVE, 'show_requisites'=>Firm::STATUS_ACTIVE, 'id_cat'=>$_cat['id']]);
 		}else{
 			Yii::$app->session->remove('current_cat');
-			$query = Firm::find()->with(['users', 'cat']);
+			$query = Firm::find()->with(['users', 'cat'])->where(['status'=>Firm::STATUS_ACTIVE, 'show_requisites'=>Firm::STATUS_ACTIVE]);
 		}
 
 		// add conditions that should always apply here

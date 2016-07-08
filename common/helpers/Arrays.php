@@ -15,6 +15,23 @@ class Arrays
 	/**
 	 * @return array
 	 */
+	public static function status()
+	{
+		return [
+			'1' => 'Активный',
+			'0' => 'Скрыт',
+		];
+	}
+
+	public static function getStatus($id)
+	{
+		$status = self::status();
+		return $status[$id];
+	}
+
+	/**
+	 * @return array
+	 */
 	public static function statusYesNo()
 	{
 		return [
@@ -48,6 +65,27 @@ class Arrays
 	public static function getStatusBanner($id)
 	{
 		$status = self::statusBanner();
+		return $status[$id];
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function typeKonkurs()
+	{
+		return [
+			'1' => 'По очкам',
+			'0' => 'За или Против',
+		];
+	}
+
+	/**
+	 * @param $id
+	 * @return string
+	 */
+	public static function getTypeKonkurs($id)
+	{
+		$status = self::typeKonkurs();
 		return $status[$id];
 	}
 }

@@ -40,11 +40,11 @@ class CategServiceVMenu extends Widget
 		echo '<h3 style="margin: 0; color: #fff;"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Оказание услуг</h3>';
 		echo '</div>';
 		echo '<div  style="margin: 0px 0px 2px 0px; width: 100%; border: solid 1px #780000;">';
-		echo Html::a('Оказание услуг', [Url::to('/service/service/index')], ['class' => 'btn-u btn-u-primary', 'style' => 'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
-		echo Html::a('Поиск услуг', [Url::to('/service/set-service/index')], ['class' => 'btn-u btn-u-default', 'style' => 'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
+		echo Html::a('Оказание услуг', ['/service/service/index'], ['class' => 'btn-u btn-u-primary', 'style' => 'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
+		echo Html::a('Поиск услуг', ['/service/set-service/index'], ['class' => 'btn-u btn-u-default', 'style' => 'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
 		echo '</div>';
 
-		echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/service/create'], ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
+		echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/service/service/create'], ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
 
 		echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
 		echo '<div class="navbar navbar-default" role="navigation" style="margin: 0;">';

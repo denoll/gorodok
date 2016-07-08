@@ -24,6 +24,9 @@ use yii\web\UploadedFile;
  */
 class SliderMain extends \yii\db\ActiveRecord
 {
+	const IMG_HEIGHT = 400;
+	const IMG_WIDTH = 600;
+
 	public $image;
 	public $crop_info;
 
@@ -116,33 +119,38 @@ class SliderMain extends \yii\db\ActiveRecord
 
 			// rendering information about crop of ONE option
 			$cropInfo = Json::decode($this->crop_info)[0];
-			$cropInfo['dWidth'] = (int)$cropInfo['dWidth']; //new width image
-			$cropInfo['dHeight'] = (int)$cropInfo['dHeight']; //new height image
-			$cropInfo['x'] = $cropInfo['x']; //begin position of frame crop by X
-			$cropInfo['y'] = $cropInfo['y']; //begin position of frame crop by Y
+			if((int)$cropInfo['dw'] == 0 || (int)$cropInfo['dh'] == 0){
+				$cropInfo['dw'] = self::IMG_WIDTH; //new width image
+				$cropInfo['dh'] = self::IMG_HEIGHT; //new height image
+			}else{
+				$cropInfo['dw'] = (int)$cropInfo['dw']; //new width image
+				$cropInfo['dh'] = (int)$cropInfo['dh']; //new height image
+			}
+			$cropInfo['x'] = abs($cropInfo['x']); //begin position of frame crop by X
+			$cropInfo['y'] = abs($cropInfo['y']); //begin position of frame crop by Y
 
 			//delete old images
-			$oldImages = FileHelper::findFiles(Yii::getAlias('@frt_dir/img/slider/'), [
+			$oldImages = FileHelper::findFiles(Yii::getAlias('@frt_dir/img/news/'), [
 				'only' => [
-					$this->id_user . '_' . $this->id . '.*',
-					'thumb_' . $this->id_user . '_' . $this->id . '.*',
+					$this->id . '.*',
+					'thumb_' . $this->id . '.*',
 				],
 			]);
 			for ($i = 0; $i != count($oldImages); $i++) {
 				@unlink($oldImages[$i]);
 			}
 			//avatar image name
-			$imgName = $this->id_user . '_' . $this->id . '.' . $this->image->getExtension();
+			$imgName = $this->id . '.' . $this->image->getExtension();
 
 			//saving thumbnail
-			$newSizeThumb = new Box($cropInfo['dWidth'], $cropInfo['dHeight']);
-			$cropSizeThumb = new Box(600, 400); //frame size of crop
+			$newSizeThumb = new Box($cropInfo['dw'], $cropInfo['dh']);
+			$cropSizeThumb = new Box(self::IMG_WIDTH, self::IMG_HEIGHT); //frame size of crop
 			$cropPointThumb = new Point($cropInfo['x'], $cropInfo['y']);
 			$pathThumbImage = Yii::getAlias('@frt_dir/img/slider/') . 'thumb_' . $imgName;
 
 			$image->resize($newSizeThumb)
 				->crop($cropPointThumb, $cropSizeThumb)
-				->save($pathThumbImage, ['quality' => 100]);
+				->save($pathThumbImage, ['quality' => 70]);
 			//Save original image
 			$this->image->saveAs(Yii::getAlias('@frt_dir/img/slider/') . $imgName);
 

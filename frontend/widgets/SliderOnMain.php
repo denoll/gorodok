@@ -33,7 +33,7 @@ class SliderOnMain extends Widget
 		if (empty($this->images) && empty($this->path)) {
 			$this->path = Url::to('@frt_url/img/slider/');
 			$this->images = SliderMain::getDb()->cache(function () {
-				return SliderMain::find()->asArray()->where(['status' => 1])->andWhere(['IS NOT', 'img', null])->orderBy('id DESC')->all();
+				return SliderMain::find()->asArray()->where(['status' => 1])->andWhere(['IS NOT', 'img', null])->limit(9)->orderBy('id DESC')->all();
 			}, Arrays::CASH_TIME );
 		}
 		$this->registerCssLoc();

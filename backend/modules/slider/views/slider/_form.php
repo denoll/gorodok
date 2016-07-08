@@ -30,17 +30,17 @@ use kartik\widgets\Select2;
     ])->label('Пользователь'); ?>
     <?= $form->field($model, 'image')->widget(Cropbox::className(), [
         'attributeCropInfo' => 'crop_info',
-        'pluginOptions' => [
-            'width' => 600,
-            'height' => 400,
-            'variants' => [
+        'optionsCropbox' => [
+            'boxWidth' => \common\models\slider\SliderMain::IMG_WIDTH,
+            'boxHeight' => \common\models\slider\SliderMain::IMG_HEIGHT,
+            'cropSettings' => [
                 [
-                    'width' => 600,
-                    'height' => 400,
+                    'width' => \common\models\slider\SliderMain::IMG_WIDTH,
+                    'height' => \common\models\slider\SliderMain::IMG_HEIGHT,
                 ],
             ],
         ],
-        'previewImagesUrl' => [
+        'previewUrl' => [
             Yii::getAlias('@frt_url/img/slider/') . $model['thumbnail']
         ],
     ]); ?>
