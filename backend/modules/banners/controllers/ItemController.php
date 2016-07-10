@@ -22,6 +22,9 @@ use Imagine\Image\Point;
  */
 class ItemController extends Controller
 {
+	protected $width;
+	protected $height;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -49,8 +52,12 @@ class ItemController extends Controller
 					/* @var $file \League\Flysystem\File */
 					$file = $event->file;
 					$post = Yii::$app->request->post('BannerItem');
+					$width = (int)$post['width'];
+					$height = (int)$post['height'];
+					$this->width = (!empty($width) && $width >= 900 && $width <= 900) ? $width : 600;
+					$this->height = (!empty($height) && $height >= 900 && $height <= 900) ? $height : 600;
 					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
-					Image::thumbnail($path, (int)$post['width'],(int)$post['height'])
+					Image::thumbnail($path, $this->width,$this->height)
 						->save($path, ['quality' => 80]);
 				}
 			],
@@ -146,7 +153,7 @@ class ItemController extends Controller
 	 */
 	public function actionGetSize($key)
 	{
-		$model = Banner::findOne($key);
+		$model = BannerAdv::findOne($key);
 		$arr = [
 			'height' => $model->height,
 			'width' => $model->width

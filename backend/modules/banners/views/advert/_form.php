@@ -35,7 +35,7 @@ if ($model->isNewRecord) {
 			<?= $form->field($model, 'click_size')->textInput(['maxlength' => true]) ?>
 			<?= $form->field($model, 'day_size')->textInput(['maxlength' => true]) ?>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-2">
 			<div class="checkbox">
 				<?= $form->field($model, 'hit_status')->checkbox() ?>
 			</div>
@@ -45,6 +45,10 @@ if ($model->isNewRecord) {
 			<div class="checkbox">
 				<?= $form->field($model, 'day_status')->checkbox() ?>
 			</div>
+		</div>
+		<div class="col-md-3">
+			<?= $form->field($model, 'height')->textInput() ?>
+			<?= $form->field($model, 'width')->textInput() ?>
 		</div>
 
 	</div>

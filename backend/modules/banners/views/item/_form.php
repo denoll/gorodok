@@ -36,7 +36,7 @@ if ($model->isNewRecord) {
 	<div class="row">
 		<div class="col-md-4">
 			<?= $form->field($model, 'status')->dropDownList(\common\helpers\Arrays::statusBanner()) ?>
-			<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name')) ?>
+			<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите расположение баннера']) ?>
 			<?= $form->field($model, 'id_user')->widget(Select2::classname(), [
 				'language' => 'ru',
 				'data' => ArrayHelper::map($users, 'id', 'username'),

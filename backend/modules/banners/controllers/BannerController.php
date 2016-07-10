@@ -60,6 +60,11 @@ class BannerController extends Controller
 	{
 		$model = new Banner();
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->deleteAllAdvBlocks($model->key);
+			$post = Yii::$app->request->post('Banner');
+			foreach ($post['adv'] as $adv){
+				$model->saveAdvBlock($model->key, $adv);
+			}
 			return $this->redirect(['update', 'id' => $model->key]);
 		} else {
 			return $this->render('create', [
@@ -83,6 +88,11 @@ class BannerController extends Controller
 		$bannerItemsProvider = $searchModel->search([]);
 		$bannerItemsProvider->query->andWhere(['banner_key' => $model->key]);
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$post = Yii::$app->request->post('Banner');
+			$model->deleteAllAdvBlocks($model->key);
+			foreach ($post['adv'] as $adv){
+				$model->saveAdvBlock($model->key, $adv);
+			}
 			return $this->redirect(Url::previous('banner'));
 		} else {
 			return $this->render('update', [

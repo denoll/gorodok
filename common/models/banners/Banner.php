@@ -13,8 +13,7 @@ use Yii;
  * @property integer $status
  * @property integer $stage
  * @property integer $col_size
- * @property integer $height
- * @property integer $width
+ * @property array $adv
  *
  * @property BannerItem[] $items
  */
@@ -26,6 +25,8 @@ class Banner extends \yii\db\ActiveRecord
 
 	const STAGE_VERTICAL = '0';
 	const STAGE_HORIZONTAL = '1';
+
+	public $adv = Array();
 
 	/**
 	 * @inheritdoc
@@ -64,9 +65,10 @@ class Banner extends \yii\db\ActiveRecord
 		return [
 			[['key'], 'required'],
 			[['key'], 'unique'],
-			[['status', 'stage', 'col_size', 'height', 'width'], 'integer'],
+			[['status', 'stage', 'col_size'], 'integer'],
 			[['key'], 'string', 'max' => 32],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			[['adv'], 'safe'],
 		];
 	}
 
@@ -77,13 +79,45 @@ class Banner extends \yii\db\ActiveRecord
 	{
 		return [
 			'key' => 'Ключ',
+			'adv' => 'Рекламные компании',
 			'name' => 'Расположение баннера',
 			'status' => 'Включен',
 			'stage' => 'Положение блока',
 			'col_size' => 'Размер колонки',
-			'height' => 'Высота изображения',
-			'width' => 'Длинна изображения',
 		];
+	}
+
+	/**
+	 * @param $key_banner
+	 * @param $id_adv
+	 * @return bool|null
+	 */
+	public function saveAdvBlock($key_banner, $id_adv){
+		$model = BannerAdvBlock::findOne(['id_adv'=>$id_adv, 'id_banner' => $key_banner]);
+		if(!$model){
+			$model = new BannerAdvBlock();
+		}
+		$model->id_adv = $id_adv;
+		$model->id_banner = $key_banner;
+		if($model->save(false))return true;
+		else return null;
+	}
+
+	/**
+	 * @param $key_banner
+	 */
+	public function deleteAllAdvBlocks($key_banner){
+		BannerAdvBlock::deleteAll(['id_banner'=>$key_banner]);
+	}
+
+	/**
+	 * @return array|\yii\db\ActiveRecord[]
+	 */
+	public function getAdvBlock(){
+		$model = BannerAdvBlock::find()->where(['id_banner'=>$this->key])->asArray()->all();
+		if(!empty($model)){
+			return $model;
+		}return null;
 	}
 
 	/**

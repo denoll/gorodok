@@ -29,17 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			'key',
 			[
 				'class' => \common\grid\EnumColumn::className(),
-				'attribute' => 'stage',
-				'enum' => Banner::bannerStages(),
-			],
-			[
-				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'status',
 				'enum' => Banner::bannerStatuses(),
 				'label'=>'Статус блока'
 			],
-			'height',
-			'width'
+			[
+				'class' => \common\grid\EnumColumn::className(),
+				'attribute' => 'stage',
+				'enum' => Banner::bannerStages(),
+			],
 		],
 	]); ?>
 

@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="tag-box tag-box-v4">
 					<h2>Добавление рекламного баннера.</h2>
 					<ol>
-						<li>Выберите рекламную компанию в соответствии с Вашими желаниями и потребностью.</li>
 						<li>Выберите место расположения рекламного баннера.</li>
+						<li>Выберите рекламную компанию в соответствии с Вашими желаниями и потребностью.</li>
 						<li>Добавьте изображение рекламного баннера (Размеры изображения указаны в расположении баннера).</li>
 						<li>Добавьте http ссылку баннера (ссылка - это http адрес сайта на который будет осуществлен переход после клика по баннеру).</li>
 						<li>При необходимости укажите даты и время начала и окончания рекламной компании.</li>
@@ -46,33 +46,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="row">
 			<div class="col-md-6">
-				<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name')) ?>
+				<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name'), ['onChange' => 'getAdv()', 'prompt' => 'Выберите расположение баннера']) ?>
 
-				<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите расположение баннера']) ?>
-
-				<?= $form->field($model, 'url')->textInput(['maxlength' => true, 'placeholder' => 'http://адрес ссылки с вашего баннера']) ?>
-
-				<?= $form->field($model, 'start')->widget(DateTimePicker::classname(), [
-					'options' => ['placeholder' => 'Укажите дату и время ...'],
-					'value' => date('Y-m-d H:i:s'),
-					'pluginOptions' => [
-						'autoclose' => true,
-					]
-				]); ?>
-
-				<?= $form->field($model, 'stop')->widget(DateTimePicker::classname(), [
-					'options' => ['placeholder' => 'Укажите дату и время ...'],
-					'pluginOptions' => [
-						'autoclose' => true
-					]
-				]); ?>
+				<?= $form->field($model, 'id_adv_company')->dropDownList([], ['onChange' => 'getSize()', 'prompt' => 'Выберите Рекламную компанию']) ?>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-6">
+				<?= $form->field($model, 'url')->textInput(['maxlength' => true, 'placeholder' => 'http://адрес ссылки с вашего баннера']) ?>
+				<div class="row">
+					<div class="col-sm-6">
+						<?= $form->field($model, 'start')->widget(DateTimePicker::classname(), [
+							'options' => ['placeholder' => 'Укажите дату и время ...'],
+							'value' => date('Y-m-d H:i:s'),
+							'pluginOptions' => [
+								'autoclose' => true,
+							]
+						]); ?>
+					</div>
+					<div class="col-sm-6">
+						<?= $form->field($model, 'stop')->widget(DateTimePicker::classname(), [
+							'options' => ['placeholder' => 'Укажите дату и время ...'],
+							'pluginOptions' => [
+								'autoclose' => true
+							]
+						]); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
 				<?= $form->field($model, 'files')->widget(
 					'\denoll\filekit\widget\Upload',
 					[
 						'url' => ['upload'],
-						'maxFileSize' => 1 * 1024 * 1024, // 1 MiB
+						'maxFileSize' => 10 * 1024 * 1024, // 1 MiB
 						//'maxNumberOfFiles' => 1,
 						'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
 					]
@@ -97,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $js = <<<JS
 	function getSize() {
-		var banner_key = $('#banneritem-banner_key :selected').val();
+		var banner_key = $('#banneritem-id_adv_company :selected').val();
 	  $.ajax({
         type: "get",
         url: "get-size",
@@ -107,6 +112,20 @@ $js = <<<JS
         success: function (data) {
 			$('#banneritem-height').val(data.height);
            	$('#banneritem-width').val(data.width);
+        }
+    });
+	}
+	function getAdv() {
+		var banner_key = $('#banneritem-banner_key :selected').val();
+	  $.ajax({
+        type: "get",
+        url: "get-adv",
+        data: "key=" + banner_key,
+        cache: true,
+        dataType: "html",
+        success: function (data) {
+			$('#banneritem-id_adv_company').show();
+			$('#banneritem-id_adv_company').html(data);
         }
     });
 	}

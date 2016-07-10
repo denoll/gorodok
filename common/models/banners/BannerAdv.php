@@ -3,6 +3,7 @@
 namespace common\models\banners;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "banner_adv".
@@ -19,6 +20,8 @@ use Yii;
  * @property integer $hit_size
  * @property integer $click_size
  * @property integer $day_size
+ * @property integer $height
+ * @property integer $width
  * @property string $description
  *
  * @property BannerItem[] $bannerItems
@@ -43,7 +46,7 @@ class BannerAdv extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['status', 'hit_status', 'click_status', 'day_status', 'hit_size', 'click_size', 'day_size'], 'integer'],
+			[['status', 'hit_status', 'click_status', 'day_status', 'hit_size', 'click_size', 'day_size', 'height', 'width'], 'integer'],
 			[['click_price', 'day_price', 'hit_price'], 'number'],
 			[['name'], 'string', 'max' => 100],
 			[['description'], 'string', 'max' => 500],
@@ -69,7 +72,34 @@ class BannerAdv extends \yii\db\ActiveRecord
 			'click_size' => 'Кол-во кликов для одного счета',
 			'day_size' => 'Кол-во дней для одного счета',
 			'description' => 'Описание',
+			'height' => 'Высота баннера',
+			'width' => 'Длинна баннера',
 		];
+	}
+
+	/**
+	 * @param $banner_key
+	 * @param bool $for_front
+	 * @return array|null|\yii\db\ActiveRecord[]
+	 */
+	public static function getAdvForBanner($banner_key, $for_front = true){
+		$adv_banner = BannerAdvBlock::find()->where(['id_banner'=>$banner_key])->all();
+		if(!$adv_banner) return null;
+		$id_adv = ArrayHelper::getColumn($adv_banner, 'id_adv');
+		if(empty($id_adv)) return null;
+		if($for_front){
+			$model =  self::find()->where(['status'=>self::STATUS_ACTIVE])->andWhere(['id' => $id_adv])->all();
+		}else{
+			$model =  self::find()->where(['status'=>self::STATUS_ACTIVE])->orWhere(['status'=>self::STATUS_ONLY_STAFF])->andWhere(['id' => $id_adv])->all();
+		}
+		return $model;
+	}
+
+	/**
+	 * @return array|\yii\db\ActiveRecord[]
+	 */
+	public static function getAdvert(){
+		return self::find()->where(['status'=>self::STATUS_ACTIVE])->orWhere(['status'=>self::STATUS_ONLY_STAFF])->all();
 	}
 
 	/**

@@ -18,7 +18,7 @@ class AdvertSearch extends BannerAdv
 	public function rules()
 	{
 		return [
-			[['id', 'status', 'hit_status', 'click_status', 'day_status', 'hit_size', 'click_size', 'day_size'], 'integer'],
+			[['id', 'status', 'hit_status', 'click_status', 'day_status', 'hit_size', 'click_size', 'day_size', 'width', 'height'], 'integer'],
 			[['click_price', 'day_price', 'hit_price'], 'number'],
 			[['name'], 'string', 'max' => 100],
 			[['description'], 'string', 'max' => 500],
@@ -75,6 +75,8 @@ class AdvertSearch extends BannerAdv
 		]);
 
 		$query->andFilterWhere(['like', 'name', $this->name])
+			->andFilterWhere(['like', 'height', $this->height])
+			->andFilterWhere(['like', 'width', $this->width])
 			->andFilterWhere(['like', 'description', $this->description]);
 
 		return $dataProvider;

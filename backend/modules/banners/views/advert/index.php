@@ -62,7 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'boolean',
 				'options' => ['width' => '80'],
 			],
-
+			'height',
+			'width',
 			[
 				'attribute' => 'id',
 				'options' => ['width' => '60'],

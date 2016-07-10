@@ -2,6 +2,7 @@
 
 namespace app\modules\adv\controllers;
 
+use frontend\widgets\Html;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -20,8 +21,8 @@ use Imagine\Image\Point;
 class AdvertController extends Controller
 {
 
-	public $banner_height;
-	public $banner_width;
+	protected $width;
+	protected $height;
 
 	public function behaviors()
 	{
@@ -66,9 +67,13 @@ class AdvertController extends Controller
 					/* @var $file \League\Flysystem\File */
 					$file = $event->file;
 					$post = Yii::$app->request->post('BannerItem');
+					$width = (int)$post['width'];
+					$height = (int)$post['height'];
+					$this->width = (!empty($width) && $width >= 900 && $width <= 900) ? $width : 600;
+					$this->height = (!empty($height) && $height >= 900 && $height <= 900) ? $height : 600;
 					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
-					Image::thumbnail($path, (int)$post['width'], (int)$post['height'])
-						->save($path, ['quality' => 80]);
+					Image::thumbnail($path, $this->width, $this->height)
+						->save($path, ['quality' => 70]);
 				}
 			],
 		];
@@ -168,13 +173,25 @@ class AdvertController extends Controller
 	 */
 	public function actionGetSize($key)
 	{
-		$model = Banner::findOne($key);
-
+		$model = BannerAdv::findOne($key);
 		$arr = [
 			'height' => $model->height,
 			'width' => $model->width
 		];
 		echo json_encode($arr);
+	}
+
+	/**
+	 * @param string $key
+	 */
+	public function actionGetAdv($key)
+	{
+		$model = BannerAdv::getAdvForBanner($key,true);
+		if($model){
+			foreach ($model as $item)
+			echo '<option>Выберите рекламную компанию...</option>';
+			echo '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+		}
 	}
 
 	/**
