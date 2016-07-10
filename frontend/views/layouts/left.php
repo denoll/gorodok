@@ -37,6 +37,7 @@ if (!stristr($path, 'site')) {
 		}
 		if (stristr($path, 'firm/update')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 2]);
+			echo DbBanner::widget(['key' => 'left_side_poleznieadresa_small']);
 		}
 		if (stristr($path, 'jobs/job-profile/index') || stristr($path, 'jobs/index') || stristr($path, 'jobs/edu') || stristr($path, 'jobs/exp')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 4]);
@@ -49,9 +50,11 @@ if (!stristr($path, 'site')) {
 		}
 		if (stristr($path, 'jobs/resume/index') || stristr($path, 'jobs/resume/view')) {
 			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'res']);
+			echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
 		}
 		if (stristr($path, 'jobs/vacancy/index') || stristr($path, 'jobs/vacancy/view')) {
 			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'vac']);
+			echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
 		}
 	}
 	if (stristr($path, '/med/doctors')) {
@@ -73,6 +76,7 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, '/goods')) {
 			echo \frontend\widgets\CategGoodsVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
+			echo DbBanner::widget(['key' => 'left_side_tovari_small']);
 		}
 	}
 	if (stristr($path, '/service') || stristr($path, '/set-service')) {
@@ -82,10 +86,12 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, '/service/get')) {
 			echo \frontend\widgets\CategServiceVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
+			echo DbBanner::widget(['key' => 'left_side_uslygi_small']);
 		}
 		if (stristr($path, '/service/set')) {
 			echo \frontend\widgets\CategSetServiceVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
+			echo DbBanner::widget(['key' => 'left_side_uslygi_small']);
 		}
 	}
 
@@ -99,18 +105,23 @@ if (!stristr($path, 'site')) {
 		if (stristr($path, '/realty/sale')) {
 			echo \frontend\widgets\CategRealtySaleVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
+			echo DbBanner::widget(['key' => 'left_side_nedvigimostproda_small']);
 		}
 		if (stristr($path, '/realty/rent')) {
 			echo \frontend\widgets\CategRealtyRentVMenu::widget();
 			echo \frontend\widgets\TagsWidget::widget();
+			echo DbBanner::widget(['key' => 'left_side_nedvigimosarend_small']);
 		}
 	}
 	if (stristr($path, '/afisha')) {
 		echo \frontend\widgets\CategAfisha::widget();
 		echo \frontend\widgets\TagsWidget::widget();
+		echo DbBanner::widget(['key' => 'left_side_afisha_small']);
 	}
 	if (stristr($path, '/firm') && !stristr($path, '/firm/update')) {
 		echo \frontend\widgets\CategFirm::widget();
+		echo'<br>';
+		echo DbBanner::widget(['key' => 'left_side_poleznieadresa_small']);
 	}
 	if (stristr($path, '/news')) {
 		echo \frontend\widgets\CategNews::widget();
