@@ -2,6 +2,7 @@
 
 namespace common\models\konkurs;
 
+use common\models\users\User;
 use Yii;
 use \yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
@@ -125,7 +126,7 @@ class Konkurs extends ActiveRecord
 			'md' => 'Мета описание',
 		];
 	}
-
+	
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */

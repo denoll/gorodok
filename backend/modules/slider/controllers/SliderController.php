@@ -93,6 +93,7 @@ class SliderController extends Controller
 			$model->image = \yii\web\UploadedFile::getInstance($model, 'image'); //Миниатюра
 			if ($model->save()) {
 				Yii::$app->cache->flush();
+				Yii::$app->cache->flush('frontendCache');
 				Yii::$app->session->setFlash('success', 'Фото успешно сохранено.');
 				return $this->redirect(['update', 'id' => $model->id]);
 			} else {
@@ -128,6 +129,7 @@ class SliderController extends Controller
 			@unlink($images[$i]);
 		}
 		if($model->delete()&&Yii::$app->cache->flush()){
+			Yii::$app->cache->flush('frontendCache');
 			Yii::$app->session->setFlash('success', 'Фото успешно удалено');
 		}
 

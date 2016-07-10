@@ -41,9 +41,10 @@ class SliderSearch extends SliderMain
 	 */
 	public function search($params)
 	{
-		$query = SliderMain::find()->with('user')->orderBy('id DESC');
+		$query = SliderMain::find()->with('user');
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'sort' => ['defaultOrder'=> ['id'=>SORT_DESC]]
 		]);
 
 		$this->load($params);

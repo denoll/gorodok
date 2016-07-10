@@ -22,11 +22,13 @@ use yii\web\JsExpression;
 				<?= $form->field($model, 'id_user')->widget(Select2::classname(), [
 					'language' => 'ru',
 					'data' => ArrayHelper::map($users, 'id', 'username'),
-					'options' => ['placeholder' => 'Веберите рекламодателя ...'],
+					'options' => ['placeholder' => 'Веберите пользователя ...'],
 					'pluginOptions' => [
 						'allowClear' => true
 					],
 				]); ?>
+				<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
 				<?= $form->field($model, 'description')->textarea(['rows'=>6, 'maxlength' => true]) ?>
 				<div class="row">
 					<div class="col-sm-6">
@@ -64,9 +66,9 @@ use yii\web\JsExpression;
 					echo  $model->path;
 				}
 				?>
-				<?= $form->field($model, 'yes')->textInput() ?>
+				<?//= $form->field($model, 'yes')->textInput() ?>
 
-				<?= $form->field($model, 'no')->textInput() ?>
+				<?//= $form->field($model, 'no')->textInput() ?>
 
 				<?= $form->field($model, 'scope')->textInput() ?>
 			</div>

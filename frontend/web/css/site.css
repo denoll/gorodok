@@ -10,6 +10,11 @@ body {
     padding: 0px;
 }
 
+.header-title{
+    margin: 0 !important;
+    padding: 2px 0px 0px 5px;
+}
+
 @media (max-width: 768px) {
     #logo-header {
         margin: auto !important;
@@ -1258,6 +1263,43 @@ Widgets
     font-size: 0.95em;
 }
 
+/*Rating Star block*/
+
+.rating-container .filled-stars {
+    color: #FF7F00;
+    left: 0;
+    margin: auto;
+    overflow: hidden;
+    position: absolute;
+    text-shadow: 1px 1px #777;
+    top: 0;
+    white-space: nowrap;
+}
+
+.star-block{
+    position: absolute;
+    top: 8px;
+    left:2px;
+}
+.star-block div.rating{
+    background-color: rgba(0,0,0,0.6) !important;
+
+}
+.star-block .rating-container .filled-stars {
+    color: #FF9400;
+    left: 0;
+    margin: auto;
+    overflow: hidden;
+    position: absolute;
+    text-shadow: 1px 0px #777;
+    top: 0;
+    white-space: nowrap;
+}
+
+.rating-xxs {
+    font-size: 1.5em;
+}
+
 /*
 Top block
 */
@@ -1335,4 +1377,8 @@ Top block
 
 .upload-kit-item span.name {
     display: none;
+}
+
+.post .page-in {
+    padding: 15px 20px 25px 20px;
 }

@@ -16,7 +16,7 @@ use \common\widgets\Arrays;
 			</div>
 			<div class="col-md-10 side_left">
 				<h2 style="margin: 5px 0px;">
-					<?= Html::a(Html::encode($model['name']), ['/konkurs/konkurs/view', 'id' => $model['slug']]) ?>
+					Конкурс: <?= Html::a(Html::encode($model['name']), ['/konkurs/konkurs/view', 'id' => $model['slug']]) ?>
 				</h2>
 				<p>
 					<?= $model['title']; ?>

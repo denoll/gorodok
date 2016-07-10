@@ -16,6 +16,7 @@ use yii\db\Expression;
  * @property integer $id
  * @property integer $id_konkurs
  * @property integer $id_user
+ * @property string $name
  * @property string $base_url
  * @property string $img
  * @property string $image
@@ -26,6 +27,7 @@ use yii\db\Expression;
  * @property integer $yes
  * @property integer $no
  * @property integer $scope
+ * @property integer $vote_count
  *
  * @property Konkurs $konkurs
  * @property User $user
@@ -36,6 +38,8 @@ class KonkursItem extends \yii\db\ActiveRecord
 
 	const STATUS_ACTIVE = 1;
 	const STATUS_DISABLE = 0;
+	const STATUS_VERIFICATION = 2;
+
 	const HEIGHT_IMG = 600;
 	const WIDTH_IMG = 400;
 
@@ -81,9 +85,12 @@ class KonkursItem extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['id_konkurs', 'id_user', 'status', 'yes', 'no', 'scope', 'height', 'width'], 'integer'],
+			['name', 'required'],
+			[['id_konkurs', 'id_user', 'status', 'yes', 'no', 'height', 'width', 'vote_count'], 'integer'],
+			['scope', 'number'],
 			[['created_at', 'updated_at', 'image'], 'safe'],
-			[['base_url', 'img', 'description'], 'string', 'max' => 255],
+			[['base_url', 'img', 'name'], 'string', 'max' => 255],
+			[['description'], 'string', 'max' => 2000],
 			[['id_konkurs'], 'exist', 'skipOnError' => true, 'targetClass' => Konkurs::className(), 'targetAttribute' => ['id_konkurs' => 'id']],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
 		];
@@ -98,6 +105,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 			'id' => 'ID',
 			'id_konkurs' => 'Конкурс',
 			'id_user' => 'Пользователь',
+			'name' => 'Название',
 			'base_url' => 'Base Url',
 			'img' => 'Фото',
 			'image' => 'Фото',
@@ -107,10 +115,30 @@ class KonkursItem extends \yii\db\ActiveRecord
 			'status' => 'Статус',
 			'yes' => 'За',
 			'no' => 'Против',
-			'scope' => 'Баллы',
+			'scope' => 'Средний балл',
+			'vote_count' => 'Проголосовало (чел)',
 		];
 	}
 
+	/**
+	 * @param int $id_item KonkursItem id
+	 * @return float
+	 */
+	public static function getSumScope($id_item){
+		$vote = KonkursVote::find()->select('SUM(scope) AS scope, COUNT(id_user) AS count')->where(['id_item'=>$id_item])->asArray()->one();
+		if($vote['scope'] !== null && $vote['count'] !== null){
+			$model = self::findOne($id_item);
+			$model->vote_count = $vote['count'];
+			$model->scope = $vote['scope'] !== 0 ? $vote['scope'] / $vote['count'] : 0;
+			$model->save();
+		}
+
+	}
+
+	/**
+	 * @param bool $period
+	 * @return array|\yii\db\ActiveRecord[]
+	 */
 	public static function allKonkurs($period = false){
 		if($period){
 			return Konkurs::find()
@@ -137,6 +165,15 @@ class KonkursItem extends \yii\db\ActiveRecord
 	public function getUser()
 	{
 		return $this->hasOne(User::className(), ['id' => 'id_user']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getVote()
+	{
+		if(Yii::$app->user->isGuest) return $this->hasOne(KonkursVote::className(), ['id_item' => 'id'])->andWhere(['id_user' => 0])->asArray();
+		return $this->hasOne(KonkursVote::className(), ['id_item' => 'id'])->andWhere(['id_user' => Yii::$app->user->id])->asArray();
 	}
 
 	/**

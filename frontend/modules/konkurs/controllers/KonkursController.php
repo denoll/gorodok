@@ -3,11 +3,12 @@
 namespace app\modules\konkurs\controllers;
 
 use common\models\konkurs\ItemSearchFront;
+use common\models\konkurs\KonkursItem;
 use common\models\konkurs\KonkursSearchFront;
-use common\widgets\buttons\ControllerButton;
+use \common\models\konkurs\KonkursVote;
 use Yii;
 use common\models\konkurs\Konkurs;
-use common\models\konkurs\KonkursSearch;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,6 +62,26 @@ class KonkursController extends Controller
 		$konkurs = $this->findModel($id);
 		$searchModel = new ItemSearchFront();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $konkurs->id);
+		$post = Yii::$app->request->post();
+		if (!Yii::$app->user->isGuest) {
+			if ($post['rating'] !== null) {
+				$vote = KonkursVote::find()->where(['id_konkurs' => $konkurs->id, 'id_item' => (int)$post['item'], 'id_user' => Yii::$app->user->id])->one();
+				if (empty($vote)) {
+					$vote = new KonkursVote();
+					$vote->id_konkurs = $konkurs->id;
+					$vote->id_item = (int)$post['item'];
+					$vote->id_user = Yii::$app->user->id;
+				}
+				$vote->scope = (float)$post['rating'];
+				if ($vote->save(false)) {
+					echo
+					KonkursItem::getSumScope((int)$post['item']);
+					return $this->redirect(['view', 'id' => $id]);
+				}
+			}
+		} else {
+			Url::remember();
+		}
 		return $this->render('view', [
 			'model' => $konkurs,
 			'searchModel' => $searchModel,
@@ -77,7 +98,7 @@ class KonkursController extends Controller
 	 */
 	protected function findModel($slug)
 	{
-		if (($model = Konkurs::findOne(['slug'=>$slug])) !== null) {
+		if (($model = Konkurs::findOne(['slug' => $slug])) !== null) {
 			return $model;
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');

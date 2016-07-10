@@ -67,7 +67,7 @@ class ItemController extends Controller
 	{
 		$searchModel = new ItemSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		Url::remember();
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,

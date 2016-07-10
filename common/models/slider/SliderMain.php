@@ -140,7 +140,7 @@ class SliderMain extends \yii\db\ActiveRecord
 				@unlink($oldImages[$i]);
 			}
 			//avatar image name
-			$imgName = $this->id . '.' . $this->image->getExtension();
+			$imgName = $this->id_user .'_'. $this->id . '.' . $this->image->getExtension();
 
 			//saving thumbnail
 			$newSizeThumb = new Box($cropInfo['dw'], $cropInfo['dh']);
@@ -152,7 +152,7 @@ class SliderMain extends \yii\db\ActiveRecord
 				->crop($cropPointThumb, $cropSizeThumb)
 				->save($pathThumbImage, ['quality' => 70]);
 			//Save original image
-			$this->image->saveAs(Yii::getAlias('@frt_dir/img/slider/') . $imgName);
+			//$this->image->saveAs(Yii::getAlias('@frt_dir/img/slider/') . $imgName);
 
 			//save in database
 			$model = SliderMain::findOne($this->id);

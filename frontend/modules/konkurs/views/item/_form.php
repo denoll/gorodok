@@ -11,45 +11,23 @@ use yii\web\JsExpression;
 /* @var $model common\models\konkurs\KonkursItem */
 /* @var $users common\models\users\User */
 /* @var $form yii\widgets\ActiveForm */
+
+if($model->isNewRecord){
+	$konkurs = \common\models\konkurs\Konkurs::findOne(Yii::$app->session->get('id_konkurs'));
+	$width = $konkurs->width;
+	$height =$konkurs->height;
+}else{
+	$width = $model->konkurs->width;
+	$height =$model->konkurs->height;
+}
+
 ?>
 
 	<div class="konkurs-item-form">
 
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="row">
-			<div class="col-md-8">
-				<?= $form->field($model, 'id_konkurs')->dropDownList(ArrayHelper::map(\common\models\konkurs\KonkursItem::allKonkurs(),'id','name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите конкурс ...']) ?>
-				<?= $form->field($model, 'id_user')->widget(Select2::classname(), [
-					'language' => 'ru',
-					'data' => ArrayHelper::map($users, 'id', 'username'),
-					'options' => ['placeholder' => 'Веберите рекламодателя ...'],
-					'pluginOptions' => [
-						'allowClear' => true
-					],
-				]); ?>
-				<?= $form->field($model, 'description')->textarea(['rows'=>6, 'maxlength' => true]) ?>
-				<div class="row">
-					<div class="col-sm-6">
-						<?= $form->field($model, 'created_at')->widget(DateTimePicker::classname(), [
-							'options' => ['placeholder' => 'Укажите дату и время ...'],
-							'value' => date('Y-m-d H:i:s'),
-							'pluginOptions' => [
-								'autoclose' => true,
-							]
-						]); ?>
-					</div>
-					<div class="col-sm-6">
-						<?= $form->field($model, 'updated_at')->widget(DateTimePicker::classname(), [
-							'options' => ['placeholder' => 'Укажите дату и время ...'],
-							'pluginOptions' => [
-								'autoclose' => true
-							]
-						]); ?>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<?= $form->field($model, 'status')->dropDownList(\common\helpers\Arrays::status()) ?>
+			<div class="col-md-12">
 				<?= $form->field($model, 'image')->widget(
 					'\denoll\filekit\widget\Upload',
 					[
@@ -59,21 +37,13 @@ use yii\web\JsExpression;
 						'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
 					]
 				); ?>
-				<?php
-				if (!$model->isNewRecord && !empty($model->path)) {
-					echo  $model->path;
-				}
-				?>
-				<?= $form->field($model, 'yes')->textInput() ?>
-
-				<?= $form->field($model, 'no')->textInput() ?>
-
-				<?= $form->field($model, 'scope')->textInput() ?>
+				<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'description')->textarea(['rows'=>6, 'maxlength' => true]) ?>
 			</div>
 		</div>
 		<?= \common\widgets\buttons\ViewButtons::widget(['id' => $model->id]); ?>
-		<?= $form->field($model, 'height')->hiddenInput()->label(false) ?>
-		<?= $form->field($model, 'width')->hiddenInput()->label(false) ?>
+		<?= $form->field($model, 'height')->hiddenInput(['value' => $height])->label(false) ?>
+		<?= $form->field($model, 'width')->hiddenInput(['value' => $width])->label(false) ?>
 		<?php ActiveForm::end(); ?>
 
 	</div>

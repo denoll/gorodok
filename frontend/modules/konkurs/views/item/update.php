@@ -6,6 +6,9 @@ use yii\helpers\Html;
 /* @var $model common\models\konkurs\KonkursItem */
 /* @var $users common\models\users\User */
 
+//$this->params['left'] = true;
+$this->params['right'] = true;
+
 $this->title = 'Изменение элемента конкурса: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['index']];
 ?>

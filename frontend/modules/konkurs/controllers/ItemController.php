@@ -2,6 +2,7 @@
 
 namespace app\modules\konkurs\controllers;
 
+use common\models\konkurs\KonkursVote;
 use common\models\konkurs\Konkurs;
 use common\models\users\User;
 use Yii;
@@ -21,6 +22,10 @@ use common\widgets\buttons\ControllerButton;
  */
 class ItemController extends Controller
 {
+
+	protected $width;
+	protected $height;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -49,10 +54,14 @@ class ItemController extends Controller
 				'responseFormat' => Response::FORMAT_JSON,
 				'on afterSave' => function ($event) {
 					/* @var $file \League\Flysystem\File */
-					$file = $event->file;
 					$post = Yii::$app->request->post('KonkursItem');
+					$width = (int)$post['width'];
+					$height = (int)$post['height'];
+					$this->width = (!empty($width) && $width >= 300 && $width <= 800) ? $width : 600;
+					$this->height = (!empty($height) && $height >= 300 && $height <= 800) ? $height : 400;
+					$file = $event->file;
 					$path = Url::to('@frt_dir/img/konkurs/' . $file->getPath());
-					Image::thumbnail($path, (int)$post['width'], (int)$post['height'])
+					Image::thumbnail($path, $this->width, $this->height)
 						->save($path, ['quality' => 80]);
 				}
 			],
@@ -79,10 +88,31 @@ class ItemController extends Controller
 	 * @param integer $id
 	 * @return mixed
 	 */
-	public function actionView($id)
+	public function actionItem($id)
 	{
-		return $this->render('view', [
-			'model' => $this->findModel($id),
+		$model = $this->findModel($id);
+		$post = Yii::$app->request->post();
+		if (!Yii::$app->user->isGuest) {
+			if ($post['rating'] !== null) {
+				$vote = KonkursVote::find()->where(['id_konkurs' => $model->konkurs->id, 'id_item' => (int)$post['item'], 'id_user' => Yii::$app->user->id])->one();
+				if (empty($vote)) {
+					$vote = new KonkursVote();
+					$vote->id_konkurs = $model->konkurs->id;
+					$vote->id_item = (int)$post['item'];
+					$vote->id_user = Yii::$app->user->id;
+				}
+				$vote->scope = (float)$post['rating'];
+				if ($vote->save(false)) {
+					echo
+					KonkursItem::getSumScope((int)$post['item']);
+					return $this->redirect(['item', 'id' => $id]);
+				}
+			}
+		} else {
+			Url::remember();
+		}
+		return $this->render('item', [
+			'model' => $model,
 		]);
 	}
 
@@ -95,7 +125,10 @@ class ItemController extends Controller
 	{
 		$model = new KonkursItem();
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->load(Yii::$app->request->post())) {
+			$model->id_konkurs = Yii::$app->session->get('id_konkurs');
+			$model->id_user = Yii::$app->user->id;
+			$model->save();
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
 				'save_url' => Url::previous(),
@@ -120,7 +153,9 @@ class ItemController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->load(Yii::$app->request->post())) {
+
+			$model->save();
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
 				'save_url' => Url::previous(),

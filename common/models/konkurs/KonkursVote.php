@@ -4,6 +4,9 @@ namespace common\models\konkurs;
 
 use Yii;
 use common\models\users\User;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "konkurs_voite".
@@ -20,8 +23,26 @@ use common\models\users\User;
  * @property Konkurs $konkurs
  * @property KonkursItem $item
  */
-class KonkursVote extends \yii\db\ActiveRecord
+class KonkursVote extends ActiveRecord
 {
+
+	/**
+	 * @return array
+	 */
+	public function behaviors()
+	{
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'attributes' => [
+					ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+				],
+				'value' => new Expression('NOW()'),
+			],
+		];
+	}
+
 	/**
 	 * @inheritdoc
 	 */
@@ -37,8 +58,9 @@ class KonkursVote extends \yii\db\ActiveRecord
 	{
 		return [
 			[['id_konkurs', 'id_item', 'id_user'], 'required'],
-			[['id_konkurs', 'id_item', 'id_user', 'yes', 'no', 'scope'], 'integer'],
-			[['date'], 'safe'],
+			[['id_konkurs', 'id_item', 'id_user', 'yes', 'no'], 'integer'],
+			[['scope'], 'number'],
+			[['created_at', 'updated_at'], 'safe'],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
 			[['id_konkurs'], 'exist', 'skipOnError' => true, 'targetClass' => Konkurs::className(), 'targetAttribute' => ['id_konkurs' => 'id']],
 			[['id_item'], 'exist', 'skipOnError' => true, 'targetClass' => KonkursItem::className(), 'targetAttribute' => ['id_item' => 'id']],
@@ -57,7 +79,6 @@ class KonkursVote extends \yii\db\ActiveRecord
 			'yes' => 'За',
 			'no' => 'Против',
 			'scope' => 'Балл',
-			'date' => 'Дата голосования',
 		];
 	}
 

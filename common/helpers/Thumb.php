@@ -51,4 +51,34 @@ class Thumb
 		}
 	}
 
+	/**
+	 * @param $base_url
+	 * @param $img
+	 * @param null|string $options
+	 * @return mixed
+	 */
+	public static function imgWithOptions($base_url, $img, $options = null)
+	{
+		if ($size === null) {
+			if ($img != null || $img != '') {
+				return Html::img($base_url. '/' . $img, $options);
+			} else {
+				return Html::img(Url::to('@frt_url/img/no-img.png'), [
+					'alt' => 'Фото',
+					'style' => 'width:120px;'
+				]);
+			}
+		} else {
+			if ($img != null || $img != '') {
+				return Html::img($base_url. '/' . $img, $options);
+			} else {
+				$avtUrl = Url::to('@frt_url/img/no-img.png');
+				return Html::img($avtUrl, [
+					'alt' => 'Фото',
+					'style' => 'width:' . $size . ';'
+				]);
+			}
+		}
+	}
+
 }
