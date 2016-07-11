@@ -123,6 +123,10 @@ if (!stristr($path, 'site')) {
 		echo'<br>';
 		echo DbBanner::widget(['key' => 'left_side_poleznieadresa_small']);
 	}
+	if (stristr($path, '/konkurs')) {
+		echo \frontend\widgets\CategKonkurs::widget();
+		echo DbBanner::widget(['key' => 'left_side_konkurs_small']);
+	}
 	if (stristr($path, '/news')) {
 		echo \frontend\widgets\CategNews::widget();
 		echo \frontend\widgets\TagsWidget::widget();

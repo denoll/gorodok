@@ -18,7 +18,7 @@ class KonkursSearch extends Konkurs
 	public function rules()
 	{
 		return [
-			[['id', 'status', 'show_img', 'show_des', 'stars', 'width', 'height'], 'integer'],
+			[['id', 'status', 'show_img', 'show_des', 'stars', 'width', 'height', 'id_cat'], 'integer'],
 			[['name', 'slug', 'title', 'description', 'base_url', 'img', 'start', 'stop', 'created_at', 'updated_at', 'mk', 'md'], 'safe'],
 		];
 	}
@@ -41,7 +41,7 @@ class KonkursSearch extends Konkurs
 	 */
 	public function search($params)
 	{
-		$query = Konkurs::find();
+		$query = Konkurs::find()->with('cat');
 
 		// add conditions that should always apply here
 
@@ -59,6 +59,7 @@ class KonkursSearch extends Konkurs
 		// grid filtering conditions
 		$query->andFilterWhere([
 			'id' => $this->id,
+			'id_cat' => $this->id_cat,
 			'status' => $this->status,
 			'show_img' => $this->show_img,
 			'show_des' => $this->show_des,

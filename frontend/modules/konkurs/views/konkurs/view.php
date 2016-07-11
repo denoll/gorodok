@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-//$this->params['left'] = true;
+$this->params['left'] = true;
 $this->params['right'] = true;
 
 Yii::$app->session->remove('id_konkurs');
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="tag-box tag-box-v4 no-margin">
 				<h1 class="no-margin"><?= Html::encode($model['title']) ?></h1>
 				<?= $model['description'] ?><br>
-				<?= Html::a('Принять участие в конкурсе',['/konkurs/item/create'],['class'=>'btn-u btn-block']) ?>
+				<?= Html::a('Принять участие в конкурсе',['/konkurs/item/create'],['class'=>'btn-u btn-block']); ?>
 			</div>
 		</div>
 	</div>

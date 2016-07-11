@@ -78,9 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'enum' => BannerItem::bannerSize(),
 			],
 			[
-				'class' => \common\grid\EnumColumn::className(),
 				'attribute' => 'status',
-				'enum' => \common\helpers\Arrays::statusBanner(),
+				'format' => 'raw',
+				'filter' => \common\helpers\Arrays::statusBanner(),
+				'value' => function($data){
+					return \common\helpers\Arrays::getStatusBanner($data->status);
+				}
 			],
 			'click_count',
 			'hit_count',

@@ -57,10 +57,8 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					<?= Breadcrumbs::widget([
 						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 					]) ?>
-
-					<?= Alert::widget() ?>
-
 					<br>
+					<?= Alert::widget() ?>
 
 					<?= $content ?>
 
@@ -73,6 +71,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					<?= Breadcrumbs::widget([
 						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 					]) ?>
+					
 					<?= Alert::widget() ?>
 					<?= $content ?>
 				</div>
@@ -84,6 +83,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					<?= Breadcrumbs::widget([
 						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 					]) ?>
+
 					<?= Alert::widget() ?>
 					<?= $content ?>
 				</div>

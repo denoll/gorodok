@@ -17,6 +17,17 @@ $this->title = 'Создание нового рекламного баннер�
 $this->params['breadcrumbs'][] = ['label' => 'Все рекламные баннеры', 'url' => ['my-ads']];
 $this->params['breadcrumbs'][] = $this->title;
 
+if ($model->isNewRecord) {
+	$model->hit_count = 0;
+	$model->max_hit = 0;
+	$model->day_count = 0;
+	$model->max_day = 0;
+	$model->click_count = 0;
+	$model->max_click = 0;
+	$adv = Array();
+}else{
+	$adv = \common\models\banners\BannerAdv::getAdvForBanner($model->banner_key, false);
+}
 ?>
 <div class="banner-item-create">
 

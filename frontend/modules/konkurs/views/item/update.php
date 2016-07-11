@@ -6,15 +6,17 @@ use yii\helpers\Html;
 /* @var $model common\models\konkurs\KonkursItem */
 /* @var $users common\models\users\User */
 
-//$this->params['left'] = true;
+$this->params['left'] = true;
 $this->params['right'] = true;
 
-$this->title = 'Изменение элемента конкурса: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['index']];
+$this->title = 'Изменение элемента конкурса: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['/konkurs/konkurs/index']];
+$this->params['breadcrumbs'][] = ['label' => $konkurs->name, 'url' => ['/konkurs/konkurs/view', 'id'=>$konkurs->slug]];
 ?>
 <div class="konkurs-item-update">
 	<?= $this->render('_form', [
 		'model' => $model,
 		'users' => $users,
+		'konkurs' => $konkurs,
 	]) ?>
 </div>

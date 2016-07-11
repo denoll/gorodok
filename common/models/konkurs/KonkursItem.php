@@ -136,6 +136,19 @@ class KonkursItem extends \yii\db\ActiveRecord
 	}
 
 	/**
+	 * @param $id_konkurs
+	 * @return bool
+	 */
+	public static function verificationsUserItems($id_konkurs){
+		if(Yii::$app->user->isGuest) return false;
+		$user = Yii::$app->user->getIdentity();
+		$items = self::find()->where(['id_user'=>$user->id, 'id_konkurs'=>$id_konkurs])->andWhere(['<>', 'status', self::STATUS_DISABLE])->all();
+		if($items){
+			return true;
+		}else return false;
+	}
+
+	/**
 	 * @param bool $period
 	 * @return array|\yii\db\ActiveRecord[]
 	 */
@@ -182,5 +195,27 @@ class KonkursItem extends \yii\db\ActiveRecord
 	public function getVotes()
 	{
 		return $this->hasMany(KonkursVote::className(), ['id_item' => 'id']);
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getStatuses()
+	{
+		return [
+			self::STATUS_ACTIVE => 'Опубликован',
+			self::STATUS_DISABLE => 'Снят с публикации',
+			self::STATUS_VERIFICATION => 'На проверке'
+		];
+	}
+
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	public static function getStatus($id)
+	{
+		$statuses = self::getStatuses();
+		return $statuses[$id];
 	}
 }

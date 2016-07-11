@@ -14,6 +14,7 @@ use yii\behaviors\SluggableBehavior;
  * This is the model class for table "konkurs".
  *
  * @property integer $id
+ * @property integer $id_cat
  * @property string $name
  * @property string $slug
  * @property integer $status
@@ -92,7 +93,7 @@ class Konkurs extends ActiveRecord
 	{
 		return [
 			[['name'], 'required'],
-			[['status', 'show_img', 'show_des', 'stars', 'width', 'height'], 'integer'],
+			[['id', 'id_cat', 'status', 'show_img', 'show_des', 'stars', 'width', 'height'], 'integer'],
 			[['description'], 'string'],
 			[['image', 'start', 'stop', 'created_at', 'updated_at'], 'safe'],
 			[['name', 'slug', 'title', 'base_url', 'img', 'mk', 'md'], 'string', 'max' => 255],
@@ -107,6 +108,7 @@ class Konkurs extends ActiveRecord
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
+			'id_cat' => 'Категория',
 			'slug' => 'Алиас',
 			'status' => 'Статус',
 			'show_img' => 'Конкурс изображений',
@@ -126,7 +128,15 @@ class Konkurs extends ActiveRecord
 			'md' => 'Мета описание',
 		];
 	}
-	
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCat()
+	{
+		return $this->hasOne(KonkursCat::className(), ['id' => 'id_cat']);
+	}
+
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */

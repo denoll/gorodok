@@ -68,20 +68,6 @@ class ItemController extends Controller
 		];
 	}
 
-	/**
-	 * Lists all KonkursItem models.
-	 * @return mixed
-	 */
-	public function actionIndex()
-	{
-		$searchModel = new ItemSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-		return $this->render('index', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $dataProvider,
-		]);
-	}
 
 	/**
 	 * Displays a single KonkursItem model.
@@ -123,11 +109,17 @@ class ItemController extends Controller
 	 */
 	public function actionCreate()
 	{
+		$id_konkurs = Yii::$app->session->get('id_konkurs');
+		if(empty($id_konkurs)||Yii::$app->user->isGuest){
+			Url::remember();
+			Yii::$app->session->setFlash('info','<h2>Для участия в конкурсе Вам необходимо войти на сайт или зарегистрироваться на сайте, если еще не регистрировались.</h2>');
+			return $this->redirect(['/site/login']);
+		}
 		$model = new KonkursItem();
-
 		if ($model->load(Yii::$app->request->post())) {
 			$model->id_konkurs = Yii::$app->session->get('id_konkurs');
 			$model->id_user = Yii::$app->user->id;
+			$model->status = KonkursItem::STATUS_VERIFICATION;
 			$model->save();
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
@@ -138,7 +130,8 @@ class ItemController extends Controller
 		} else {
 			return $this->render('create', [
 				'model' => $model,
-				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all()
+				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all(),
+				'konkurs' => Konkurs::findOne($id_konkurs),
 			]);
 		}
 	}
@@ -151,10 +144,19 @@ class ItemController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		$id_konkurs = Yii::$app->session->get('id_konkurs');
+		if(empty($id_konkurs)||Yii::$app->user->isGuest){
+			Url::remember();
+			Yii::$app->session->setFlash('info','<h2>Для участия в конкурсе Вам необходимо войти на сайт или зарегистрироваться на сайте, если еще не регистрировались.</h2>');
+			return $this->redirect(['/site/login']);
+		}
 		$model = $this->findModel($id);
+		if($model->status !== KonkursItem::STATUS_VERIFICATION){
+			Yii::$app->session->setFlash('danger','<h2>Вы не можете редактировать элменты которые были проверены администрацией сайта и опубликованы.</h2>');
+			return $this->redirect(Url::previous());
+		}
 
 		if ($model->load(Yii::$app->request->post())) {
-
 			$model->save();
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
@@ -165,7 +167,8 @@ class ItemController extends Controller
 		} else {
 			return $this->render('update', [
 				'model' => $model,
-				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all()
+				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all(),
+				'konkurs' => Konkurs::findOne($id_konkurs),
 			]);
 		}
 	}

@@ -14,14 +14,19 @@ use yii\web\JsExpression;
 /* @var $form yii\widgets\ActiveForm */
 
 if ($model->isNewRecord) {
+	$model->hit_count = 0;
+	$model->max_hit = 0;
+	$model->day_count = 0;
+	$model->max_day = 0;
 	$model->click_count = 0;
 	$model->max_click = 0;
+	$adv = Array();
+}else{
+	$adv = \common\models\banners\BannerAdv::getAdvForBanner($model->banner_key, false);
 }
-
 ?>
 
 <div class="banner-item-form">
-	<button name="del-session" onclick="delSession()">Удалить сессию</button>
 	<?php $form = ActiveForm::begin(); //['options' => ['enctype' => 'multipart/form-data']] ?>
 	<div class="form-group">
 		<?= Html::submitButton('<i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить', ['class' => 'btn btn-success']) ?>
@@ -36,7 +41,8 @@ if ($model->isNewRecord) {
 	<div class="row">
 		<div class="col-md-4">
 			<?= $form->field($model, 'status')->dropDownList(\common\helpers\Arrays::statusBanner()) ?>
-			<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($advert, 'id', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите расположение баннера']) ?>
+			<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name'), ['onChange' => 'getAdv()', 'prompt' => 'Выберите расположение баннера']) ?>
+			<?= $form->field($model, 'id_adv_company')->dropDownList(ArrayHelper::map($adv, 'id', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите рекламную компанию']) ?>
 			<?= $form->field($model, 'id_user')->widget(Select2::classname(), [
 				'language' => 'ru',
 				'data' => ArrayHelper::map($users, 'id', 'username'),
@@ -45,7 +51,7 @@ if ($model->isNewRecord) {
 					'allowClear' => true
 				],
 			]); ?>
-			<?= $form->field($model, 'banner_key')->dropDownList(ArrayHelper::map($blocks, 'key', 'name'), ['onChange' => 'getSize()', 'prompt' => 'Выберите расположение баннера']) ?>
+
 			<?= $form->field($model, 'size')->dropDownList(BannerItem::bannerSize()) ?>
 			<?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 			<?= $form->field($model, 'caption')->textInput(['maxlength' => true]) ?>
@@ -118,6 +124,20 @@ $js = <<<JS
         success: function (data) {
 			$('#banneritem-height').val(data.height);
            	$('#banneritem-width').val(data.width);
+        }
+    });
+	}
+	function getAdv() {
+		var banner_key = $('#banneritem-banner_key :selected').val();
+	  $.ajax({
+        type: "get",
+        url: "get-adv",
+        data: "key=" + banner_key,
+        cache: true,
+        dataType: "html",
+        success: function (data) {
+			$('#banneritem-id_adv_company').show();
+			$('#banneritem-id_adv_company').html(data);
         }
     });
 	}

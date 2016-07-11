@@ -79,14 +79,35 @@ class KonkursController extends Controller
 					return $this->redirect(['view', 'id' => $id]);
 				}
 			}
-		} else {
-			Url::remember();
 		}
+		Url::remember();
 		return $this->render('view', [
 			'model' => $konkurs,
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 		]);
+	}
+
+	/**
+	 * Displays a single Konkurs model.
+	 * @param integer $id
+	 * @return mixed
+	 */
+	public function actionMyItems($id)
+	{
+		if (!Yii::$app->user->isGuest) {
+			$konkurs = $this->findModel($id);
+			$searchModel = new ItemSearchFront();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $konkurs->id, false);
+			Url::remember();
+			return $this->render('my-items', [
+				'model' => $konkurs,
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		} else {
+			return $this->redirect(Url::previous());
+		}
 	}
 
 	/**
@@ -98,7 +119,8 @@ class KonkursController extends Controller
 	 */
 	protected function findModel($slug)
 	{
-		if (($model = Konkurs::findOne(['slug' => $slug])) !== null) {
+		$model = Konkurs::find()->with('cat')->where(['slug' => $slug])->one();
+		if ($model) {
 			return $model;
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');

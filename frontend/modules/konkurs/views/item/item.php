@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by DENOLL LLC http://denoll.ru.
+ * User:  Denis Oleynikov
+ * Email: denoll@denoll.ru
+ * Date: 11.07.2016
+ * Time: 1:55
+ */
 
 use yii\helpers\Html;
 use kartik\widgets\StarRating;
@@ -8,18 +15,14 @@ use \common\models\konkurs\KonkursItem;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\konkurs\KonkursItem */
-
-//$this->params['left'] = true;
+$this->params['left'] = true;
 $this->params['right'] = true;
-
 Yii::$app->session->remove('id_konkurs');
 Yii::$app->session->set('id_konkurs', $model->id_konkurs);
-
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['/konkurs/konkurs/index']];
 $this->params['breadcrumbs'][] = ['label' => $model->konkurs->name, 'url' => ['/konkurs/konkurs/view', 'id' => $model->konkurs->slug]];
 $this->params['breadcrumbs'][] = $this->title;
-
 if (Yii::$app->user->isGuest) {
 	$vote = 0;
 } else {
@@ -29,8 +32,6 @@ if (Yii::$app->user->isGuest) {
 		$vote = 0;
 	}
 }
-
-
 ?>
 <div class="konkurs-item-view post">
 	<?php if (Yii::$app->user->isGuest) : ?>
@@ -85,7 +86,7 @@ if (Yii::$app->user->isGuest) {
 			<li>Дата фото: <strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong>&nbsp;&nbsp;</li>
 			<li>Проголосовало: <strong><?= !empty($model['vote_count']) ? $model['vote_count'] . ' (чел.) ' : 'еще нет голосов' ?></strong>&nbsp;&nbsp;</li>
 			<li>Средний балл: <strong><?= !empty($model['scope']) ? $model['scope'] : 'еще нет голосов' ?></strong>&nbsp;&nbsp;</li>
-			<?php if ($model->id_user === Yii::$app->user->id && $model->status === KonkursItem::STATUS_ACTIVE): ?>
+			<?php if ($model->id_user === Yii::$app->user->id && $model->status === KonkursItem::STATUS_VERIFICATION): ?>
 				<li><?= Html::a('<i class="fa fa-edit"></i>&nbsp;Редактировать', ['update', 'id' => $model->id], ['class' => 'btn-u btn-brd rounded-2x btn-u-xs']) ?></li>
 			<?php ENDIF; ?>
 		</ul>

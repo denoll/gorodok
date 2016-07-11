@@ -40,9 +40,14 @@ class ItemSearchFront extends KonkursItem
 	 *
 	 * @return ActiveDataProvider
 	 */
-	public function search($params, $id_konkurs)
+	public function search($params, $id_konkurs = null, $onlyActive = true)
 	{
-		$query = KonkursItem::find()->with(['user', 'konkurs', 'vote'])->where(['id_konkurs' => $id_konkurs]);
+		if($onlyActive){
+			$query = KonkursItem::find()->with(['user', 'konkurs', 'vote'])->where(['id_konkurs' => $id_konkurs, 'status'=>KonkursItem::STATUS_ACTIVE]);
+		}else{
+			$query = KonkursItem::find()->with(['user', 'konkurs', 'vote'])->where(['id_konkurs' => $id_konkurs])->andWhere(['<>','status',KonkursItem::STATUS_DISABLE]);
+		}
+
 
 		// add conditions that should always apply here
 

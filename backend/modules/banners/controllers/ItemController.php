@@ -162,6 +162,19 @@ class ItemController extends Controller
 	}
 
 	/**
+	 * @param string $key
+	 */
+	public function actionGetAdv($key)
+	{
+		$model = BannerAdv::getAdvForBanner($key,false);
+		if($model){
+			foreach ($model as $item)
+				echo '<option>Выберите рекламную компанию...</option>';
+			echo '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+		}
+	}
+
+	/**
 	 * Deletes an existing BannerItem model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
 	 * @param integer $id

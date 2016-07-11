@@ -114,6 +114,10 @@ body {
     padding: 14px 24px;
 }
 
+.alert{
+    margin: 10px auto !important;
+}
+
 .not-set {
     color: #c55;
     font-style: italic;

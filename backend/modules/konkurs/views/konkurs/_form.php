@@ -1,5 +1,7 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+use common\models\konkurs\KonkursCat;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\helpers\Arrays;
@@ -58,6 +60,7 @@ use kartik\date\DatePicker;
 			</div>
 		</div>
 		<div class="col-md-4">
+			<?= $form->field($model, 'id_cat')->dropDownList(ArrayHelper::map(KonkursCat::find()->all(),'id','name'),['prompt'=>'Выберите категорию...']) ?>
 			<?= $form->field($model, 'status')->dropDownList(Arrays::status()) ?>
 			<?= $form->field($model, 'show_img')->dropDownList(Arrays::statusYesNo()) ?>
 			<?= $form->field($model, 'show_des')->dropDownList(Arrays::statusYesNo()) ?>

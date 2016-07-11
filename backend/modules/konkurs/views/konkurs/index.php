@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			'id',
 			'name',
 			'title',
-			//'slug',
+			[
+				'attribute' => 'id_cat',
+				'filter' => \yii\helpers\ArrayHelper::map(\common\models\konkurs\KonkursCat::find()->all(),'id','name'),
+				'format' => 'raw',
+				'value' => 'cat.name'
+			],
 			[
 				'attribute' => 'status',
 				'filter' => \common\helpers\Arrays::status(),
