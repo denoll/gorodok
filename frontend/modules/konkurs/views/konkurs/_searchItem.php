@@ -4,46 +4,33 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\konkurs\ItemSearch */
+/* @var $model common\models\goods\GoodsSearch */
 /* @var $form yii\widgets\ActiveForm */
+$get_search = Yii::$app->request->get('search');
+$get = !empty($get_search) ? $get_search : null;
+$get_cat = Yii::$app->request->get('cat');
+$get_konkurs = Yii::$app->request->get('id');
 ?>
+<?php $form = ActiveForm::begin([
+	'action' => empty($get_cat) ? ['index'] : ['/konkurs/konkurs/view', 'cat' => $get_cat, 'id'=> $get_konkurs],
+	'method' => 'get',
+	'id' => 'search',
+]); ?>
+	<style type="text/css">
+		.help-block {
+			margin: 0px !important;
+		}
 
-<div class="konkurs-item-search">
-
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'id_konkurs') ?>
-
-    <?= $form->field($model, 'id_user') ?>
-
-    <?= $form->field($model, 'base_url') ?>
-
-    <?= $form->field($model, 'img') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'yes') ?>
-
-    <?php // echo $form->field($model, 'no') ?>
-
-    <?php // echo $form->field($model, 'scope') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+		.form-control {
+			height: 35px;
+		}
+	</style>
+	<div class="filter">
+		<div class="filter_element col-md-12 side_left" style="margin-top: 5px;">
+			<div class="input-group">
+				<?= Html::input('text', 'search', $get, ['placeholder' => 'Введите информацию для поиска ...', 'class' => 'form-control']) ?>
+				<span class="input-group-btn"><?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;Найти', ['class' => 'btn-u']) ?></span>
+			</div>
+		</div>
+	</div>
+<?php ActiveForm::end(); ?>

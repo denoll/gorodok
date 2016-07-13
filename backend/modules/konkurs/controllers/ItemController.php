@@ -2,6 +2,7 @@
 
 namespace app\modules\konkurs\controllers;
 
+use common\models\CommonQuery;
 use common\models\konkurs\Konkurs;
 use common\models\users\User;
 use Yii;
@@ -100,12 +101,12 @@ class ItemController extends Controller
 				'action' => Yii::$app->request->post('action'),
 				'save_url' => Url::previous(),
 				'update_url' => '/konkurs/item/update',
-				'id'=>$model->id
+				'id' => $model->id
 			]);
 		} else {
 			return $this->render('create', [
 				'model' => $model,
-				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all()
+				'users' => User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all()
 			]);
 		}
 	}
@@ -119,18 +120,21 @@ class ItemController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->findModel($id);
-
+		$cur_status = $model->status;
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if ($cur_status != $model->status) {
+				CommonQuery::sendUpdateKonkursItemEmail($model, Url::to('@frt_url/konkurses/my-items/' . $model->konkurs->slug));
+			}
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
 				'save_url' => Url::previous(),
 				'update_url' => '/konkurs/item/update',
-				'id'=>$model->id
+				'id' => $model->id
 			]);
 		} else {
 			return $this->render('update', [
 				'model' => $model,
-				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all()
+				'users' => User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all()
 			]);
 		}
 	}

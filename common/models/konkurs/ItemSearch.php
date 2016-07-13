@@ -42,7 +42,7 @@ class ItemSearch extends KonkursItem
 	 */
 	public function search($params)
 	{
-		$query = KonkursItem::find();
+		$query = KonkursItem::find()->with(['user', 'konkurs', 'vote']);
 
 		// add conditions that should always apply here
 

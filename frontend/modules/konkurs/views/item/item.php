@@ -15,14 +15,39 @@ use \common\models\konkurs\KonkursItem;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\konkurs\KonkursItem */
+/* @var $konkurs common\models\konkurs\Konkurs */
+
 $this->params['left'] = true;
 $this->params['right'] = true;
 Yii::$app->session->remove('id_konkurs');
 Yii::$app->session->set('id_konkurs', $model->id_konkurs);
-$this->title = $model->name;
+$this->title = 'Конкурс: ' . $konkurs->name . '. Элемент - ' . $model->name;
+$mk = [
+	$konkurs->cat->name,
+	$konkurs->name,
+	$model->name,
+];
+$md = [
+	$konkurs->cat->name,
+	$konkurs->name,
+	$model->name,
+];
+
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['/konkurs/konkurs/index']];
-$this->params['breadcrumbs'][] = ['label' => $model->konkurs->name, 'url' => ['/konkurs/konkurs/view', 'id' => $model->konkurs->slug]];
-$this->params['breadcrumbs'][] = $this->title;
+if(!empty($konkurs->cat)){
+	$this->params['breadcrumbs'][] = ['label' => $konkurs->cat->name, 'url' => ['/konkurs/konkurs/index', 'cat'=>$konkurs->cat->slug]];
+}
+$this->params['breadcrumbs'][] = ['label' => $model->konkurs->name, 'url' => ['/konkurs/konkurs/view', 'cat'=>$konkurs->cat->slug, 'id' => $model->konkurs->slug]];
+$this->params['breadcrumbs'][] = $model->name;
+
+if (!empty($md)) {
+	$this->registerMetaTag(['content' => implode(' ',$md), 'name' => 'description']);
+}
+if (!empty($mk)) {
+	$this->registerMetaTag(['content' => implode(', ',$mk), 'name' => 'keywords']);
+}
+
+
 if (Yii::$app->user->isGuest) {
 	$vote = 0;
 } else {
@@ -34,6 +59,7 @@ if (Yii::$app->user->isGuest) {
 }
 ?>
 <div class="konkurs-item-view post">
+	<h1 class="header-title"><?= $this->title ?></h1>
 	<?php if (Yii::$app->user->isGuest) : ?>
 		<div class="tag-box tag-box-v4 margin-bottom-10">
 			<h4>Для голосования Вам необходимо войти на сайт, либо зарегистрироваться, если еще не регистрировались.</h4>

@@ -394,6 +394,16 @@ a.thumbnail {
     margin-bottom: 11px;
 }
 
+.thumbnail-style span.status-top {
+    left: -10px;
+    top: 10px;
+    color: #fff;
+    padding: 3px 10px;
+    position: absolute;
+    background: #A90000;
+    display: inline-block;
+}
+
 .thumbnail-style a.btn-more {
     right: -10px;
     bottom: 10px;
@@ -411,6 +421,25 @@ a.thumbnail {
 
 .thumbnail-style:hover a.btn-more {
     right: 10px;
+}
+
+.thumbnail-style a.btn-more-left-bottom {
+    left: -10px;
+    bottom: 10px;
+    color: #fff;
+    padding: 3px 10px;
+    position: absolute;
+    background: #A90000;
+    display: inline-block;
+}
+
+.thumbnail-style a.btn-more-left-bottom:hover {
+    text-decoration: none;
+    box-shadow: 0 0 0 2px #A30000;
+}
+
+.thumbnail-style:hover a.btn-more-left-bottom {
+    left: 10px;
 }
 
 .thumbnail-style button.btn-more {

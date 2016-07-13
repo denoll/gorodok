@@ -14,11 +14,32 @@ $this->params['right'] = true;
 Yii::$app->session->remove('id_konkurs');
 Yii::$app->session->set('id_konkurs', $model->id);
 
+$cur_cat_slug = Yii::$app->request->get('cat');
+$cur_cat = $model->cat;
+
+$mk = $model->mk;
+$md = $model->md;
+
 $this->title = 'Конкурс: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['index']];
+if(!empty($cur_cat_slug) && !empty($cur_cat)){
+	$this->params['breadcrumbs'][] = ['label' => $cur_cat['name'], 'url' => ['/konkurs/konkurs/index', 'cat'=>$cur_cat['slug']]];
+	$mk = $mk . ', ' . $cur_cat['mk'];
+	$md = $md . ', ' . $cur_cat['md'];
+}
 $this->params['breadcrumbs'][] = $this->title;
+
+if (!empty($md)) {
+	$this->registerMetaTag(['content' => Html::encode($md), 'name' => 'description']);
+}
+if (!empty($mk)) {
+	$this->registerMetaTag(['content' => Html::encode($mk), 'name' => 'keywords']);
+}
+
+
 ?>
 <div class="konkurs-view">
+	<?= $this->render('_searchItem', ['model' => $searchModel]); ?>
 	<div class="row" style="padding-top: 5px;">
 		<div class="container-fluid">
 			<div class="tag-box tag-box-v4 no-margin">
@@ -32,6 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= \yii\widgets\ListView::widget([
 			'dataProvider' => $dataProvider,
 			'itemView' => '_itemItem',
+			'viewParams' => [
+				'konkurs' => $model,
+			],
 			'layout' => '<div class="col-md-12"><div class="sorter-block"><i class="small-text">Сортировать:</i> {sorter} {pager}</div> </div> {items} <div class="col-md-12">{pager}</div>',
 		]); ?>
 	</div>

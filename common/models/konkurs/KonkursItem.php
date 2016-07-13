@@ -91,6 +91,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 			[['created_at', 'updated_at', 'image'], 'safe'],
 			[['base_url', 'img', 'name'], 'string', 'max' => 255],
 			[['description'], 'string', 'max' => 2000],
+			[['description', 'name'], 'filter', 'filter' => 'strip_tags'],
 			[['id_konkurs'], 'exist', 'skipOnError' => true, 'targetClass' => Konkurs::className(), 'targetAttribute' => ['id_konkurs' => 'id']],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
 		];
@@ -175,6 +176,14 @@ class KonkursItem extends \yii\db\ActiveRecord
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
+	public function getKonkursWithCat()
+	{
+		return $this->hasOne(Konkurs::className(), ['id' => 'id_konkurs'])->with('cat');
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
 	public function getUser()
 	{
 		return $this->hasOne(User::className(), ['id' => 'id_user']);
@@ -213,7 +222,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 	 * @param $id
 	 * @return mixed
 	 */
-	public static function getStatus($id)
+	public static function getCurStatus($id)
 	{
 		$statuses = self::getStatuses();
 		return $statuses[$id];

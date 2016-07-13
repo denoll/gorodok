@@ -2,6 +2,7 @@
 
 namespace app\modules\konkurs\controllers;
 
+use common\models\CommonQuery;
 use common\models\konkurs\KonkursVote;
 use common\models\konkurs\Konkurs;
 use common\models\users\User;
@@ -99,6 +100,7 @@ class ItemController extends Controller
 		}
 		return $this->render('item', [
 			'model' => $model,
+			'konkurs' => Konkurs::find()->with('cat')->where(['id'=>$model->konkurs->id, 'status'=>Konkurs::STATUS_ACTIVE])->one(),
 		]);
 	}
 
@@ -120,7 +122,9 @@ class ItemController extends Controller
 			$model->id_konkurs = Yii::$app->session->get('id_konkurs');
 			$model->id_user = Yii::$app->user->id;
 			$model->status = KonkursItem::STATUS_VERIFICATION;
-			$model->save();
+			if($model->save()){
+				CommonQuery::sendCreateKonkursItemEmail($model,Url::to('@frt_url/konkurses/my-items/'.$model->konkurs->slug));
+			}
 			return ControllerButton::widget([
 				'action' => Yii::$app->request->post('action'),
 				'save_url' => Url::previous(),
@@ -131,7 +135,7 @@ class ItemController extends Controller
 			return $this->render('create', [
 				'model' => $model,
 				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all(),
-				'konkurs' => Konkurs::findOne($id_konkurs),
+				'konkurs' => Konkurs::find()->with('cat')->where(['id'=>$id_konkurs, 'status'=>Konkurs::STATUS_ACTIVE])->one(),
 			]);
 		}
 	}
@@ -168,7 +172,7 @@ class ItemController extends Controller
 			return $this->render('update', [
 				'model' => $model,
 				'users' => User::find()->where(['status'=>User::STATUS_ACTIVE])->asArray()->all(),
-				'konkurs' => Konkurs::findOne($id_konkurs),
+				'konkurs' => Konkurs::find()->with('cat')->where(['id'=>$id_konkurs, 'status'=>Konkurs::STATUS_ACTIVE])->one(),
 			]);
 		}
 	}

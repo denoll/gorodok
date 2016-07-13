@@ -9,11 +9,7 @@ use yii\widgets\ActiveForm;
 $get_search = Yii::$app->request->get('search');
 $get = !empty($get_search) ? $get_search : null;
 $get_cat = Yii::$app->request->get('cat');
-if (!empty($first_child)) {
-	$data = \yii\helpers\ArrayHelper::map($first_child, 'alias', 'name');
-} else {
-	$data = false;
-}
+
 ?>
 <?php $form = ActiveForm::begin([
 	'action' => empty($get_cat) ? ['index'] : ['index', 'cat' => $get_cat],

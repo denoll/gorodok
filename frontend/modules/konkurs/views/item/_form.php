@@ -12,13 +12,13 @@ use yii\web\JsExpression;
 /* @var $users common\models\users\User */
 /* @var $form yii\widgets\ActiveForm */
 
-if($model->isNewRecord){
+if ($model->isNewRecord) {
 	$konkurs = \common\models\konkurs\Konkurs::findOne(Yii::$app->session->get('id_konkurs'));
 	$width = $konkurs->width;
-	$height =$konkurs->height;
-}else{
+	$height = $konkurs->height;
+} else {
 	$width = $model->konkurs->width;
-	$height =$model->konkurs->height;
+	$height = $model->konkurs->height;
 }
 
 ?>
@@ -28,17 +28,21 @@ if($model->isNewRecord){
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="row">
 			<div class="col-md-12">
-				<?= $form->field($model, 'image')->widget(
-					'\denoll\filekit\widget\Upload',
-					[
-						'url' => ['upload'],
-						'sortable' => false,
-						'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
-						'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
-					]
-				); ?>
+				<?php if ($konkurs->show_img): ?>
+					<?= $form->field($model, 'image')->widget(
+						'\denoll\filekit\widget\Upload',
+						[
+							'url' => ['upload'],
+							'sortable' => false,
+							'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
+							'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+						]
+					); ?>
+				<?php ENDIF; ?>
 				<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-				<?= $form->field($model, 'description')->textarea(['rows'=>6, 'maxlength' => true]) ?>
+				<?php if ($konkurs->show_des): ?>
+					<?= $form->field($model, 'description')->textarea(['rows' => 6, 'maxlength' => true]) ?>
+				<?php ENDIF; ?>
 			</div>
 		</div>
 		<?= \common\widgets\buttons\ViewButtons::widget(['id' => $model->id]); ?>

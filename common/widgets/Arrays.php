@@ -26,7 +26,7 @@ class Arrays
 	const IMG_SIZE_HEIGHT = 200;
 	const IMG_SIZE_WIDTH = 200;
 
-	const CASH_TIME = 43200; //в секундах 60*60 = 3600 = 1 час  60*60*12 = 43200 = 12 час
+	const CASH_TIME = 300; //в секундах 60*60 = 3600 = 1 час  60*60*12 = 43200 = 12 час
 
 
 	public static function comp()
@@ -63,7 +63,7 @@ class Arrays
 	public static function paymentMethods()
 	{
 		return [
-			['id' => 'AC', 'name' => 'Оплата с банковской карты.'],
+			//['id' => 'AC', 'name' => 'Оплата с банковской карты.'],
 			['id' => 'PC', 'name' => 'Со счета в Яндекс Деньгах.'],
 			['id' => 'GP', 'name' => 'Наличными в салонах связи или через термирналы.'],
 			['id' => 'MC', 'name' => 'Платеж со счета мобильного телефона.'],

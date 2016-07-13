@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'name',
 			[
 				'attribute' => 'status',
-				'filter' => \common\helpers\Arrays::status(),
+				'filter' => \common\models\konkurs\KonkursItem::getStatuses(),
 				'value' => function ($data) {
-					return \common\helpers\Arrays::getStatus($data->status);
+					return  \common\models\konkurs\KonkursItem::getCurStatus($data->status);
 				}
 			],
 			[

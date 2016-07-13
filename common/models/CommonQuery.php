@@ -8,6 +8,7 @@
 
 namespace common\models;
 
+use common\helpers\Functions;
 use common\models\banners\BannerItem;
 use \common\models\users\UserAccount;
 use common\widgets\Arrays;
@@ -16,6 +17,7 @@ use Yii;
 use yii\bootstrap\Html;
 use yii\helpers\FileHelper;
 use common\models\users\User as CurUser;
+use \common\models\konkurs\KonkursItem;
 
 class CommonQuery extends ActiveRecord
 {
@@ -358,6 +360,77 @@ class CommonQuery extends ActiveRecord
 			<p>Номер баннера: <strong>'. $model->id .'</strong></p>
 			<p>Рекламная компания баннера: <strong>'. $model->advert->name.'</strong></p>
 			<p>Место размещения баннера: <strong>'.$model->banner->name .'</strong></p>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about create KonkursItem.
+	 * @param \common\models\konkurs\KonkursItem $model
+	 * @return boolean
+	 */
+	public static function sendCreateKonkursItemEmail($model, $link = null){
+
+		$user_id = $model->id_user;
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/createKonkursItemEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Поздравляем, Вы приняли участие в конкурсе: '.$model->konkurs->name.' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Пользователь '.$current_user->username.' на сайте '.Yii::$app->name.' создал новый элемент в конкурсе:'.$model->konkurs->name)
+			->setHtmlBody('Пользователь <strong>'.$current_user->username.'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' создал новый элемент в конкурсе:<strong>'.$model->konkurs->name.'</strong>
+			<br>Дата создания: <strong>'. $current_date .'.</strong>
+			<p>Название элемента: <strong>'. $model->name .'</strong></p>
+			<p>Статус элемента: <strong>'. KonkursItem::getCurStatus($model->status).'</strong></p>
+			<p>Изображение: <div style="display: block;">'. Html::img($model->base_url.'/'.$model->img).'</div></p>
+			<h3>Текст:</h3>
+			<p>'. nl2br($model->description) .'</p>
+			')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about update status KonkursItem.
+	 * @param \common\models\konkurs\KonkursItem $model
+	 * @return boolean
+	 */
+	public static function sendUpdateKonkursItemEmail($model, $link = null){
+		$user_id = $model->id_user;
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/updateKonkursItemEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Изменен статус Вашего элемента '.$model->name.' в конкурсе: '.$model->konkurs->name.' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Статус элемента '.$model->name.' пользователя '.$current_user->username.' в конкурсе: '.$model->konkurs->name. ' изменил свой статус.')
+			->setHtmlBody('Статус элемента <strong>'.$model->name.'</strong> пользователя <strong>'.$current_user->username.'</strong> в конкурсе: <strong>'.$model->konkurs->name. '</strong> изменил свой статус.
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>Конкурс:<strong>'.$model->konkurs->name.'</strong>
+			<p>Название элемента: <strong>'. $model->name .'</strong></p>
+			<p>Текущий статус элемента: <strong>'. KonkursItem::getCurStatus($model->status).'</strong></p>
+			<br>Дата изменения: <strong>'. $current_date .'.</strong>
+			<p>Изображение: <div style="display: block;">'. Html::img($model->base_url.'/'.$model->img).'</div></p>
+			<h3>Текст:</h3>
+			<p>'. nl2br($model->description) .'</p> 
+			')
 			->send();
 	}
 

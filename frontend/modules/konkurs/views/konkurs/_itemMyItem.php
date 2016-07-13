@@ -17,8 +17,9 @@ use yii\bootstrap\ActiveForm;
 					<div class="overflow-hidden">
 						<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['id' => 'img_id_' . $model['id'], 'style' => 'width: 100%; overflow: hidden;']) ?>
 					</div>
+					<span class="status-top">Статус:&nbsp;<?= \common\models\konkurs\KonkursItem::getCurStatus($model['status']) ?></span>
 					<?= Html::a('Подробнее',['/konkurs/item/item', 'id'=>$model['id']],['class' => 'btn btn-more hover-effect']); ?>
-					<?= Html::a('Редактировать',['/konkurs/item/update', 'id'=>$model['id']],['class' => 'btn btn-more hover-effect']); ?>
+					<?= Html::a('Редактировать',['/konkurs/item/update', 'id'=>$model['id']],['class' => 'btn btn-more-left-bottom hover-effect']); ?>
 			</div>
 		</div>
 		<div class="caption">

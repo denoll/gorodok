@@ -47,7 +47,10 @@ class ItemSearchFront extends KonkursItem
 		}else{
 			$query = KonkursItem::find()->with(['user', 'konkurs', 'vote'])->where(['id_konkurs' => $id_konkurs])->andWhere(['<>','status',KonkursItem::STATUS_DISABLE]);
 		}
-
+		$user_id = Yii::$app->request->get('user');
+		if(!empty($user_id)){
+			$query->andWhere(['id_user' => (int)$user_id]);
+		}
 
 		// add conditions that should always apply here
 
@@ -113,6 +116,34 @@ class ItemSearchFront extends KonkursItem
 		$query->andFilterWhere(['like', 'name', $this->name])
 			->andFilterWhere(['like', 'description', $this->description]);
 
+		$search = Yii::$app->request->get('search');
+		if(!empty($search)){
+			$search = $this->check($search);
+			$search = $this->getSearchArray($search);
+			$sql = '';
+
+			foreach ($search as $i => $item){
+				if($i !== 0) $sql .= ' OR ';
+				$sql .= '`name` LIKE \'%'.$item.'%\' ';
+				$sql .= ' OR ';
+				$sql .= '`description` LIKE \'%'.$item.'%\' ';
+			}
+			$query->andWhere(
+				$sql
+			);
+		}
+
 		return $dataProvider;
+	}
+
+	protected function check($str){
+		$arr = [',','.',':',';','_','"','\'','+','\\'];
+		$str = str_replace($arr, ' ',$str);
+		$str = strip_tags($str);
+		return trim($str);
+	}
+
+	protected function getSearchArray($str){
+		return explode(' ',$str);
 	}
 }

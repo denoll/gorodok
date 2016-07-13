@@ -10,13 +10,21 @@ use yii\grid\GridView;
 $this->params['left'] = true;
 $this->params['right'] = true;
 
-$model = $dataProvider->getModels();
+$cur_cat_slug = Yii::$app->request->get('cat');
+$cur_cat = Yii::$app->session->get('cat');
 
-$this->title = 'Конкурсы';
-$this->params['breadcrumbs'][] = $this->title;
 
-$mk = 'справочник адресов Тынды, адреса Тынды, адреса гос органов Тынды, адреса фирм Тынды, каталог фирм города Тында';
-$md = 'Справочник адресов государственных органов и компаний города Тында';
+$this->title = 'Конкурсы для жителей Тынды';
+$mk = 'конкурсы в Тынде, соревнования в Тынде, конкурсы, соревнования, состязания';
+$md = 'конкурсы, соревнования, состязания проводимые для жителей города Тында';
+
+$this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['/konkurs/konkurs/index']];
+if(!empty($cur_cat_slug) && !empty($cur_cat)){
+	$this->params['breadcrumbs'][] = ['label' => $cur_cat['name'], 'url' => ['/konkurs/konkurs/index', 'cat'=>$cur_cat['slug']]];
+	$this->title = $cur_cat['name'] .' для жителей Тынды';
+	$mk = $cur_cat['mk'] . ', ' . $mk;
+	$md = $cur_cat['md'] . ', ' . $md;
+}
 
 if (!empty($md)) {
 	$this->registerMetaTag(['content' => Html::encode($md), 'name' => 'description']);
@@ -32,7 +40,7 @@ if (!empty($mk)) {
 
 	<h1 class="header-title"><?= Html::encode($this->title) ?></h1>
 
-	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+	<?= $this->render('_search', ['model' => $searchModel]); ?>
 
 	<?= \yii\widgets\ListView::widget([
 		'dataProvider' => $dataProvider,

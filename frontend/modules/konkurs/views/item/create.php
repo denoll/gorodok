@@ -12,14 +12,18 @@ $this->params['right'] = true;
 
 $this->title = 'Добавление данных в конкурс: '.$konkurs->name;
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['/konkurs/konkurs/index']];
-$this->params['breadcrumbs'][] = ['label' => $konkurs->name, 'url' => ['/konkurs/konkurs/view', 'id'=>$konkurs->slug]];
+if(!empty($konkurs->cat)){
+	$this->params['breadcrumbs'][] = ['label' => $konkurs->cat->name, 'url' => ['/konkurs/konkurs/index', 'cat'=>$konkurs->cat->slug]];
+}
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['/konkurs/konkurs/view', 'id'=>$konkurs->slug]];
+
 
 ?>
 
 <div class="konkurs-item-create">
 
 	<h1><?= $this->title ?></h1>
-	
+
 	<?= $this->render('_form', [
 		'model' => $model,
 		'users' => $users,

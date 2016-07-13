@@ -55,13 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					return \common\helpers\Arrays::getYesNo($data->show_des);
 				}
 			],
-			[
+			/*[
 				'attribute' => 'stars',
 				'filter' => \common\helpers\Arrays::typeKonkurs(),
 				'value' => function($data){
 					return \common\helpers\Arrays::getTypeKonkurs($data->stars);
 				}
-			],
+			],*/
 			[
 				'attribute' => 'img',
 				'format' => 'raw',

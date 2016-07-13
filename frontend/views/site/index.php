@@ -40,6 +40,7 @@ $this->registerMetaTag(['content' => Html::encode('Городской порта
 						<?= \frontend\widgets\AfishaMainWidget::widget(); ?>
 					</div>
 					<div class="col-md-6 side_left" style="margin-top: 10px;">
+						<?= \frontend\widgets\KonkursMainWidget::widget(); ?>
 						<?= \frontend\widgets\LettersMainWidget::widget(); ?>
 					</div>
 				</div>
@@ -67,6 +68,7 @@ $this->registerMetaTag(['content' => Html::encode('Городской порта
 		</div>
 	</div>
 	<div class="col-md-3 side_left" style="margin-top: 10px;">
+
 		<div class="banner-header">
 			<span class="title-underblock title-bottom-border dark">Реклама</span>
 		</div>

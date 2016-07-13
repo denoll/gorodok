@@ -12,6 +12,7 @@ use common\models\konkurs\Konkurs;
  */
 class KonkursSearchFront extends Konkurs
 {
+
 	/**
 	 * @inheritdoc
 	 */
@@ -41,7 +42,17 @@ class KonkursSearchFront extends Konkurs
 	 */
 	public function search($params)
 	{
-		$query = Konkurs::find()->with('cat')->where(['status'=>Konkurs::STATUS_ACTIVE]);
+		$cur_cat_slug = Yii::$app->request->get('cat');
+
+		if(!empty($cur_cat_slug))
+		$cur_cat = KonkursCat::findOne(['slug'=>$cur_cat_slug]);
+		if(!empty($cur_cat)){
+			Yii::$app->session->set('cat', $cur_cat);
+			$query = Konkurs::find()->with('cat')->where(['status'=>Konkurs::STATUS_ACTIVE, 'id_cat'=>$cur_cat->id]);
+		}else{
+			Yii::$app->session->remove('cat');
+			$query = Konkurs::find()->with('cat')->where(['status'=>Konkurs::STATUS_ACTIVE]);
+		}
 
 		// add conditions that should always apply here
 
@@ -92,14 +103,44 @@ class KonkursSearchFront extends Konkurs
 			'updated_at' => $this->updated_at,
 		]);
 
-		$query->andFilterWhere(['like', 'name', $this->name])
-			->andFilterWhere(['like', 'slug', $this->slug])
-			->andFilterWhere(['like', 'title', $this->title])
-			->andFilterWhere(['like', 'description', $this->description])
-			->andFilterWhere(['like', 'img', $this->img])
-			->andFilterWhere(['like', 'mk', $this->mk])
-			->andFilterWhere(['like', 'md', $this->md]);
+		//$query->andFilterWhere(['like', 'name', $this->name])
+			//->andFilterWhere(['like', 'slug', $this->slug])
+			//->andFilterWhere(['like', 'title', $this->title])
+			//->andFilterWhere(['like', 'description', $this->description])
+			//->andFilterWhere(['like', 'img', $this->img])
+			//->andFilterWhere(['like', 'mk', $this->mk])
+			//->andFilterWhere(['like', 'md', $this->md]);
+		$search = Yii::$app->request->get('search');
+		if(!empty($search)){
+			$search = $this->check($search);
+			$search = $this->getSearchArray($search);
+			$sql = '';
+
+			foreach ($search as $i => $item){
+				if($i !== 0) $sql .= ' OR ';
+				$sql .= '`name` LIKE \'%'.$item.'%\' ';
+				$sql .= ' OR ';
+				$sql .= '`title` LIKE \'%'.$item.'%\' ';
+				$sql .= ' OR ';
+				$sql .= '`description` LIKE \'%'.$item.'%\' ';
+			}
+				$query->andWhere(
+					$sql
+				);
+		}
+
 
 		return $dataProvider;
+	}
+
+	protected function check($str){
+		$arr = [',','.',':',';','_','"','\'','+','\\'];
+		$str = str_replace($arr, ' ',$str);
+		$str = strip_tags($str);
+		return trim($str);
+	}
+
+	protected function getSearchArray($str){
+		return explode(' ',$str);
 	}
 }

@@ -34,6 +34,7 @@ use yii\behaviors\SluggableBehavior;
  * @property string $mk
  * @property string $md
  *
+ * @property KonkursCat[] $cat
  * @property KonkursItem[] $items
  * @property KonkursVote[] $votes
  */

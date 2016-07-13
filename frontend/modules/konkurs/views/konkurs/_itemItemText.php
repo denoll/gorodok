@@ -19,12 +19,6 @@ if (Yii::$app->user->isGuest) {
 		$vote = 0;
 	}
 }
-if($konkurs->show_img){
-	$desc =  \common\helpers\Functions::subString($model->description, 120);
-}else{
-	$desc =  \common\helpers\Functions::subString($model->description, 400);
-}
-
 
 ?>
 
@@ -53,7 +47,10 @@ if($konkurs->show_img){
 							]);?>
 						</div>
 						<?php if($konkurs->show_img): ?>
-							<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['id' => 'img_id_' . $model['id'], 'style' => 'width: 100%; overflow: hidden;']) ?>
+						<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['id' => 'img_id_' . $model['id'], 'style' => 'width: 100%; overflow: hidden;']) ?>
+						<?php ENDIF; ?>
+						<?php if($konkurs->show_des): ?>
+							<?= $model->description; ?>
 						<?php ENDIF; ?>
 					</div>
 					<?= Html::a('Подробнее',['/konkurs/item/item', 'cat' => $konkurs['cat']['slug'], 'konkurs'=>$konkurs['slug'], 'id'=>$model['id']],['class' => 'btn btn-more hover-effect']); ?>
@@ -66,17 +63,10 @@ if($konkurs->show_img){
 						],
 					]); ?>
 					<h4><i>Название: </i><?= $model['name'] ?></h4>
-					<?php if($konkurs->show_img): ?>
-						<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['id' => 'img_id_' . $model['id'], 'style' => 'width: 100%; overflow: hidden;']) ?>
-					<?php ENDIF; ?>
-					<?php if($konkurs->show_des):?>
-						<p>
-							<?= nl2br($desc); ?>
-						</p>
-					<?php ENDIF; ?>
+					<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['style' => 'width: 100%;']) ?>
 					<?php $form = ActiveForm::begin(); ?>
 					<p>
-						<i>Добавил участник: </i><strong><?= Html::a($model['user']['username'], ['/konkurs/konkurs/view', 'cat'=>$konkurs['cat']['slug'], 'id'=>$konkurs['slug'], 'user'=>$model['id_user']]) ?></strong>&nbsp;&nbsp;
+						<i>Добавил участник: </i><strong><?= $model['user']['username'] ?></strong>&nbsp;&nbsp;
 						<i>Дата фото: </i><strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong><br>
 						<i>Проголосовало: </i><strong><?= !empty($model['vote_count']) ? $model['vote_count'] .' (чел.) ' : 'еще нет голосов' ?></strong>&nbsp;&nbsp;
 						<i>Средний балл: </i><strong><?= !empty($model['scope']) ? $model['scope'] : 'еще нет голосов' ?></strong>
@@ -120,21 +110,11 @@ if($konkurs->show_img){
 					</p>
 				<?php ActiveForm::end(); ?>
 				<?php Modal::end(); ?>
-				<?php if(!$konkurs->show_img): ?>
-					<br><br><br><br>
-				<?php ENDIF; ?>
 			</div>
 		</div>
 		<div class="caption">
-
-			<h3><?= $model->name; ?></h3>
-			<?php if($konkurs->show_des): ?>
-				<p>
-					<?= nl2br($desc); ?>
-				</p>
-			<?php ENDIF; ?>
 			<p>
-				<i>Добавил участник: </i><strong><?= Html::a($model['user']['username'], ['/konkurs/konkurs/view', 'cat'=>$konkurs['cat']['slug'], 'id'=>$konkurs['slug'], 'user'=>$model['id_user']]) ?></strong>&nbsp;&nbsp;
+				<i>Добавил участник: </i><strong><?= $model['user']['username'] ?></strong>&nbsp;&nbsp;
 				<i>Дата фото: </i><strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong>&nbsp;&nbsp;<br>
 				<i>Проголосовало: </i><strong><?= !empty($model['vote_count']) ? $model['vote_count'] .' (чел.) ' : '0 (чел.)' ?></strong>&nbsp;&nbsp;
 				<i>Средний балл: </i><strong><?= !empty($model['scope']) ? $model['scope'] : 'еще нет голосов' ?></strong><br>

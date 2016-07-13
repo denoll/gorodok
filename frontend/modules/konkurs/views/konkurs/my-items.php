@@ -24,6 +24,9 @@ Yii::$app->session->set('id_konkurs', $model->id);
 
 $this->title = 'Конкурс: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Все конкурсы', 'url' => ['index']];
+if(!empty($model->cat)){
+	$this->params['breadcrumbs'][] = ['label' => $model->cat->name, 'url' => ['/konkurs/konkurs/index', 'cat'=>$model->cat->slug]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 	<div class="konkurs-view">
@@ -47,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerJsFile('/js/jquery.matchHeight.min.js',[
 	'depends' => [
-		\yii\bootstrap\BootstrapAsset::className()
+		\yii\web\JqueryAsset::className()
 	],
 ]);
 

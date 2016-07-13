@@ -51,7 +51,7 @@ use yii\web\JsExpression;
 				</div>
 			</div>
 			<div class="col-md-4">
-				<?= $form->field($model, 'status')->dropDownList(\common\helpers\Arrays::status()) ?>
+				<?= $form->field($model, 'status')->dropDownList(\common\models\konkurs\KonkursItem::getStatuses()) ?>
 				<?= $form->field($model, 'image')->widget(
 					'\denoll\filekit\widget\Upload',
 					[
