@@ -92,6 +92,7 @@ class Firm extends \yii\db\ActiveRecord
 			[['base_url', 'logo'], 'string', 'max' => 255],
 			[['tel', 'email', 'site', 'address', 'mk', 'md'], 'string', 'max' => 255],
 			[['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => FirmCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
+			[['description', 'name'], \common\components\stopWords\StopWord::className()],
 		];
 	}
 

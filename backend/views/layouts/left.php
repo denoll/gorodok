@@ -114,6 +114,15 @@ use yii\bootstrap\NavBar;
 				</ul>
 			</li>
 			<li>
+				<a href="#"><i class="fa fa-car"></i><span class="nav-label"> Авто</span><span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level collapse">
+					<li><?= Html::a('<i class="fa fa-car"></i> Авто объявления',['/auto/item/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-flag"></i> Авто бренды',['/auto/brands/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-flag-checkered"></i> Авто модели',['/auto/models/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-flag-o"></i> Авто модификации',['/auto/modify/index']) ?></li>
+				</ul>
+			</li>
+			<li>
 				<a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">Товары</span><span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse">
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Категории товаров',['/goods/goods-category/index']) ?></li>
@@ -141,12 +150,9 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-camera"></i> Фото на главной',['/slider/slider/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-font"></i> Текстовые вставки',['/text/text/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-edge"></i> Кэш',['/cache/cache/index']) ?></li>
-				</ul>
-			</li>
-			<li>
-				<a href="#"><i class="fa fa-cubes"></i><span class="nav-label">Меню</span><span class="fa arrow"></span></a>
-				<ul class="nav nav-second-level collapse">
-					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['/menu/menu-list/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['/mainmenu/default/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-cubes"></i> Расширения',['/mainmenu/extensions/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-map"></i> Sitemap static',['/static-sitemap/index']) ?></li>
 				</ul>
 			</li>
 			<li>

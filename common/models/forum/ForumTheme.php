@@ -85,6 +85,7 @@ class ForumTheme extends ActiveRecord
             [['description'], 'string', 'max' => 4000],
             [['m_keyword', 'm_description'], 'string', 'max' => 255],
             [['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => ForumCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
+			[['description', 'name'], \common\components\stopWords\StopWord::className()],
         ];
     }
 

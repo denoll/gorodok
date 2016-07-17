@@ -100,6 +100,7 @@ class RealtyRent extends \yii\db\ActiveRecord
 			[['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => RealtyCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
 			[['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
+			[['description', 'name', 'address'], \common\components\stopWords\StopWord::className()],
 		];
 	}
 

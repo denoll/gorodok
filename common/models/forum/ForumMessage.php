@@ -62,11 +62,12 @@ class ForumMessage extends ActiveRecord
             [['id_theme', 'id_cat', 'id_author'], 'required'],
             [['id_theme', 'id_cat', 'id_author', 'status'], 'integer'],
             [['created_at', 'modify_at'], 'safe'],
-            [['message'], 'string'],
+            [['message'], 'string', 'max' => 2000],
             [['message'], 'filter','filter'=>'strip_tags'],
             [['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => ForumCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
             [['id_theme'], 'exist', 'skipOnError' => true, 'targetClass' => ForumTheme::className(), 'targetAttribute' => ['id_theme' => 'id']],
             [['id_author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_author' => 'id']],
+			[['string'], \common\components\stopWords\StopWord::className()],
         ];
     }
 

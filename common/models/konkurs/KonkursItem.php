@@ -94,6 +94,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 			[['description', 'name'], 'filter', 'filter' => 'strip_tags'],
 			[['id_konkurs'], 'exist', 'skipOnError' => true, 'targetClass' => Konkurs::className(), 'targetAttribute' => ['id_konkurs' => 'id']],
 			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+			[['description', 'name'], \common\components\stopWords\StopWord::className()],
 		];
 	}
 
