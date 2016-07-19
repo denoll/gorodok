@@ -2,6 +2,7 @@
 
 namespace common\models\auto;
 
+use common\models\users\User;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -115,7 +116,9 @@ use Imagine\Image\Point;
  *
  * @property Image $images
  *
- * @property AutoImg[] $autoImgs
+ * @property User $user
+ * @property User $userActive
+ * @property AutoImg[] $autoImg
  * @property AutoBrands $brand
  * @property AutoModels $model
  * @property AutoModify $modify
@@ -195,7 +198,6 @@ class AutoItem extends \yii\db\ActiveRecord
 			[['id_model'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModels::className(), 'targetAttribute' => ['id_model' => 'id']],
 			[['id_modify'], 'exist', 'skipOnError' => true, 'targetClass' => AutoModify::className(), 'targetAttribute' => ['id_modify' => 'id']],
 			[['description'], \common\components\stopWords\StopWord::className()],
-
 			[['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
 		];
 	}
@@ -214,13 +216,13 @@ class AutoItem extends \yii\db\ActiveRecord
 			'status' => 'Статус',
 			'order' => 'Порядок',
 			'vin' => 'VIN',
-			'price' => 'Стоимость',
+			'price' => 'Стоимость(руб)',
 			'new' => 'Новый / С пробегом',
 			'body' => 'Кузов',
 			'transmission' => 'Коробка',
 			'year' => 'Год выпуска',
 			'power' => 'Мощность двигателя',
-			'distance' => 'Пробег',
+			'distance' => 'Пробег(км)',
 			'color' => 'Цвет',
 			'customs' => 'Растаможен',
 			'stage' => 'Стостояние',
@@ -311,6 +313,22 @@ class AutoItem extends \yii\db\ActiveRecord
 	public function getAutoImg()
 	{
 		return $this->hasMany(AutoImg::className(), ['id_item' => 'id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getUser()
+	{
+		return $this->hasOne(User::className(), ['id' => 'id_user']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getUserActive()
+	{
+		return $this->hasOne(User::className(), ['id' => 'id_user', 'status'=>User::STATUS_ACTIVE]);
 	}
 
 	/**
