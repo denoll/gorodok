@@ -9,6 +9,7 @@
 namespace common\models;
 
 use common\helpers\Functions;
+use common\models\auto\AutoItem;
 use common\models\banners\BannerItem;
 use \common\models\users\UserAccount;
 use common\widgets\Arrays;
@@ -18,6 +19,7 @@ use yii\bootstrap\Html;
 use yii\helpers\FileHelper;
 use common\models\users\User as CurUser;
 use \common\models\konkurs\KonkursItem;
+use yii\helpers\Url;
 
 class CommonQuery extends ActiveRecord
 {
@@ -201,6 +203,37 @@ class CommonQuery extends ActiveRecord
 			<br><strong>Email: '.$current_user->email.'</strong>
 			<br>На сайте '.Yii::$app->name.' изменил статус объявления №:<strong>'.$ads['id'].'</strong>
 			<br>На: <strong>'. Arrays::getAdsStatus($ads['status']).'</strong>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about change status ads.
+	 * @param integer $user_id
+	 * @param AutoItem $ads
+	 * @return boolean
+	 */
+	public static function sendChangeAutoStatusEmail($user_id, $ads, $link){
+		$current_user = Yii::$app->user->getIdentity();
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/changeAutoStatusEmail', ['current_user' => $current_user ,'ads' => $ads, 'link'=>$link])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Статус Вашего объявления №: '.$ads['id'].' - ' .$ads->brand->name. ' - ' . $ads->model->name .' на сайте '.Yii::$app->name. ' изменен.')
+			->send();
+		
+		$link_to_ads = Yii::$app->urlManager->createAbsoluteUrl(['/auto/item/view', 'id'=>$ads->id]);
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Пользователь '.$current_user->username.' на сайте '.Yii::$app->name.' изменил статус объявления №:'.$ads['id'])
+			->setHtmlBody('Пользователь <strong>'.$current_user->username.'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' изменил статус объявления №:<strong>'.$ads['id'].' - ' .$ads->brand->name. ' - ' . $ads->model->name .'</strong>
+			<br>На: <strong>'. \common\models\auto\Arrays::getStatusAuto($ads->status).'</strong>
+			<br>Для просмотра объявления пройдите по ссылке: '.Html::a( $link_to_ads ,$link_to_ads )
+			)
 			->send();
 	}
 

@@ -41,9 +41,9 @@ if($konkurs->show_img){
 							'pluginOptions' => [
 								'language' => 'ru',
 								'size' => 'xxs',
-								'stars' => 6,
+								'stars' => 5,
 								'min' => 0,
-								'max' => 6,
+								'max' => 5,
 								'step' => 0.1,
 								//'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
 								//'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>',
@@ -93,9 +93,9 @@ if($konkurs->show_img){
 								'value' => $vote,
 								'language' => 'ru',
 								'pluginOptions' => [
-									'stars' => 6,
+									'stars' => 5,
 									'min' => 0,
-									'max' => 6,
+									'max' => 5,
 									'step' => 0.1,
 									'defaultCaption' => '{rating} лайков',
 									'starCaptions' => new JsExpression("function(val){

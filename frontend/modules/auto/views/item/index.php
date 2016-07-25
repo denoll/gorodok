@@ -1,123 +1,45 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\auto\ItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Auto Items';
+//$this->params['left'] = true;
+$this->params['right'] = true;
+
+$this->title = 'Объявления авто';
 $this->params['breadcrumbs'][] = $this->title;
+
+$m_kw = 'продать автомобиль в тынде, купить автомобиль в тынде, автомобили в тынде, каталог автомобилей в тынде, продажа автомобилей в тынде';
+$m_d = 'Объявления о продеже и покупке автомобилей в Тынде. Здесь Вы можете подать свое объявление о продаже или покупке автомобиля в городе Тынада.';
+
+if (!empty($m_d)) {
+	$this->registerMetaTag(['content' => Html::encode($m_d), 'name' => 'description']);
+}
+if (!empty($m_kw)) {
+	$this->registerMetaTag(['content' => Html::encode($m_kw), 'name' => 'keywords']);
+}
+
 ?>
 <div class="auto-item-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Auto Item', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'id_model',
-            'id_brand',
-            'id_modify',
-            'status',
-            // 'order',
-            // 'vin',
-            // 'price',
-            // 'new',
-            // 'body',
-            // 'transmission',
-            // 'year',
-            // 'distance',
-            // 'color',
-            // 'customs',
-            // 'stage',
-            // 'crash',
-            // 'door',
-            // 'motor',
-            // 'privod',
-            // 'wheel',
-            // 'wheel_power',
-            // 'wheel_drive',
-            // 'wheel_leather',
-            // 'termal_glass',
-            // 'auto_cabin',
-            // 'sunroof',
-            // 'heat_front_seat',
-            // 'heat_rear_seat',
-            // 'heat_mirror',
-            // 'heat_rear_glass',
-            // 'heat_wheel',
-            // 'power_front_seat',
-            // 'power_rear_seat',
-            // 'power_mirror',
-            // 'power_wheel',
-            // 'folding_mirror',
-            // 'memory_front_seat',
-            // 'memory_rear_seat',
-            // 'memory_mirror',
-            // 'memory_wheel',
-            // 'auto_jockey',
-            // 'sensor_rain',
-            // 'sensor_light',
-            // 'partkronic_rear',
-            // 'parktronic_front',
-            // 'blind_spot_control',
-            // 'camera_rear',
-            // 'cruise_control',
-            // 'signaling',
-            // 'central_locking',
-            // 'immobiliser',
-            // 'satelite',
-            // 'airbags_front',
-            // 'airbags_knee',
-            // 'airbags_curtain',
-            // 'airbags_side_front',
-            // 'airbags_side_rear',
-            // 'abs',
-            // 'traction',
-            // 'rate_stability',
-            // 'brakeforce',
-            // 'emergency_braking',
-            // 'block_diff',
-            // 'pedestrian_detect',
-            // 'cd_system',
-            // 'mp3',
-            // 'radio',
-            // 'tv',
-            // 'video',
-            // 'wheel_manage',
-            // 'usb',
-            // 'aux',
-            // 'bluetooth',
-            // 'gps',
-            // 'audio_system',
-            // 'subwoofer',
-            // 'headlight',
-            // 'headlight_fog',
-            // 'headlight_washers',
-            // 'adaptive_light',
-            // 'bus',
-            // 'bus_winter_in',
-            // 'owners',
-            // 'service_book',
-            // 'dealer_serviced',
-            // 'garanty',
-            // 'description',
-            // 'created_at',
-            // 'updated_at',
-            // 'mk',
-            // 'md',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+	<h1 class="header-title"><?= Html::encode($this->title) ?></h1>
+	
+	<?php echo $this->render('_search', [
+			'model' => $searchModel,
+		]);?>
+	<?php if ($items) { ?>
+		<?= ListView::widget([
+			'dataProvider' => $dataProvider,
+			'itemView' => '_item',
+			'layout' => '<div class="sorter-block"><i class="small-text">Сортировать:</i> {sorter} {pager}</div> {items} {pager}',
+		]); ?>
+	<?php } else { ?>
+		<div class="alert alert-success fade in">
+			<strong>Ничего не найдено!</strong>
+		</div>
+	<?php } ?>
 </div>

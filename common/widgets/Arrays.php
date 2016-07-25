@@ -47,6 +47,8 @@ class Arrays
 	public static function PAYMENTS()
 	{
 		return [
+			'auto_vip_pay' => 100,
+			'auto_up_pay' => 30,
 			'res_vip_pay' => 100,
 			'res_up_pay' => 30,
 			'vac_vip_pay' => 100,
@@ -63,7 +65,7 @@ class Arrays
 	public static function paymentMethods()
 	{
 		return [
-			//['id' => 'AC', 'name' => 'Оплата с банковской карты.'],
+			['id' => 'AC', 'name' => 'Оплата с банковской карты.'],
 			['id' => 'PC', 'name' => 'Со счета в Яндекс Деньгах.'],
 			['id' => 'GP', 'name' => 'Наличными в салонах связи или через термирналы.'],
 			['id' => 'MC', 'name' => 'Платеж со счета мобильного телефона.'],

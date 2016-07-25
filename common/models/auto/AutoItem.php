@@ -32,6 +32,7 @@ use Imagine\Image\Point;
  * @property integer $year
  * @property integer $distance
  * @property integer $power
+ * @property string $volume
  * @property integer $color
  * @property integer $customs
  * @property integer $stage
@@ -111,6 +112,8 @@ use Imagine\Image\Point;
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
+ * @property string $top_date
+ * @property string $vip_date
  * @property string $mk
  * @property string $md
  *
@@ -153,7 +156,7 @@ class AutoItem extends \yii\db\ActiveRecord
 				'class' => TimestampBehavior::className(),
 				'attributes' => [
 					ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+					//ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
 				],
 				'value' => new Expression('NOW()'),
 			],
@@ -187,9 +190,9 @@ class AutoItem extends \yii\db\ActiveRecord
 				'headlight', 'headlight_fog', 'headlight_washers', 'adaptive_light', 'bus', 'bus_winter_in',
 				'owners', 'service_book', 'dealer_serviced', 'garanty'], 'integer'],
 
-			[['id_model', 'id_brand', 'price', 'body', 'transmission', 'year', 'distance', 'customs', 'stage', 'crash', 'door', 'motor', 'privod', 'wheel'], 'required'],
-			[['price'], 'number'],
-			[['created_at', 'updated_at', 'images'], 'safe'],
+			[['id_model', 'id_brand', 'price', 'new', 'body', 'transmission', 'year', 'distance', 'volume', 'power', 'motor', 'privod', 'stage', 'door', 'wheel', 'color'], 'required'],
+			[['price', 'volume'], 'number'],
+			[['created_at', 'updated_at', 'top_date', 'vip_date', 'images'], 'safe'],
 			[['color'], 'string', 'max' => 7],
 			[['vin'], 'string', 'max' => 20],
 			[['description'], 'string', 'max' => 2032],
@@ -215,13 +218,14 @@ class AutoItem extends \yii\db\ActiveRecord
 			'id_user' => 'Подал объявление',
 			'status' => 'Статус',
 			'order' => 'Порядок',
-			'vin' => 'VIN',
+			'vin' => 'VIN номер автомобиля',
 			'price' => 'Стоимость(руб)',
 			'new' => 'Новый / С пробегом',
 			'body' => 'Кузов',
 			'transmission' => 'Коробка',
 			'year' => 'Год выпуска',
 			'power' => 'Мощность двигателя',
+			'volume' => 'Объем двигателя',
 			'distance' => 'Пробег(км)',
 			'color' => 'Цвет',
 			'customs' => 'Растаможен',
@@ -233,7 +237,7 @@ class AutoItem extends \yii\db\ActiveRecord
 			'climate_control' => 'Климат контроль',
 			'wheel' => 'Руль',
 			'wheel_power' => 'Усилитель руля',
-			'wheel_drive' => 'Управление на руле',
+			'wheel_drive' => 'Управление климатконтролем на руле',
 			'wheel_leather' => 'Кожанный руль',
 			'termal_glass' => 'Атермальное остекление',
 			'auto_cabin' => 'Салон авто',
@@ -282,7 +286,7 @@ class AutoItem extends \yii\db\ActiveRecord
 			'radio' => 'Радио',
 			'tv' => 'TV',
 			'video' => 'Видео',
-			'wheel_manage' => 'Управление на руле',
+			'wheel_manage' => 'Управление аудио на руле',
 			'usb' => 'USB',
 			'aux' => 'AUX',
 			'bluetooth' => 'Bluetooth',
@@ -302,8 +306,11 @@ class AutoItem extends \yii\db\ActiveRecord
 			'description' => 'Описание',
 			'created_at' => 'Создано',
 			'updated_at' => 'Изменено',
+			'top_date' => 'Поднято',
+			'vip_date' => 'Выделено',
 			'mk' => 'Ключевые слова',
 			'md' => 'Мета описание',
+			'reCaptcha' => 'Докажите что Вы не робот',
 		];
 	}
 
@@ -328,7 +335,7 @@ class AutoItem extends \yii\db\ActiveRecord
 	 */
 	public function getUserActive()
 	{
-		return $this->hasOne(User::className(), ['id' => 'id_user', 'status'=>User::STATUS_ACTIVE]);
+		return $this->hasOne(User::className(), ['id' => 'id_user'])->andWhere(['status'=>User::STATUS_ACTIVE]);
 	}
 
 	/**

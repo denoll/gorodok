@@ -69,8 +69,8 @@ class AdvertController extends Controller
 					$post = Yii::$app->request->post('BannerItem');
 					$width = (int)$post['width'];
 					$height = (int)$post['height'];
-					$this->width = (!empty($width) && $width >= 900 && $width <= 900) ? $width : 600;
-					$this->height = (!empty($height) && $height >= 900 && $height <= 900) ? $height : 600;
+					$this->width = (!empty($width)) ? $width : 600;
+					$this->height = (!empty($height)) ? $height : 600;
 					$path = Url::to('@frt_dir/img/banners/'.$file->getPath());
 					Image::thumbnail($path, $this->width, $this->height)
 						->save($path, ['quality' => 70]);

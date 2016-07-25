@@ -31,8 +31,8 @@ class ItemSearch extends AutoItem
 				'cd_system', 'mp3', 'radio', 'tv', 'video', 'wheel_manage', 'usb', 'aux', 'bluetooth', 'gps', 'audio_system', 'subwoofer',
 				'headlight', 'headlight_fog', 'headlight_washers', 'adaptive_light',
 				'bus', 'bus_winter_in', 'owners', 'service_book', 'dealer_serviced', 'garanty'], 'integer'],
-			[['vin', 'description', 'created_at', 'updated_at', 'mk', 'md', 'color'], 'safe'],
-			[['price'], 'number'],
+			[['vin', 'description', 'created_at', 'updated_at', 'top_date', 'vip_date', 'mk', 'md', 'color'], 'safe'],
+			[['price', 'volume'], 'number'],
 		];
 	}
 
@@ -85,6 +85,7 @@ class ItemSearch extends AutoItem
 			'transmission' => $this->transmission,
 			'year' => $this->year,
 			'power' => $this->power,
+			'volume' => $this->volume,
 			'distance' => $this->distance,
 			'color' => $this->color,
 			'customs' => $this->customs,
@@ -164,6 +165,8 @@ class ItemSearch extends AutoItem
 			'garanty' => $this->garanty,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
+			'top_date' => $this->top_date,
+			'vip_date' => $this->vip_date,
 		]);
 
 		$query->andFilterWhere(['like', 'vin', $this->vin])

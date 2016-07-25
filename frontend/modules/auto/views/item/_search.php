@@ -2,208 +2,161 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\auto\AutoBrands;
+use common\models\auto\AutoModels;
+
+$get_model = Yii::$app->request->get('S');
+
+if ( !empty($get_model[ 'id_brand' ]) ) {
+	$auto_models = AutoModels::getModelsForOneBrand((int)$get_model[ 'id_brand' ]);
+} else {
+	$auto_models = [ ];
+}
+
+if ( !empty($get_model[ 'new' ]) ) {
+	switch ( $get_model[ 'new' ] ) {
+		case 0:
+			$checked_0 = 'checked';
+			$checked_1 = $checked_2 = null;
+			break;
+		case 1:
+			$checked_1 = 'checked';
+			$checked_0 = $checked_2 = null;
+			break;
+		case 2:
+			$checked_2 = 'checked';
+			$checked_0 = $checked_1 = null;
+			break;
+	}
+} else {
+	$checked_0 = 'checked';
+	$checked_1 = $checked_2 = null;
+}
 
 /* @var $this yii\web\View */
-/* @var $model common\models\auto\ItemSearch */
+/* @var $model common\models\med\DoctorsSearch */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
-<div class="auto-item-search">
-
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'id_model') ?>
-
-    <?= $form->field($model, 'id_brand') ?>
-
-    <?= $form->field($model, 'id_modify') ?>
-
-    <?= $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'order') ?>
-
-    <?php // echo $form->field($model, 'vin') ?>
-
-    <?php // echo $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'new') ?>
-
-    <?php // echo $form->field($model, 'body') ?>
-
-    <?php // echo $form->field($model, 'transmission') ?>
-
-    <?php // echo $form->field($model, 'year') ?>
-
-    <?php // echo $form->field($model, 'distance') ?>
-
-    <?php // echo $form->field($model, 'color') ?>
-
-    <?php // echo $form->field($model, 'customs') ?>
-
-    <?php // echo $form->field($model, 'stage') ?>
-
-    <?php // echo $form->field($model, 'crash') ?>
-
-    <?php // echo $form->field($model, 'door') ?>
-
-    <?php // echo $form->field($model, 'motor') ?>
-
-    <?php // echo $form->field($model, 'privod') ?>
-
-    <?php // echo $form->field($model, 'wheel') ?>
-
-    <?php // echo $form->field($model, 'wheel_power') ?>
-
-    <?php // echo $form->field($model, 'wheel_drive') ?>
-
-    <?php // echo $form->field($model, 'wheel_leather') ?>
-
-    <?php // echo $form->field($model, 'termal_glass') ?>
-
-    <?php // echo $form->field($model, 'auto_cabin') ?>
-
-    <?php // echo $form->field($model, 'sunroof') ?>
-
-    <?php // echo $form->field($model, 'heat_front_seat') ?>
-
-    <?php // echo $form->field($model, 'heat_rear_seat') ?>
-
-    <?php // echo $form->field($model, 'heat_mirror') ?>
-
-    <?php // echo $form->field($model, 'heat_rear_glass') ?>
-
-    <?php // echo $form->field($model, 'heat_wheel') ?>
-
-    <?php // echo $form->field($model, 'power_front_seat') ?>
-
-    <?php // echo $form->field($model, 'power_rear_seat') ?>
-
-    <?php // echo $form->field($model, 'power_mirror') ?>
-
-    <?php // echo $form->field($model, 'power_wheel') ?>
-
-    <?php // echo $form->field($model, 'folding_mirror') ?>
-
-    <?php // echo $form->field($model, 'memory_front_seat') ?>
-
-    <?php // echo $form->field($model, 'memory_rear_seat') ?>
-
-    <?php // echo $form->field($model, 'memory_mirror') ?>
-
-    <?php // echo $form->field($model, 'memory_wheel') ?>
-
-    <?php // echo $form->field($model, 'auto_jockey') ?>
-
-    <?php // echo $form->field($model, 'sensor_rain') ?>
-
-    <?php // echo $form->field($model, 'sensor_light') ?>
-
-    <?php // echo $form->field($model, 'partkronic_rear') ?>
-
-    <?php // echo $form->field($model, 'parktronic_front') ?>
-
-    <?php // echo $form->field($model, 'blind_spot_control') ?>
-
-    <?php // echo $form->field($model, 'camera_rear') ?>
-
-    <?php // echo $form->field($model, 'cruise_control') ?>
-
-    <?php // echo $form->field($model, 'signaling') ?>
-
-    <?php // echo $form->field($model, 'central_locking') ?>
-
-    <?php // echo $form->field($model, 'immobiliser') ?>
-
-    <?php // echo $form->field($model, 'satelite') ?>
-
-    <?php // echo $form->field($model, 'airbags_front') ?>
-
-    <?php // echo $form->field($model, 'airbags_knee') ?>
-
-    <?php // echo $form->field($model, 'airbags_curtain') ?>
-
-    <?php // echo $form->field($model, 'airbags_side_front') ?>
-
-    <?php // echo $form->field($model, 'airbags_side_rear') ?>
-
-    <?php // echo $form->field($model, 'abs') ?>
-
-    <?php // echo $form->field($model, 'traction') ?>
-
-    <?php // echo $form->field($model, 'rate_stability') ?>
-
-    <?php // echo $form->field($model, 'brakeforce') ?>
-
-    <?php // echo $form->field($model, 'emergency_braking') ?>
-
-    <?php // echo $form->field($model, 'block_diff') ?>
-
-    <?php // echo $form->field($model, 'pedestrian_detect') ?>
-
-    <?php // echo $form->field($model, 'cd_system') ?>
-
-    <?php // echo $form->field($model, 'mp3') ?>
-
-    <?php // echo $form->field($model, 'radio') ?>
-
-    <?php // echo $form->field($model, 'tv') ?>
-
-    <?php // echo $form->field($model, 'video') ?>
-
-    <?php // echo $form->field($model, 'wheel_manage') ?>
-
-    <?php // echo $form->field($model, 'usb') ?>
-
-    <?php // echo $form->field($model, 'aux') ?>
-
-    <?php // echo $form->field($model, 'bluetooth') ?>
-
-    <?php // echo $form->field($model, 'gps') ?>
-
-    <?php // echo $form->field($model, 'audio_system') ?>
-
-    <?php // echo $form->field($model, 'subwoofer') ?>
-
-    <?php // echo $form->field($model, 'headlight') ?>
-
-    <?php // echo $form->field($model, 'headlight_fog') ?>
-
-    <?php // echo $form->field($model, 'headlight_washers') ?>
-
-    <?php // echo $form->field($model, 'adaptive_light') ?>
-
-    <?php // echo $form->field($model, 'bus') ?>
-
-    <?php // echo $form->field($model, 'bus_winter_in') ?>
-
-    <?php // echo $form->field($model, 'owners') ?>
-
-    <?php // echo $form->field($model, 'service_book') ?>
-
-    <?php // echo $form->field($model, 'dealer_serviced') ?>
-
-    <?php // echo $form->field($model, 'garanty') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'mk') ?>
-
-    <?php // echo $form->field($model, 'md') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+<div class="realty-search">
+	<?php $form = ActiveForm::begin([
+		'method' => 'get',
+	]); ?>
+
+	<div class="filter">
+		<div class="row">
+			<div class=" container-fluid">
+				<div class="radio_buttons">
+					<div class="col-3">
+						<input id="radio1" type="radio" <?= $checked_0 ?> value="0" name="S[new]">
+						<label for="radio1">Все</label>
+					</div>
+					<div class="col-3">
+						<input id="radio2" type="radio" <?= $checked_1 ?> value="1" name="S[new]">
+						<label for="radio2">Только новые</label>
+					</div>
+					<div class="col-3">
+						<input id="radio3" type="radio" <?= $checked_2 ?> value="2" name="S[new]">
+						<label for="radio3">Только с пробегом</label>
+					</div>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<?= $form->field($model, 'id_brand')->dropDownList(ArrayHelper::map(AutoBrands::getAllBrands(), 'id', 'name'), [ 'id' => 'brand-id', 'onChange' => 'getModel()', 'prompt' => 'Выберите ...' ]); ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<?= $form->field($model, 'id_model')->dropDownList(ArrayHelper::map($auto_models, 'id', 'name'), [ 'id' => 'model-id', 'prompt' => 'Выберите ...' ]) ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<label class="control-label" for="el-cost">Стоимость (руб):</label>
+					<table>
+						<tr>
+							<td><?= $form->field($model, 'price_min', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'от' ] ])->label(false) ?></td>
+							<td><?= $form->field($model, 'price_max', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'до' ] ])->label(false) ?></td>
+						</tr>
+					</table>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<?= $form->field($model, 'body', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::bodyAuto(), [ 'prompt' => '--' ]) ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<?= $form->field($model, 'transmission', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::transmissionAuto(), [ 'prompt' => '--' ]) ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left">
+					<label class="control-label" for="el-distance">Год выпуска:</label>
+					<table style="width: 100%;">
+						<tr>
+							<td style="width: 50%;"><?= $form->field($model, 'year_min', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::yearAuto(), [ 'prompt' => 'от --' ])->label(false) ?></td>
+							<td style="width: 50%;"><?= $form->field($model, 'year_max', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::yearAuto(), [ 'prompt' => 'до --' ])->label(false) ?></td>
+						</tr>
+					</table>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $distance ?>">
+					<label class="control-label" for="el-distance">Пробег (км):</label>
+					<table>
+						<tr>
+							<td><?= $form->field($model, 'distance_min', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'от' ] ])->label(false) ?></td>
+							<td><?= $form->field($model, 'distance_max', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'до' ] ])->label(false) ?></td>
+						</tr>
+					</table>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $distance ?>">
+					<label class="control-label" for="el-distance">Объем двигателя (л):</label>
+					<table>
+						<tr>
+							<td><?= $form->field($model, 'volume_min', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'от' ] ])->label(false) ?></td>
+							<td><?= $form->field($model, 'volume_max', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'до' ] ])->label(false) ?></td>
+						</tr>
+					</table>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $area_home ?>">
+					<label class="control-label" for="el-area">Мощность двигателя (л.с.):</label>
+					<table>
+						<tr>
+							<td><?= $form->field($model, 'power_min', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'от' ] ])->label(false) ?></td>
+							<td><?= $form->field($model, 'power_max', [ 'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'до' ] ])->label(false) ?></td>
+						</tr>
+					</table>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $area_land ?>">
+					<?= $form->field($model, 'motor', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::motorAuto(), [ 'prompt' => '--' ]) ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $floor ?>">
+					<?= $form->field($model, 'color', [ 'inputOptions' => [ 'class' => 'form-control' ] ])->dropDownList(\common\models\auto\Arrays::colorAuto(), [ 'prompt' => '--' ]) ?>
+				</div>
+				<div class="filter_element col-sm-4 side_left" style="display: <?= $floor_home ?>">
+					<label class="control-label" for="el-area">&nbsp;</label>
+					<span class="input-group-btn">
+						<?= Html::submitButton('Найти', [ 'class' => 'btn-u ' ]) ?>
+						<?= Html::a('<i class="fa fa-close"></i>', [ '/auto/item/index' ], [ 'class' => 'btn-u btn-brd' ]) ?>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php ActiveForm::end(); ?>
 </div>
+
+<?php
+
+$js = <<<JS
+	function getModel() {
+		var id_brand = $('#brand-id :selected').val();
+	  $.ajax({
+        type: "get",
+        url: "/auto/item/get-model",
+        data: "id_brand=" + id_brand,
+        cache: true,
+        dataType: "html",
+        success: function (data) {
+			$('#model-id').show();
+			$('#model-id').html(data);
+        }
+    });
+	}
+JS;
+
+$this->registerJs($js, \yii\web\View::POS_BEGIN);
+
+?>

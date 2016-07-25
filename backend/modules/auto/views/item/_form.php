@@ -54,6 +54,9 @@ if ($model->isNewRecord) {
 					<?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 				</div>
 				<div class="col-sm-3">
+					<?= $form->field($model, 'volume')->textInput() ?>
+				</div>
+				<div class="col-sm-3">
 					<?= $form->field($model, 'power')->textInput() ?>
 				</div>
 				<div class="col-sm-3">
@@ -83,13 +86,11 @@ if ($model->isNewRecord) {
 				<div class="col-sm-3">
 					<?= $form->field($model, 'wheel')->dropDownList(\common\models\auto\Arrays::wheelAuto()) ?>
 				</div>
-				<div class="col-sm-3">
-					<?= $form->field($model, 'vin')->textInput(['maxlength' => true]) ?>
-				</div>
 			</div>
 		</div>
 
 	</div>
+	<?= $form->field($model, 'vin')->textInput(['maxlength' => true]) ?>
 	<hr>
 	<h2>Укажите дополнительные параметры и опции</h2>
 	<hr class="no-margin">

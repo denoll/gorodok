@@ -348,6 +348,36 @@ class Avatar
 		}
 	}
 
+	public static function imgAuto($base_url = null, $path = null, $size = null)
+	{
+		if ($size === null) {
+			if (!empty($base_url) && !empty($path)) {
+				return Html::img($base_url.'/'.$path, [
+					'alt' => 'Фото',
+					'style' => 'width:120px;'
+				]);
+			} else {
+				return Html::img(Url::to('@frt_url/img/no-img.png'), [
+					'alt' => 'Фото',
+					'style' => 'width:120px;'
+				]);
+			}
+		} else {
+			if (!empty($base_url) && !empty($path)) {
+				return Html::img($base_url.'/'.$path, [
+					'alt' => 'Фото',
+					'style' => 'width:' . $size . ';'
+				]);
+			} else {
+				$avtUrl = Url::to('@frt_url/img/no-img.png');
+				return Html::img($avtUrl, [
+					'alt' => 'Фото',
+					'style' => 'width:' . $size . ';'
+				]);
+			}
+		}
+	}
+
 	public static function Star()
 	{
 		return Html::img(Url::to('@frt_url/img/star32.png'), [

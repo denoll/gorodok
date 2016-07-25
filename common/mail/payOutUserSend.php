@@ -14,7 +14,7 @@ $link = Url::to('@frt_url/account/index');
 	<h3>Здравствуйте, <?= Html::encode($user->username) ?>.</h3>
 
 	<p>С Вашего счета на сайте <?= Yii::$app->name ?> были списаны средства на сумму <?= $payment['pay_out'] ?> рублей.</p>
-	<p>Остаток средств на ваше счете: <?= $payment['account'] ?> рублей.</p>
+	<p>Остаток средств на вашем счете: <?= $payment['account'] ?> рублей.</p>
 	<p>Номер платежного документа: <?= $payment['invoice'] ?></p>
 
 	<p>Услуга: <?= $payment['service'] ?></p>

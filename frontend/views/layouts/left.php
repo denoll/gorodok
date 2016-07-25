@@ -149,6 +149,13 @@ if (!stristr($path, 'site')) {
 		echo \frontend\widgets\TagsWidget::widget();
 	}
 
+	if (stristr($path, 'my-auto') || stristr($path, 'my-auto/create') || stristr($path, 'my-auto/update')) {
+		echo ProfileLeftSidebar::widget(['activeElement' => 13]);
+	}
+	if (stristr($path, '/auto')) {
+		echo \frontend\widgets\CategAuto::widget();
+	}
+
 	$show = true;
 
 }

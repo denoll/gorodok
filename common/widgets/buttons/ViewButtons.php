@@ -57,7 +57,7 @@ class ViewButtons extends Widget
 		$str .= Html::a(
 			'<i class="fa fa-close"></i>&nbsp;Закрыть без сохранения',
 			[
-				Url::previous()
+				$this->close_url ? $this->close_url : Url::previous()
 			],
 			[
 				'class' => 'btn btn-default',

@@ -6,17 +6,17 @@ use yii\helpers\Html;
 use common\widgets\DbBanner;
 
 $this->title = 'Наша Тында';
-$this->registerMetaTag(['content' => Html::encode('Городской портал Наша Тында'), 'name' => 'description']);
-$this->registerMetaTag(['content' => Html::encode('Городской портал Наша Тында'), 'name' => 'keywords']);
+$this->registerMetaTag([ 'content' => Html::encode('Городской портал Наша Тында'), 'name' => 'description' ]);
+$this->registerMetaTag([ 'content' => Html::encode('Городской портал Наша Тында'), 'name' => 'keywords' ]);
 
 ?>
 <div class="site-index row" style="margin-top: 10px; margin-bottom: 20px;">
-	<?php if (DbText::widget(['key' => 'text-on-main-comming-soon'])) { ?>
+	<?php if ( DbText::widget([ 'key' => 'text-on-main-comming-soon' ]) ) { ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12 shadow-wrapper">
 					<div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
-						<?= DbText::widget(['key' => 'text-on-main-comming-soon']) ?>
+						<?= DbText::widget([ 'key' => 'text-on-main-comming-soon' ]) ?>
 					</div>
 				</div>
 			</div>
@@ -69,12 +69,22 @@ $this->registerMetaTag(['content' => Html::encode('Городской порта
 	</div>
 	<div class="col-md-3 side_left" style="margin-top: 10px;">
 		<div class="banner-header">
-			<span class="title-underblock title-bottom-border dark">Это интересно</span>
+			<span class="title-underblock title-bottom-border dark">Полезная информация</span>
 		</div>
-		<?= DbBanner::widget(['key' => 'main_page_right_service']) ?>
+		<?php
+			echo \frontend\widgets\LinkPage::widget([
+				'text'    => '<i class="fa fa-train fa-3"></i>&nbsp;&nbsp;&nbsp;Ж/Д Расписание',
+				'url'     => [ '/page/page/view', 'cat' => 'poleznaa-informacia', 'id' => 'raspisanie-poezdov-i-elektricek-stancia-tynda' ],
+				'options' => [
+					'class' => 'btn-u header-link',
+					'style' => 'margin-bottom: 10px; padding: 20px 15px; width: 100%; font-size: 1.1em;',
+				],
+			]);
+		?>
+		<?= DbBanner::widget([ 'key' => 'main_page_right_service' ]) ?>
 		<div class="banner-header">
 			<span class="title-underblock title-bottom-border dark">Реклама</span>
 		</div>
-		<?= DbBanner::widget(['key' => 'banners_main_page_right']) ?>
+		<?= DbBanner::widget([ 'key' => 'banners_main_page_right' ]) ?>
 	</div>
 </div>

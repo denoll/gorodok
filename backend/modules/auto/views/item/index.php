@@ -88,6 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
 			'price',
+			'volume',
 			[
 				'attribute' => 'new',
 				'filter' => \common\models\auto\Arrays::newAuto(),

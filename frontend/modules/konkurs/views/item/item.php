@@ -75,9 +75,9 @@ if (Yii::$app->user->isGuest) {
 			'value' => $vote,
 			'language' => 'ru',
 			'pluginOptions' => [
-				'stars' => 6,
+				'stars' => 5,
 				'min' => 0,
-				'max' => 6,
+				'max' => 5,
 				'step' => 0.1,
 				'defaultCaption' => '{rating} лайков',
 				'starCaptions' => new JsExpression("function(val){

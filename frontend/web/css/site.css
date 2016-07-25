@@ -104,6 +104,16 @@ body {
     }
 }
 
+.nowrap{
+    white-space: nowrap;
+}
+
+.color-bage{
+    display: inline-block;
+    width: 40px;
+    border: 1px solid #909090;
+}
+
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -758,8 +768,9 @@ i.lab {
     background-color: rgba(180, 180, 180, 0.5);
     padding-top: 3px;
     padding-bottom: 9px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 1px solid #ccc;
 
 }
 
@@ -768,7 +779,7 @@ i.lab {
 }
 
 .filter_element {
-    padding: 6px;
+    padding: 0px 4px;
 }
 
 div.sorter-block {
@@ -1068,6 +1079,12 @@ ul.sorter > li a {
     float: left;
     width: 50%;
 }
+
+.radio_buttons div.col-3 {
+    float: left;
+    width: 33.333%;
+}
+
 
 .radio_buttons input {
     position: absolute;

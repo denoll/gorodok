@@ -71,6 +71,9 @@ class ProfileLeftSidebar extends Widget
 			case 12:
 				$a_12 = 'active';
 				break;
+			case 13:
+				$a_13 = 'active';
+				break;
 		}
 
 		echo '<div class="profile_avatar">';
@@ -120,6 +123,9 @@ class ProfileLeftSidebar extends Widget
 		echo '<li class="list-group-item ' . $a_7 . '">';
 		echo Html::a('<i class="fa fa-envelope-o "></i>&nbsp;&nbsp;Мои коллективные письма', ['/letters/letters/my-letters']);
 		echo '</li>';
+		echo '<li class="list-group-item ' . $a_13 . '">';
+		echo '<a href="' . Url::to(['/auto/item/my-auto']) . '"><i class="fa fa-car"></i>&nbsp;&nbsp;Мои объявления об авто</a>';
+		echo '</li>';
 		echo '<li class="list-group-item ' . $a_8 . '">';
 		echo Html::a('<i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Мои объявления о товарах', ['/goods/goods/my-ads']);
 		echo '</li>';
@@ -133,9 +139,7 @@ class ProfileLeftSidebar extends Widget
 		echo Html::a('<i class="fa fa-building"></i>&nbsp;&nbsp;Мои объявления об аренде недвижимости', ['/realty/rent/my-ads']);
 		echo '</li>';
 
-		//echo '<li class="list-group-item ' . $a_13 . '">';
-		//echo '<a href="' . Url::Home() . 'auto/my-ads"><i class="fa fa-car"></i>&nbsp;&nbsp;Мои объявления об авто</a>';
-		//echo '</li>';
+
 
 
 		echo '</ul>';

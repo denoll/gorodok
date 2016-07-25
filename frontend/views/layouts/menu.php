@@ -26,7 +26,7 @@ $menuItems = [
 	//['label' => 'Хобби', 'url' => ['/service/category/hobby'], 'options' => ['class' => 'main_menu_li']],
 	['label' => 'Афиша', 'url' => ['/afisha/afisha/index'], 'options' => ['class' => 'main_menu_li']],
 	//['label' => 'Коллективные письма', 'url' => ['/site/in-work'], 'options' => ['class' => 'main_menu_li']],
-	// ['label' => 'Авто', 'url' => ['/site/in-work'], 'options' => ['class' => 'main_menu_li']],
+	['label' => 'Авто', 'url' => ['/auto/item/index'], 'options' => ['class' => 'main_menu_li']],
 	['label' => 'Недвижимость', 'options' => ['class' => 'main_menu_li'], 'items' => [
 		['label' => 'Продажа', 'url' => ['/realty/sale/index']],
 		['label' => 'Аренда', 'url' => ['/realty/rent/index']],

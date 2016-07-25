@@ -76,7 +76,7 @@ if ($model->isNewRecord) {
 				[
 					'url' => ['upload'],
 					'sortable' => false,
-					'maxFileSize' => 2 * 1024 * 1024, // 1 MiB
+					'maxFileSize' => 2 * 1024 * 1024, // 2 MiB
 					'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
 				]
 			); ?>
@@ -114,7 +114,7 @@ if ($model->isNewRecord) {
 <?php
 $js = <<<JS
 	function getSize() {
-		var banner_key = $('#banneritem-banner_key :selected').val();
+		var banner_key = $('#banneritem-id_adv_company :selected').val();
 	  $.ajax({
         type: "get",
         url: "get-size",

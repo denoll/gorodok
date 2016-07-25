@@ -43,8 +43,8 @@ class Arrays
 	public static function newAuto()
 	{
 		return [
-			'1' => 'С пробегом',
-			'2' => 'Новая',
+			'1' => 'новый',
+			'2' => 'с пробегом',
 		];
 	}
 
@@ -166,8 +166,8 @@ class Arrays
 			'1'  => 'Бензин',
 			'2'  => 'Дизель',
 			'3'  => 'Гибрид',
-			'4'  => 'Робот',
-			'5'  => 'Вариатор',
+			'4'  => 'Газ',
+			'5'  => 'Электрический',
 		];
 	}
 
@@ -312,7 +312,7 @@ class Arrays
 	 */
 	public static function getAudioSystem($id)
 	{
-		$arr = self::cabinAuto();
+		$arr = self::audioSystem();
 		return $arr[$id];
 	}
 

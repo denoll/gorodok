@@ -19,47 +19,80 @@ use \yii\bootstrap\Widget;
 
 class AdsSlider extends Widget
 {
-    public function run($path, $images, $size = null)
-    {
-        self::registerCss();
-        if(!empty($images[0])){
-            echo '<div class="demo">';
-                echo '<div class="item">';
-                    echo '<div class="clearfix" style="">';
-                    echo '<ul id="image-gallery" class="gallery list-unstyled cS-hidden">';
-                        foreach ($images as $_image) {
-                            //$path = Url::to('@frt_url/img/realty_sale/');
-                            $image = $_image['img'];
-                            echo '<li data-thumb="'.$path.$image.'">';
-                            echo '<img src="'.$path.$image.'" style="width: '.$size.' ;" alt="Фото">';
-                            echo '</li>';
-                        }
-                    echo '</ul>';
-                    echo '</div>';
-                echo '</div>';
-            echo '</div>';
-        }else{
-            if ($size != null) {
-                $avtUrl = Url::to('@frt_url/img/no-img.png');
-                return Html::img($avtUrl, [
-                    'alt' => 'Фото',
-                    'style' => 'width:'.$size.';'
-                ]);
-            } else {
+	public function run($path, $images, $size = null)
+	{
+		self::registerCss();
+		if ( !empty($images[ 0 ]) ) {
+			echo '<div class="demo">';
+			echo '<div class="item">';
+			echo '<div class="clearfix" style="">';
+			echo '<ul id="image-gallery" class="gallery list-unstyled cS-hidden">';
+			foreach ( $images as $_image ) {
+				//$path = Url::to('@frt_url/img/realty_sale/');
+				$image = $_image[ 'img' ];
+				echo '<li data-thumb="' . $path . $image . '">';
+				echo '<img src="' . $path . $image . '" style="width: ' . $size . ' ;" alt="Фото">';
+				echo '</li>';
+			}
+			echo '</ul>';
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		} else {
+			if ( $size != null ) {
+				$avtUrl = Url::to('@frt_url/img/no-img.png');
+				return Html::img($avtUrl, [
+					'alt'   => 'Фото',
+					'style' => 'width:' . $size . ';',
+				]);
+			} else {
 
-            }
-        }
-        self::registerJs();
-    }
+			}
+		}
+		self::registerJs();
+	}
 
+    
+	public function runAuto($images, $size = null)
+	{
+		self::registerCss();
+		if ( !empty($images[ 0 ]) ) {
+			echo '<div class="demo">';
+			echo '<div class="item">';
+			echo '<div class="clearfix" style="">';
+			echo '<ul id="image-gallery" class="gallery list-unstyled cS-hidden">';
+			foreach ( $images as $_image ) {
+				echo '<li data-thumb="' . $_image->base_url . '/' . $_image->path . '">';
+				echo '<img src="' . $_image->base_url . '/' . $_image->path . '" style="width: ' . $size . ' ;" alt="Фото">';
+				echo '</li>';
+			}
+			echo '</ul>';
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		} else {
+			if ( $size != null ) {
+				$avtUrl = Url::to('@frt_url/img/no-img.png');
+				return Html::img($avtUrl, [
+					'alt'   => 'Фото',
+					'style' => 'width:' . $size . ';',
+				]);
+			} else {
 
-    private function registerCss(){
-        $this->registerCssFile('/plugins/light-slider/css/lightslider.min.css', ['depends' => [\frontend\assets\AppAsset::className()]]);
-        $this->registerCssFile('/plugins/light-slider/css/style.css', ['depends' => [\frontend\assets\AppAsset::className()]]);
-    }
+			}
+		}
+		self::registerJs();
+	}
 
-    private  function registerJs(){
-$js = <<< JS
+	private function registerCss()
+	{
+		$this->registerCssFile('/plugins/light-slider/css/lightslider.min.css', [ 'depends' => [ \frontend\assets\AppAsset::className() ] ]);
+		$this->registerCssFile('/plugins/light-slider/css/style.css', [ 'depends' => [ \frontend\assets\AppAsset::className() ] ]);
+	}
+
+	private function registerJs()
+	{
+		$js = <<< JS
     $(document).ready(function () {
             $('#image-gallery').lightSlider({
                 gallery:true,
@@ -76,9 +109,9 @@ $js = <<< JS
             });
     });
 JS;
-        $this->registerJsFile('/plugins/light-slider/js/lightslider.min.js', ['depends' => [\frontend\assets\AppAsset::className()]]);
-        $this->registerJs($js, View::POS_END);
-    }
+		$this->registerJsFile('/plugins/light-slider/js/lightslider.min.js', [ 'depends' => [ \frontend\assets\AppAsset::className() ] ]);
+		$this->registerJs($js, View::POS_END);
+	}
 }
 
 ?>
