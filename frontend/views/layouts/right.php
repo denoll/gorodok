@@ -14,16 +14,6 @@ $show = false;
 $path = Url::current();
 
 if (!stristr($path, 'site')) {
-	if (stristr($path, '/auto')) {
-		echo \frontend\widgets\LinkPage::widget([
-			'text' => '<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление',
-			'url' => ['/auto/item/create'],
-			'options' => [
-				'class' => 'btn-u btn-u-orange cat-button',
-				'style' => 'margin-bottom: -1px; margin-top: 10px; padding: 20px 15px; width: 100%; font-size: 1.2em;'
-			],
-		]);
-	}
 	echo \frontend\widgets\LinkPage::widget([
 		'text' => '<i class="fa fa-train fa-3"></i>&nbsp;&nbsp;&nbsp;Ж/Д Расписание',
 		'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda'],

@@ -38,7 +38,7 @@ class CategRealtyRentVMenu extends Widget
         echo Html::a('Продажа', ['/realty/sale/index'], ['class' => 'btn-u btn-u-default', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
         echo Html::a('Аренда', ['/realty/rent/index'], ['class' => 'btn-u btn-u-primary', 'style'=>'width:50%; text-align: center; font-size: 11px; text-transform: uppercase; font-weight: 400;']);
         echo '</div>';
-        echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/realty/rent/create'], ['class' => 'btn-u btn-u-orange cat-button','style'=>'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
+        //echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', ['/realty/rent/create'], ['class' => 'btn-u btn-u-orange cat-button','style'=>'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
         echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
         echo '<div class="navbar navbar-default" role="navigation" style="margin: 0;">';
         echo '<div class="navbar-header">';

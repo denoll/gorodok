@@ -1050,12 +1050,13 @@ ul.labels-demo li {
 .line-icon-page .item-box {
     width: 25%;
     float: left;
-    height: 90px;
+    height: 115px;
     text-align: center;
     padding: 20px 10px;
     margin: 0 -1px -1px 0;
     word-wrap: break-word;
     border: 1px solid #ddd;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -1071,7 +1072,10 @@ ul.labels-demo li {
 }
 
 .line-icon-page .item-box:hover {
-    background: #fafafa;
+    background: #eaeaea;
+    text-decoration: none;
+    color: #A90000;
+
 }
 
 .line-icon-page .item span {

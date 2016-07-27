@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use \yii\bootstrap\Modal;
 
 AppAsset::register($this);
 
@@ -32,7 +33,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 
 <div class="wrapper">
 
-	<div class="header-v4"> <!--header-sticky-->
+	<div class="header-v4">
 
 		<?= $this->render(
 			'top.php',
@@ -59,7 +60,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					]) ?>
 					<br>
 					<?= Alert::widget() ?>
-
+					<?= $this->render('_addAds') ?>
 					<?= $content ?>
 
 				</div>
@@ -71,8 +72,9 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					<?= Breadcrumbs::widget([
 						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 					]) ?>
-					
+
 					<?= Alert::widget() ?>
+					<?= $this->render('_addAds') ?>
 					<?= $content ?>
 				</div>
 				<div class="col-md-3 main_right">
@@ -85,6 +87,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 					]) ?>
 
 					<?= Alert::widget() ?>
+					<?= $this->render('_addAds') ?>
 					<?= $content ?>
 				</div>
 				<div class="col-md-3">
@@ -96,6 +99,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 					]) ?>
 					<?= Alert::widget() ?>
+					<?= $this->render('_addAds') ?>
 					<?= $content ?>
 
 				</div>
@@ -147,6 +151,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 	<?php
 	//Сервис для для кнопок поделиться в социальных сетях
 	$this->registerJsFile('https://cdn.jsdelivr.net/jquery.goodshare.js/3.2.4/goodshare.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+	
 	?>
 	<?php $this->endBody() ?>
 </body>

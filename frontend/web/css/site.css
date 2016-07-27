@@ -10,7 +10,7 @@ body {
     padding: 0px;
 }
 
-.header-title{
+.header-title {
     margin: 0 !important;
     padding: 2px 0px 0px 5px;
 }
@@ -104,11 +104,11 @@ body {
     }
 }
 
-.nowrap{
+.nowrap {
     white-space: nowrap;
 }
 
-.color-bage{
+.color-bage {
     display: inline-block;
     width: 40px;
     border: 1px solid #909090;
@@ -124,7 +124,7 @@ body {
     padding: 14px 24px;
 }
 
-.alert{
+.alert {
     margin: 10px auto !important;
 }
 
@@ -1075,6 +1075,13 @@ ul.sorter > li a {
     margin: 0px;
 }
 
+.radio_buttons.auto  {
+    display: block;
+    content: "";
+    margin-top: 5px;
+}
+
+
 .radio_buttons div {
     float: left;
     width: 50%;
@@ -1084,7 +1091,6 @@ ul.sorter > li a {
     float: left;
     width: 33.333%;
 }
-
 
 .radio_buttons input {
     position: absolute;
@@ -1102,6 +1108,17 @@ ul.sorter > li a {
     text-align: center;
 }
 
+.radio_buttons.auto label {
+    display: block;
+    margin: 0px 0px 0px -2px;
+    padding: 8px 10px;
+    border: 1px solid #BBBBBB;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .12);
+    cursor: pointer;
+    text-align: center;
+}
+
 .radio_buttons input:checked + label {
     background: #EAA8AB;
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, .2);
@@ -1109,6 +1126,12 @@ ul.sorter > li a {
 
 .radio_buttons div:first-child label {
     margin-left: 0;
+    border-top-left-radius: 2px !important;
+    border-bottom-left-radius: 2px !important;
+}
+
+.radio_buttons.auto div:first-child label {
+    margin-left: 4px;
     border-top-left-radius: 2px !important;
     border-bottom-left-radius: 2px !important;
 }
@@ -1297,15 +1320,17 @@ Widgets
     white-space: nowrap;
 }
 
-.star-block{
+.star-block {
     position: absolute;
     top: 8px;
-    left:2px;
+    left: 2px;
 }
-.star-block div.rating{
-    background-color: rgba(0,0,0,0.6) !important;
+
+.star-block div.rating {
+    background-color: rgba(0, 0, 0, 0.6) !important;
 
 }
+
 .star-block .rating-container .filled-stars {
     color: #FF9400;
     left: 0;
@@ -1402,4 +1427,55 @@ Top block
 
 .post .page-in {
     padding: 15px 20px 25px 20px;
+}
+
+/*Button effect*/
+.btn-sh {
+    width: 100%;
+    -moz-box-shadow: 0px 7px 17px -7px #2e2e06;
+    -webkit-box-shadow: 0px 7px 17px -7px #2e2e06;
+    box-shadow: 0px 7px 17px -7px #2e2e06;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cfb54b), color-stop(1, #a1801e));
+    background:-moz-linear-gradient(top, #cfb54b 5%, #a1801e 100%);
+    background:-webkit-linear-gradient(top, #cfb54b 5%, #a1801e 100%);
+    background:-o-linear-gradient(top, #cfb54b 5%, #a1801e 100%);
+    background:-ms-linear-gradient(top, #cfb54b 5%, #a1801e 100%);
+    background:linear-gradient(to bottom, #cfb54b 5%, #a1801e 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cfb54b', endColorstr='#a1801e',GradientType=0);
+    background-color:#cfb54b;
+    -moz-border-radius:3px !important;
+    -webkit-border-radius:3px !important;
+    border:1px solid #415210;
+    border-radius: 3px !important;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 25px 15px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+    text-align: center;
+}
+
+.btn-sh:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #a1801e), color-stop(1, #cfb54b));
+    background:-moz-linear-gradient(top, #a1801e 5%, #cfb54b 100%);
+    background:-webkit-linear-gradient(top, #a1801e 5%, #cfb54b 100%);
+    background:-o-linear-gradient(top, #a1801e 5%, #cfb54b 100%);
+    background:-ms-linear-gradient(top, #a1801e 5%, #cfb54b 100%);
+    background:linear-gradient(to bottom, #a1801e 5%, #cfb54b 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#a1801e', endColorstr='#cfb54b',GradientType=0);
+    background-color:#a1801e;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.btn-sh:active {
+    position: relative;
+    top: 3px;
+    color: #ffffff;
+    -moz-box-shadow: 0px 3px 8px -4px #2e2e06;
+    -webkit-box-shadow: 0px 3px 8px -4px #2e2e06;
+    box-shadow: 0px 3px 8px -4px #2e2e06;
 }

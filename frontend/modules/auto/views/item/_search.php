@@ -48,7 +48,7 @@ if ( !empty($get_model[ 'new' ]) ) {
 	<div class="filter">
 		<div class="row">
 			<div class=" container-fluid">
-				<div class="radio_buttons">
+				<div class="radio_buttons auto">
 					<div class="col-3">
 						<input id="radio1" type="radio" <?= $checked_0 ?> value="0" name="S[new]">
 						<label for="radio1">Все</label>

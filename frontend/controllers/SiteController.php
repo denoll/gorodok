@@ -174,6 +174,13 @@ class SiteController extends Controller
 	}
 
 	/**
+	 * @return string
+	 */
+	public function actionAdd(){
+		return $this->render('add');
+	}
+
+	/**
 	 * Displays contact page.
 	 *
 	 * @return mixed

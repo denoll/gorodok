@@ -72,7 +72,7 @@ $this->registerMetaTag([ 'content' => Html::encode('Городской порт�
 			<span class="title-underblock title-bottom-border dark">Полезная информация</span>
 		</div>
 		<?php
-			echo \frontend\widgets\LinkPage::widget([
+			/*echo \frontend\widgets\LinkPage::widget([
 				'text'    => '<i class="fa fa-train fa-3"></i>&nbsp;&nbsp;&nbsp;Ж/Д Расписание',
 				'url'     => [ '/page/page/view', 'cat' => 'poleznaa-informacia', 'id' => 'raspisanie-poezdov-i-elektricek-stancia-tynda' ],
 				'options' => [
@@ -80,7 +80,7 @@ $this->registerMetaTag([ 'content' => Html::encode('Городской порт�
 					'style' => 'margin-bottom: 10px; padding: 20px 15px; width: 100%; font-size: 1.1em;',
 				],
 			]);
-		?>
+		*/?>
 		<?= DbBanner::widget([ 'key' => 'main_page_right_service' ]) ?>
 		<div class="banner-header">
 			<span class="title-underblock title-bottom-border dark">Реклама</span>

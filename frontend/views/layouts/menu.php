@@ -5,7 +5,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\widgets\MyNav;
 use frontend\widgets\JobSearch;
-
 //use common\models\Menu;
 
 //$menu = new Menu();
@@ -72,8 +71,14 @@ $li = (100 / $count) - 0.01;
 				<div class="col-sm-7 side_left block-top">
 					<?= DbBanner::widget(['key' => 'banners_all_pages_top_hover_menu']) ?>
 				</div>
-				<div class="col-sm-3 side_left block-top">
-					<?= Html::a('<span class="icon-envelope-letter" style="padding-right: 10px;" aria-hidden="true"></span>Коллективные письма', ['/letters/letters/index'], ['class' => 'btn-letters']) ?>
+				<div class="col-sm-3 block-top">
+					<?= Html::button('<span class="icon-like" aria-hidden="true"></span>&nbsp;&nbsp;Подать объявление',
+						[
+							'id'=>'btn-advert-button',
+							'data-target' => '#btn-advert',
+							'data-toggle' => 'modal',
+							'class'=>'btn-sh cat-button hover-effect'
+						]) ?>
 				</div>
 			</div>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -87,7 +92,7 @@ $li = (100 / $count) - 0.01;
 		</div>
 	</div>
 
-	<div class="clearfix"></div>
+
 	<div class="navbar-collapse mega-menu navbar-responsive-collapse collapse in" role="navigation">
 		<div class="container">
 			<?php

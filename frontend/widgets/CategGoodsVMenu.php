@@ -37,7 +37,7 @@ class CategGoodsVMenu extends Widget
 		echo Html::a('<i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Каталог товаров', '/goods/goods/index', ['style' => 'color:#fff; text-decoration:none; font-size: 0.9em;']);
 		echo '</h3>';
 		echo '</div>';
-		echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', '/goods/goods/create', ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
+		//echo Html::a('<i class="fa fa-plus"></i>&nbsp;&nbsp;Подать объявление', '/goods/goods/create', ['class' => 'btn-u btn-u-orange cat-button', 'style' => 'padding: 5px 7px 5px 7px; text-align:center; font-size:15px; width:100%;']);
 		echo '<div id="vertical" class="hovermenu ttmenu dark-style menu-color-gradient" style="margin: 0px 0px 0px 0px;">';
 		echo '<div class="navbar navbar-default" role="navigation" style="margin: 0;">';
 		echo '<div class="navbar-header">';

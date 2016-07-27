@@ -119,10 +119,10 @@ class S extends AutoItem
 			$query->andFilterWhere(['id_model' => $this->id_model]);
 		}
 		//кузов и коробка
-		if(!empty($this->id_brand)){
+		if(!empty($this->body)){
 			$query->andFilterWhere(['body' => $this->body]);
 		}
-		if(!empty($this->id_model)){
+		if(!empty($this->transmission)){
 			$query->andFilterWhere(['transmission' => $this->transmission]);
 		}
 		//цена

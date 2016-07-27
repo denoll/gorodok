@@ -10,8 +10,8 @@ use yii\widgets\ListView;
 //$this->params['left'] = true;
 $this->params['right'] = true;
 
-$this->title = 'Объявления авто';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Объявления о продаже автомобилей в Тынде';
+$this->params['breadcrumbs'][] = 'Поиск автомобилей';
 
 $m_kw = 'продать автомобиль в тынде, купить автомобиль в тынде, автомобили в тынде, каталог автомобилей в тынде, продажа автомобилей в тынде';
 $m_d = 'Объявления о продеже и покупке автомобилей в Тынде. Здесь Вы можете подать свое объявление о продаже или покупке автомобиля в городе Тынада.';
@@ -26,8 +26,13 @@ if (!empty($m_kw)) {
 ?>
 <div class="auto-item-index">
 
-	<h1 class="header-title"><?= Html::encode($this->title) ?></h1>
-	
+	<div class="row">
+		<div class="container-fluid">
+			<hr class="no-margin">
+			<h1 class="header-title">Поиск автомобилей: </h1>
+			<hr class="no-margin">
+		</div>
+	</div>
 	<?php echo $this->render('_search', [
 			'model' => $searchModel,
 		]);?>
