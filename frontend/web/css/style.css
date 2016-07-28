@@ -1550,6 +1550,76 @@ ul.labels-demo li {
     text-align: center;
 }
 
+.btn-twitter {
+    background-color: transparent;
+    border-color: #46c0fb;
+    color: #46c0fb;
+    margin-right: 2px;
+    width: 40px;
+    text-align: center;
+}
+.btn-twitter:hover {
+    background-color: #46c0fb;
+    border-color: #46c0fb;
+    color: #fff;
+}
+
+.btn-linkedin {
+    background-color: transparent;
+    border-color: #0083a8;
+    color: #0083a8;
+    margin-right: 2px;
+    width: 40px;
+    text-align: center;
+}
+.btn-linkedin:hover {
+    background-color: #0083a8;
+    border-color: #0083a8;
+    color: #fff;
+}
+
+.btn-facebook {
+    background-color: transparent;
+    border-color: #4863ae;
+    color: #4863ae;
+    margin-right: 2px;
+    width: 40px;
+    text-align: center;
+}
+.btn-facebook:hover {
+    background-color: #4863ae;
+    border-color: #4863ae;
+    color: #fff;
+}
+
+.btn-vk {
+    background-color: transparent;
+    border-color: #45688e;
+    color: #45688e;
+    margin-right: 2px;
+    width: 40px;
+    text-align: center;
+}
+.btn-vk:hover {
+    background-color: #45688e;
+    border-color: #45688e;
+    color: #fff;
+}
+
+.btn-ok {
+    background-color: transparent;
+    border-color: #ff5616;
+    color: #ff5616;
+    margin-right: 2px;
+    width: 40px;
+    text-align: center;
+}
+.btn-ok:hover {
+    background-color: #ff5616;
+    border-color: #ff5616;
+    color: #fff;
+}
+
 /*Status Bar
 ------------------------------------*/
 .status-bar li {

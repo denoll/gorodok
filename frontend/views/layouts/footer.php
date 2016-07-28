@@ -38,10 +38,11 @@ use yii\helpers\Html;
 				<div class="col-md-3 md-margin-bottom-40">
 					<div class="headline"><h2>Полезные ссылки</h2></div>
 					<ul class="list-unstyled link-list">
+						<li><?= Html::a('Расписание поездов и электричек станция Тында ', ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda']) ?><i class="fa fa-angle-right"></i></li>
+						<li><?= Html::a('Расписание автобусов по г. Тында ', ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-avtobusov']) ?><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('О сайте ', ['/page/page/view','id'=>'about']) ?><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('Как пользоваться ', ['/page/page/index','cat'=>'kak-polzovatsa-sajtom']) ?><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('Пользовательское соглашение ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'polzovatelskoe-soglasenie']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('Расписание поездов и электричек станция Тында ', ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda']) ?><i class="fa fa-angle-right"></i></li>
 						<li><?= Html::a('Реклама на сайте ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'reklama-na-sajte']) ?><i class="fa fa-angle-right"></i></li>
 					</ul>
 				</div>

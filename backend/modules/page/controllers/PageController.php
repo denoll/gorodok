@@ -2,6 +2,7 @@
 
 namespace app\modules\page\controllers;
 
+use common\models\page\PageSearchBack;
 use Yii;
 use yii\helpers\Json;
 use yii\helpers\FileHelper;
@@ -50,7 +51,7 @@ class PageController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PageSearch();
+        $searchModel = new PageSearchBack();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
