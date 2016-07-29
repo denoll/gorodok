@@ -1479,3 +1479,13 @@ Top block
     -webkit-box-shadow: 0px 3px 8px -4px #2e2e06;
     box-shadow: 0px 3px 8px -4px #2e2e06;
 }
+
+.tag-box-red{
+    margin-right: 3px;
+    background-color: #7E0000;
+    color: #fff;
+}
+.tag-box-red h2{
+    margin: 0px;
+    color: #fff;
+}

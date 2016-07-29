@@ -17,11 +17,11 @@ use \yii\bootstrap\Modal;
 <?php Modal::begin([
 	'id' => 'btn-advert',
 	'size' => 'modal-lg',
-	'header'       => Html::tag('h2', '<i>Подача объявления </i>'),
+	'header'       => Html::tag('i', 'Подача объявления'),
 ]); ?>
 <div class="row">
 	<div class="col-md-12">
-		<div class="tag-box tag-box-v4 margin-bottom-10">
+		<div class="tag-box tag-box-red margin-bottom-10">
 			<h2>Выберите категорию в которую Вы хотите подать объявление.</h2>
 		</div>
 		<section class="line-icon-page margin-bottom-40">
@@ -33,7 +33,7 @@ use \yii\bootstrap\Modal;
 				['/service/service/create'],
 				['class' => 'item-box']);
 			?>
-			<?= Html::a('<span class="item"><span class="icon-rocket" aria-hidden="true"></span>авто</span>',
+			<?= Html::a('<span class="item"><span class="pe-is-t-car-3" style="font-size: 28px;;" aria-hidden="true"></span>авто</span>',
 				['/auto/item/create'],
 				['class' => 'item-box']);
 			?>

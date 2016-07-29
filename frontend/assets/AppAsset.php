@@ -15,25 +15,27 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-    public $css = [
-        'css/style.css',
-        'css/header.css',
-        'css/footer.css',
-        'plugins/animate.css',
-        'plugins/line-icons/line-icons.css',
-        'plugins/font-awesome/css/font-awesome.min.css',
-        'css/sky-forms.css',
-        'css/site.css',
-    ];
-    public $js = [
-        'plugins/back-to-top.js',
-        'plugins/smoothScroll.js',
-        'js/app.js',
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
+	public $basePath = '@webroot';
+	public $baseUrl = '@web';
+	public $css = [
+		'css/style.css',
+		'css/header.css',
+		'css/footer.css',
+		'plugins/animate.css',
+		'plugins/line-icons/line-icons.css',
+		'plugins/font-awesome/css/font-awesome.min.css',
+		'css/helper.min.css',
+		'css/pe-icon-set-transportation.min.css',
+		'css/sky-forms.css',
+		'css/site.css',
+	];
+	public $js = [
+		'plugins/back-to-top.js',
+		'plugins/smoothScroll.js',
+		'js/app.js',
+	];
+	public $depends = [
+		'yii\web\YiiAsset',
+		'yii\bootstrap\BootstrapAsset',
+	];
 }

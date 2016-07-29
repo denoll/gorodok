@@ -72,15 +72,31 @@ $this->registerMetaTag([ 'content' => Html::encode('Городской порт�
 			<span class="title-underblock title-bottom-border dark">Полезная информация</span>
 		</div>
 		<?php
-			/*echo \frontend\widgets\LinkPage::widget([
-				'text'    => '<i class="fa fa-train fa-3"></i>&nbsp;&nbsp;&nbsp;Ж/Д Расписание',
-				'url'     => [ '/page/page/view', 'cat' => 'poleznaa-informacia', 'id' => 'raspisanie-poezdov-i-elektricek-stancia-tynda' ],
-				'options' => [
-					'class' => 'btn-u header-link',
-					'style' => 'margin-bottom: 10px; padding: 20px 15px; width: 100%; font-size: 1.1em;',
-				],
-			]);
-		*/?>
+		echo \frontend\widgets\LinkPage::widget([
+			'text' => '<i class="fa fa-train"></i>&nbsp;&nbsp;&nbsp;Ж/Д расписание',
+			'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda'],
+			'options' => [
+				'class' => 'btn-u header-link',
+				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+			],
+		]);
+		echo \frontend\widgets\LinkPage::widget([
+			'text' => '<i class="fa fa-bus"></i>&nbsp;&nbsp;&nbsp;Расписание автобусов',
+			'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-avtobusov'],
+			'options' => [
+				'class' => 'btn-u header-link',
+				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+			],
+		]);
+		echo \frontend\widgets\LinkPage::widget([
+			'text' => '<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;Коллективные письма',
+			'url' => ['/letters/letters/index'],
+			'options' => [
+				'class' => 'btn-u header-link',
+				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+			],
+		]);
+		?>
 		<?= DbBanner::widget([ 'key' => 'main_page_right_service' ]) ?>
 		<div class="banner-header">
 			<span class="title-underblock title-bottom-border dark">Реклама</span>

@@ -34,13 +34,15 @@ class CommonQuery extends ActiveRecord
 		if ($img_path != null) {
 			$dir = Yii::getAlias($img_path);
 			if (is_dir($dir)) {
-				$images = FileHelper::findFiles($dir, [
-					'only' => [
-						$item->main_img,
-					],
-				]);
-				for ($n = 0; $n != count($images); $n++) {
-					@unlink($images[$n]);
+				if(!empty($item->main_img)){
+					$images = FileHelper::findFiles($dir, [
+						'only' => [
+							$item->main_img,
+						],
+					]);
+					for ($n = 0; $n != count($images); $n++) {
+						@unlink($images[$n]);
+					}
 				}
 			}
 		}
@@ -222,7 +224,7 @@ class CommonQuery extends ActiveRecord
 			->setTo($current_user->email)
 			->setSubject('Статус Вашего объявления №: '.$ads['id'].' - ' .$ads->brand->name. ' - ' . $ads->model->name .' на сайте '.Yii::$app->name. ' изменен.')
 			->send();
-		
+
 		$link_to_ads = Yii::$app->urlManager->createAbsoluteUrl(['/auto/item/view', 'id'=>$ads->id]);
 		Yii::$app->mailer->compose()
 			->setFrom(Yii::$app->params['robotEmail'])

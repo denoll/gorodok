@@ -66,10 +66,6 @@ class ServiceController extends Controller
 			'error' => [
 				'class' => 'yii\web\ErrorAction',
 			],
-			'captcha' => [
-				'class' => 'yii\captcha\CaptchaAction',
-				'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-			],
 		];
 	}
 
@@ -173,14 +169,13 @@ class ServiceController extends Controller
 			$model->id_user = Yii::$app->user->identity->getId();
 			$model->status = 1;
 			$model->image = \yii\web\UploadedFile::getInstance($model, 'image');
-			if ($model->validate() && $model->save()) {
+			if ($model->validate() && $model->save(false)) {
 				\Yii::$app->session->setFlash('success', 'Объявление успешно создано.');
 				CommonQuery::sendCreateAdsEmail(Yii::$app->user->identity->getId(), $model, Url::to('@frt_url/service/my-ads'));
 				return $this->redirect(['my-ads', 'id' => $model->id]);
 			} else {
 				\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление создать не удалось.<br>Пожалуйста повторите попытку.');
 			}
-			//$model->id_cat = null;
 			return $this->render('create', ['model' => $model,]);
 		} else {
 			return $this->render('create', [

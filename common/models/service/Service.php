@@ -95,21 +95,21 @@ class Service extends ActiveRecord
 			['id_cat', 'validateReadonly'],
 			[['id_cat', 'id_user', 'buy', 'status'], 'integer'],
 			[['cost'], 'number'],
-			[['description'], 'string', 'max' => 1000],
 			[['vip_date', 'top_date', 'created_at', 'updated_at', 'crop_info'], 'safe'],
-			[['name', 'main_img'], 'string', 'max' => 50],
 			[['m_keyword', 'm_description'], 'string', 'max' => 255],
-			[['id_cat'], 'exist', 'skipOnError' => true, 'targetClass' => ServiceCat::className(), 'targetAttribute' => ['id_cat' => 'id']],
-			[['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+
 			[
 				['image'],
 				'image',
 				'extensions' => ['jpg', 'jpeg', 'png', 'gif'],
-				'mimeTypes' => ['image/jpeg', 'image/pjpeg', 'image/png', 'image/gif'],
+				'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
 			],
-			[['description', 'name', 'main_img'], 'filter', 'filter' => 'strip_tags'],
+
+			[['description'], 'string', 'max' => 1000],
+			[['name', 'main_img'], 'string', 'max' => 50],
+			[['description', 'name'], 'filter', 'filter' => 'strip_tags'],
 			[['reCaptcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'on' => 'create'],
-			[['description', 'name', 'main_img'], \common\components\stopWords\StopWord::className()],
+			[['description', 'name'], \common\components\stopWords\StopWord::className()],
 		];
 	}
 
