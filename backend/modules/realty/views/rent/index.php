@@ -1,156 +1,154 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\helpers\Url;
-use app\modules\goods\assets\GoodsAsset;
+use kartik\grid\GridView;
+use \yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\goods\GoodsSearch */
+/* @var $searchModel app\modules\realty\models\SearchRent */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-GoodsAsset::register($this);
-$this->title = 'Товары';
-$this->params['breadcrumbs'][] = $this->title;
-//$ip = \Yii::$app->getRequest()->getUserIP();
-$status = [
-    ['id' => '1', 'name' => 'Активный'],
-    ['id' => '0' , 'name' => 'Заблокирован'],
-];
 
-//$model = $dataProvider->getModels();
-
-
+$this->title = 'Объявления об аренде недвижимости';
+$this->params[ 'breadcrumbs' ][] = $this->title;
 ?>
-<div class="goods-index" style="margin-bottom: 75px;">
+<div class="realty-rent-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+	<h1><?= Html::encode($this->title) ?></h1>
+	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Создать товар', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute'=>'id',
-                'label'=>'№ объявления',
-                'filter'=>false,
-                'options' => ['width' => '70']
-            ],
-            [
-                'attribute'=>'category',
-                'label'=>'Категория',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'username',
-                'label'=>'Владелец объявления',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'name',
-                'label'=>'Товар',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'cost',
-                'label'=>'Цена',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'created_at',
-                'label'=>'Дата создания',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'updated_at',
-                'label'=>'Дата поднятия',
-                'filter'=>false,
-            ],
-            [
-                'attribute'=>'vip_date',
-                'label'=>'Дата выделения',
-                'filter'=>false,
-            ],
-            [
-                'attribute' => 'main_img',
-                'label' => 'Фото',
-                'format' => 'raw',
-                'options' => ['width' => '70'],
-                'filter' => false,
-                'value' => function($data){
-                    if($data['main_img'] != null || $data['main_img'] != '') {
-                        return Html::img(Url::to('@frt_url/img/goods/' . $data['main_img']), [
-                            'alt' => 'Фото',
-                            'style' => 'width:31px;'
-                        ]);
-                    }else{
-                        return Html::img(Url::to('@frt_url/img/no-img.png'), [
-                            'alt' => 'Фото',
-                            'style' => 'width:31px;'
-                        ]);
-                    }
-                },
-            ],
-            [
-                'attribute' => 'status',
-                'label' => 'Статус',
-                'format' => 'raw',
-                'filter' => false, // \yii\helpers\ArrayHelper::map($status, 'id', 'name'),
-                'options' => ['width' => '70'],
-                'value' => function($data){
-                    if($data['status'] == 1){
-                        return Html::button('<i class="fa fa-check"></i>',['class' => 'btn btn-sm btn-success', 'id'=>'status_'.$data['id'], 'onclick' => 'changeStatus('.$data['id'].')','title'=>'Изменить статус']);
-                    }else{
-                        return Html::button('<i  class="fa fa-minus"></i>',['class' => 'btn btn-sm btn-danger', 'id'=>'status_'.$data['id'], 'onclick' => 'changeStatus('.$data['id'].')','title'=>'Изменить статус']);
-                    }
-                },
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'contentOptions' => ['style' => 'width: 130px; max-width: 130px;'],
-                'template' => '<div class="btn-group">{view} {update}</div> {delete}',
-                'buttons' => [
-                    'view' => function ($url, $model, $key) {
-                        return Html::a(
-                            '<i class="fa fa-eye"></i>',
-                            ['/goods/goods/view', 'id'=>$model['id']],
-                            [
-                                'class' => 'btn btn-sm btn-primary',
-                                'title' => 'Просмотр',
-                            ]
-                        );
-                    },
-                    'update' => function ($url, $model, $key) {
-                        return Html::a(
-                            '<i class="fa fa-edit"></i>',
-                            ['/goods/goods/update', 'id'=>$model['id']],
-                            [
-                                'class' => 'btn btn-sm btn-success',
-                                'title' => 'Изменить',
-                            ]
-                        );
-                    },
-                    'delete' => function ($url, $model, $key) {
-                        return Html::a(
-                            '<i class="fa fa-trash"></i>',
-                            ['/goods/goods/delete', 'id'=>$model['id']],
-                            [
-                                'class' => 'btn btn-sm btn-danger',
-                                'title' => 'Удалить',
-                                'data' => [
-                                    'confirm' => 'Вы действительно хотите удалить это объявление?',
-                                    'method' => 'post',
-                                ],
-                            ]
-                        );
-                    },
-                ],
-            ],
-        ],
-    ]); ?>
+	<p>
+		<?= Html::a('Добавить новое объявление об аренде недвижимости', [ 'create' ], [ 'class' => 'btn btn-success' ]) ?>
+	</p>
+	<?= GridView::widget([
+		'dataProvider' => $dataProvider,
+		'filterModel'  => $searchModel,
+		'columns'      => [
+			[
+				'class'          => 'yii\grid\ActionColumn',
+				'contentOptions' => [ 'style' => 'width: 90px; max-width: 90px;' ],
+				'template'       => '{update} {delete}',
+				'buttons'        => [
+					'update' => function ($url, $model, $key) {
+						return Html::a(
+							'<i class="fa fa-edit"></i>',
+							['/realty/rent/update', 'id'=>$model->id],
+							[
+								'class' => 'btn btn-sm btn-primary',
+								'title' => 'Редактировать',
+							]
+						);
+					},
+					'delete' => function ($url, $model, $key) {
+						return Html::a(
+							'<i class="fa fa-trash"></i>',
+							['/realty/rent/delete', 'id'=>$model->id],
+							[
+								'class' => 'btn btn-sm btn-danger',
+								'title' => 'Удалить',
+								'data'  => [
+									'confirm' => 'Вы действительно хотите удалить это объявление?',
+									'method'  => 'post',
+								],
+							]
+						);
+					},
+				],
+			],
+			[
+				'attribute' => 'status',
+				'label'     => 'Статус',
+				'format'    => 'raw',
+				'filter'    => false, // \yii\helpers\ArrayHelper::map($status, 'id', 'name'),
+				'options'   => [ 'width' => '70' ],
+				'value'     => function ($data) {
+					if ( $data[ 'status' ] == 1 ) {
+						return Html::button('<i class="fa fa-check"></i>', [ 'class' => 'btn btn-sm btn-success', 'id' => 'status_' . $data[ 'id' ], 'onclick' => 'changeStatus(' . $data[ 'id' ] . ')', 'title' => 'Изменить статус' ]);
+					} else {
+						return Html::button('<i  class="fa fa-minus"></i>', [ 'class' => 'btn btn-sm btn-danger', 'id' => 'status_' . $data[ 'id' ], 'onclick' => 'changeStatus(' . $data[ 'id' ] . ')', 'title' => 'Изменить статус' ]);
+					}
+				},
+			],
+			[
+				'attribute' => 'id',
+				'label'     => '№ ',
+				'filter'    => false,
+				'options'   => [ 'width' => '70' ],
+			],
+			[
+				'attribute' => 'category',
+				'label'     => 'Категория',
+				'format'    => 'raw',
+				'filter'    => ArrayHelper::map(\common\models\realty\RealtyCat::find()->orderBy('root', 'lft')->all(), 'name', 'name'),
+				'value'     => 'category',
+				'options'   => [ 'width' => '170' ],
+			],
+			[
+				'attribute'           => 'username',
+				'value'               => 'username',
+				'format'              => 'raw',
+				'filterType'          => GridView::FILTER_SELECT2,
+				'filter'              => ArrayHelper::map(\common\models\users\User::find()->all(), 'username', 'username'),
+				'filterWidgetOptions' => [
+					'pluginOptions' => [ 'allowClear' => true ],
+				],
+				'filterInputOptions'  => [ 'placeholder' => 'Пользователь ...' ],
+			],
+			'name',
+			'cost',
+			'created_at',
+			// 'area_home',
+			// 'area_land',
+			// 'floor',
+			// 'floor_home',
+			// 'resell',
+			// 'in_city',
+			// 'type',
+			// 'repair',
+			// 'elec',
+			// 'gas',
+			// 'water',
+			// 'heating',
+			// 'tel_line',
+			// 'internet',
+			// 'distance',
+			// 'main_img',
+			// 'address',
+			// 'description:ntext',
+			// 'updated_at',
+			// 'vip_date',
+			// 'adv_date',
+			// 'm_keyword',
+			// 'm_description',
+			// 'count_img',
+		],
+	]); ?>
 </div>
+<?php
+$js = <<<JS
+function changeStatus(id){
+    var status = "#status_"+id;
+    $.ajax({
+        type: "post",
+        url: "/realty/rent/change-status",
+        data: "id=" + id,
+        cache: true,
+        dataType: "text",
+        success: function (data) {
+            if(data == '1'){
+                $(status + ' i').removeClass("fa-minus");
+                $(status + ' i').addClass("fa-check");
+                $(status).removeClass('btn-danger');
+                $(status).addClass('btn-success');
+            }else{
+                $(status + ' i').removeClass("fa-check");
+                $(status + ' i').addClass("fa-minus");
+                $(status).removeClass('btn-success');
+                $(status).addClass('btn-danger');
+            }
+        }
+    });
+}
+JS;
+
+$this->registerJs($js, \yii\web\View::POS_END);
+?>

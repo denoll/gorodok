@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\goods\Goods */
+/* @var $model common\models\realty\RealtyRent */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Goods', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Realty Rents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goods-view">
+<div class="realty-rent-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,17 +31,35 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'id_cat',
             'id_user',
+            'status',
+            'buy',
             'name',
             'cost',
+            'area_home',
+            'area_land',
+            'floor',
+            'floor_home',
+            'resell',
+            'in_city',
+            'type',
+            'repair',
+            'elec',
+            'gas',
+            'water',
+            'heating',
+            'tel_line',
+            'internet',
+            'distance',
+            'main_img',
+            'address',
             'description:ntext',
-            'status',
-            'vip_date',
-            'top_date',
             'created_at',
             'updated_at',
+            'vip_date',
+            'adv_date',
             'm_keyword',
             'm_description',
-            'main_img',
+            'count_img',
         ],
     ]) ?>
 

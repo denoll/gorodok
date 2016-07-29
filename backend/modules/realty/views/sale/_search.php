@@ -2,70 +2,88 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\Select2;
-use common\widgets\Arrays;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\med\DoctorsSearch */
+/* @var $model app\modules\realty\models\SearchSale */
 /* @var $form yii\widgets\ActiveForm */
-
-$get_cat = Yii::$app->request->get('cat');
-
-$data = \yii\helpers\ArrayHelper::map(Arrays::getGoodsCat(), 'alias', 'name');
-$status = [
-    '1'=>'Опубликованные',
-    '0'=>'Не опубликованные',
-];
-
 ?>
 
-<div class="widget lazur-bg style1 container-fluid">
+<div class="realty-sale-search">
+
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <div class="filter">
-        <div class="filter_element col-md-12 side_left" style="margin-top: 5px;">
-            <div class="input-group" style="margin-top: 10px;">
-                <?= $form->field($model, 'search_field', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Введите название товара, категорию или их часть ...']])->label(false) ?>
-                <span class="input-group-btn"><?= Html::submitButton('<i class="fa fa-search"></i>&nbsp;&nbsp;Найти', ['class' => 'btn btn-primary']) ?></span>
-            </div>
-        </div>
-        <?php if ($data) { ?>
-            <div class="filter_element col-sm-6 side_left">
-                <?= $form->field($model, 'cat')->widget(Select2::classname(), [
-                    'data' => $data,
-                    'hideSearch' => false,
-                    'options' => ['placeholder' => 'Выбор категории...'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label('Категория'); ?>
-            </div>
-        <?php } ?>
-        <div class="filter_element col-sm-3 side_left">
-            <label class="control-label" for="el-salary">Стоимость:</label>
-            <table id="el-salary">
-                <tr>
-                    <td><?= $form->field($model, 'cost_min', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'от']])->label(false) ?></td>
-                    <td><?= $form->field($model, 'cost_max', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'до']])->label(false) ?></td>
-                </tr>
-            </table>
-        </div>
-        <div class="filter_element col-md-3 " style="margin-top: 5px;">
-            <div class="input-group">
+    <?= $form->field($model, 'id') ?>
 
-                    <?= $form->field($model, 'status')->widget(Select2::classname(), [
-                        'data' => $status,
-                        'hideSearch' => true,
-                        'options' => ['placeholder' => 'Выбор статуса...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label('Подкатегория'); ?>
-            </div>
-        </div>
+    <?= $form->field($model, 'id_cat') ?>
+
+    <?= $form->field($model, 'id_user') ?>
+
+    <?= $form->field($model, 'status') ?>
+
+    <?= $form->field($model, 'buy') ?>
+
+    <?php // echo $form->field($model, 'name') ?>
+
+    <?php // echo $form->field($model, 'cost') ?>
+
+    <?php // echo $form->field($model, 'area_home') ?>
+
+    <?php // echo $form->field($model, 'area_land') ?>
+
+    <?php // echo $form->field($model, 'floor') ?>
+
+    <?php // echo $form->field($model, 'floor_home') ?>
+
+    <?php // echo $form->field($model, 'resell') ?>
+
+    <?php // echo $form->field($model, 'in_city') ?>
+
+    <?php // echo $form->field($model, 'type') ?>
+
+    <?php // echo $form->field($model, 'repair') ?>
+
+    <?php // echo $form->field($model, 'elec') ?>
+
+    <?php // echo $form->field($model, 'gas') ?>
+
+    <?php // echo $form->field($model, 'water') ?>
+
+    <?php // echo $form->field($model, 'heating') ?>
+
+    <?php // echo $form->field($model, 'tel_line') ?>
+
+    <?php // echo $form->field($model, 'internet') ?>
+
+    <?php // echo $form->field($model, 'distance') ?>
+
+    <?php // echo $form->field($model, 'main_img') ?>
+
+    <?php // echo $form->field($model, 'address') ?>
+
+    <?php // echo $form->field($model, 'description') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
+
+    <?php // echo $form->field($model, 'updated_at') ?>
+
+    <?php // echo $form->field($model, 'vip_date') ?>
+
+    <?php // echo $form->field($model, 'adv_date') ?>
+
+    <?php // echo $form->field($model, 'm_keyword') ?>
+
+    <?php // echo $form->field($model, 'm_description') ?>
+
+    <?php // echo $form->field($model, 'count_img') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
+
+    <?php ActiveForm::end(); ?>
 
 </div>
