@@ -44,17 +44,19 @@ if (!stristr($path, 'site')) {
 		}
 		if (stristr($path, 'jobs/resume/create') || stristr($path, 'jobs/resume/update') || stristr($path, 'jobs/resume/my-resume')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 3]);
+		}else{
+			if (stristr($path, 'jobs/resume/index') || stristr($path, 'jobs/resume')) {
+				echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'res']);
+				echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
+			}
 		}
 		if (stristr($path, 'jobs/vacancy/create') || stristr($path, 'jobs/vacancy/update') || stristr($path, 'jobs/vacancy/my-vacancy')) {
 			echo ProfileLeftSidebar::widget(['activeElement' => 5]);
-		}
-		if (stristr($path, 'jobs/resume/index') || stristr($path, 'jobs/resume/view')) {
-			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'res']);
-			echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
-		}
-		if (stristr($path, 'jobs/vacancy/index') || stristr($path, 'jobs/vacancy/view')) {
-			echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'vac']);
-			echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
+		}else{
+			if (stristr($path, 'jobs/vacancy/index') || stristr($path, 'jobs/vacancy')) {
+				echo CategJob::widget(['cats' => \common\widgets\Arrays::getJobCat(), 'for' => 'vac']);
+				echo DbBanner::widget(['key' => 'left_side_vacancia_small']);
+			}
 		}
 	}
 	if (stristr($path, '/med/doctors')) {

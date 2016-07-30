@@ -2,6 +2,7 @@
 
 namespace common\models\users;
 
+use common\models\firm\Firm;
 use common\models\jobs\JobProfile;
 use common\models\jobs\JobResume;
 use Yii;
@@ -202,8 +203,8 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 			return false;
 		}
 	}
-	
-	
+
+
 
 	public function validatePassword($password)
 	{
@@ -265,7 +266,7 @@ class User extends ActiveRecord implements IdentityInterface //ActiveRecord impl
 
 	public function getCompany()
 	{
-		return $this->hasOne(Company::className(), ['id_user' => 'id']);
+		return $this->hasOne(Firm::className(), ['id_user' => 'id']);
 	}
 
 	public function afterSave($insert, $changedAttributes)
