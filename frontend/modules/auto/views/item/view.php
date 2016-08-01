@@ -10,10 +10,20 @@ use \common\widgets\checks\ChecksWidget;
 
 //$this->params[ 'left' ] = true;
 $this->params[ 'right' ] = true;
-
 $user = !Yii::$app->user->isGuest ? Yii::$app->user->getIdentity() : null;
-
 $label = $model->attributeLabels();
+
+$auto = $model->id . '.  Авто ' . $model->brand->name . ' - ' . $model->model->name;
+
+$m_kw = $auto . ', продать автомобиль в тынде, купить автомобиль в тынде, автомобили в тынде, каталог автомобилей в тынде, продажа автомобилей в тынде';
+$m_d = $auto . '. Объявления о продеже и покупке автомобилей в Тынде. Здесь Вы можете подать свое объявление о продаже или покупке автомобиля в городе Тынада.';
+
+if (!empty($m_d)) {
+	$this->registerMetaTag(['content' => Html::encode($m_d), 'name' => 'description']);
+}
+if (!empty($m_kw)) {
+	$this->registerMetaTag(['content' => Html::encode($m_kw), 'name' => 'keywords']);
+}
 
 $this->title = 'Объявление № ' . $model->id . '.  Авто ' . $model->brand->name . ' - ' . $model->model->name;
 $this->params[ 'breadcrumbs' ][] = [ 'label' => 'Все объявления авто', 'url' => [ 'index' ] ];
