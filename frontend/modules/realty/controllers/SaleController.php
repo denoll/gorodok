@@ -202,7 +202,16 @@ class SaleController extends Controller
 	{
 		$user_id = Yii::$app->user->identity->getId();
 		$model = RealtySale::findOne(['id' => $id, 'id_user' => $user_id]);
-
+		$images = RealtySaleImg::find()->where([ 'id_ads' => $id ])->all();
+		$path = Url::to('@frt_dir/img/realty_sale/');
+		if ( $images ) {
+			foreach ( $images as $item ) {
+				$file = $path . $item->img;
+				if ( file_exists($file) ) {
+					unlink($file);
+				}
+			}
+		}
 		if ($model->delete()) {
 			CommonQuery::sendDeleteAdsEmail($user_id, $model, Url::to('@frt_url/realty/sale/my-ads'));
 			return $this->redirect(['my-ads']);
