@@ -19,7 +19,7 @@ class Odnoklassniki extends OAuth2
 	/** @inheritdoc */
 	public $apiBaseUrl = 'http://api.odnoklassniki.ru/';
 	/** @var string Публичный ключ */
-	public $publicKey;
+	public $publicKey = 'CBAJCQFLEBABABABA';
 	/** @inheritdoc */
 	protected function defaultName()
 	{
@@ -34,14 +34,16 @@ class Odnoklassniki extends OAuth2
 	protected function initUserAttributes()
 	{
 		$token = $this->getAccessToken()->getParam('access_token');
-		$sig = md5("application_key={$this->publicKey}format=jsonmethod=users.getCurrentUser" . md5("{$token}{$this->clientSecret}"));
-		$params = array(
-			'method'          => 'users.getCurrentUser',
-			'access_token'    => $token,
-			'application_key' => $this->publicKey,
-			'format'          => 'json',
-			'sig'             => $sig
-		);
+		if (!empty($token)) {
+			$sig = md5("application_key={$this->publicKey}format=jsonmethod=users.getCurrentUser" . md5("{$token}{$this->clientSecret}"));
+			$params = [
+				'method'          => 'users.getCurrentUser',
+				'access_token'    => $token,
+				'application_key' => $this->publicKey,
+				'format'          => 'json',
+				'sig'             => $sig
+			];
+		}
 		return $this->api('fb.do', 'GET', $params);
 	}
 	/** @inheritdoc */

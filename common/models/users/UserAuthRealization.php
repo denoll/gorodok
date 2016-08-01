@@ -31,6 +31,10 @@ class UserAuthRealization extends User
 	{
 		if (!empty($client)) {
 			$attributes = $client->getUserAttributes();
+			/*echo '<pre>';
+			print_r($attributes);
+			echo '</pre>';
+			die;*/
 			switch ($client->getName()){
 				case 'facebook' :
 					$this->attributes = [
@@ -41,8 +45,8 @@ class UserAuthRealization extends User
 				case 'google':
 					$this->attributes = [
 						'id' => $attributes['id'],
-						'username' => ($attributes['first_name'] || $attributes['last_name']) ? implode(' ', [$attributes['first_name'], $attributes['last_name']]) : $attributes['email'],
-						'email' => $attributes['email'],
+						'username' => !empty($attributes['displayName']) ? $attributes['displayName'] : $attributes['emails'][0]['value'],
+						'email' => $attributes['emails'][0]['value'],
 					]; break;
 				case 'yandex':
 					$this->attributes = [
@@ -54,6 +58,12 @@ class UserAuthRealization extends User
 					$this->attributes = [
 						'id' => $attributes['id'],
 						'username' => ($attributes['first_name'] && $attributes['last_name']) ? implode(' ', [$attributes['first_name'], $attributes['last_name']]) : $attributes['email'],
+						'email' => $attributes['email'],
+					]; break;
+				case 'odnoklassniki':
+					$this->attributes = [
+						'id' => $attributes['id'],
+						'username' => $attributes['name'],
 						'email' => $attributes['email'],
 					]; break;
 				case 'mailru':

@@ -24,6 +24,7 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 <head>
 	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-site-verification" content="yXyFxF4EjNh-T9VwFDFKBMPo-GCZiCnSua8miDoJFLw" />
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
@@ -147,11 +148,24 @@ $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title,
 	<noscript>
 		<div><img src="https://mc.yandex.ru/watch/35183035" style="position:absolute; left:-9999px;" alt=""/></div>
 	</noscript>
-	<!-- /Yandex.Metrika counter -->
+	<!-- END Yandex.Metrika counter -->
+	<!-- Google analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-81709906-1', 'auto');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
+
+	</script>
+	<!-- END Google analytics -->
 	<?php
 	//Сервис для для кнопок поделиться в социальных сетях
 	$this->registerJsFile('https://cdn.jsdelivr.net/jquery.goodshare.js/3.2.4/goodshare.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-	
+
 	?>
 	<?php $this->endBody() ?>
 </body>
