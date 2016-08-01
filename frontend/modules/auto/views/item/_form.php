@@ -294,7 +294,7 @@ if ( $model->isNewRecord ) {
 	<div class="form-group">
 		<?= \common\widgets\buttons\ViewButtons::widget([
 			'close_url'  => '/auto/item/my-auto',
-			'delete_url' => '/auto/item/delete-item', 'id' => $model->id,
+			'delete_url' => '/auto/item/delete', 'id' => $model->id,
 		]); ?>
 	</div>
 

@@ -37,8 +37,12 @@ class ControllerButton extends Widget
 		$action = $this->action; // \Yii::$app->request->get($this->action);
 		if(empty($action)) \Yii::$app->response->redirect(['index']);
 		switch ($action) {
-			case 'index':
-				return \Yii::$app->response->redirect([Url::previous()]);
+			case 'save':
+				return \Yii::$app->response->redirect(
+					[
+						$this->save_url,
+					]
+				);
 			case 'update':
 				return \Yii::$app->response->redirect(
 					[

@@ -40,10 +40,10 @@ class ItemController extends Controller
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only'  => [ 'change-status', 'change-up', 'change-vip', 'my-auto', 'create', 'update', 'delete-item' ],
+				'only'  => [ 'change-status', 'change-up', 'change-vip', 'my-auto', 'create', 'update', 'delete' ],
 				'rules' => [
 					[
-						'actions' => [ 'change-status', 'change-up', 'change-vip', 'create', 'my-auto', 'update', 'delete-item' ],
+						'actions' => [ 'change-status', 'change-up', 'change-vip', 'create', 'my-auto', 'update', 'delete' ],
 						'allow'   => true,
 						'roles'   => [ '@' ],
 					],
@@ -87,10 +87,10 @@ class ItemController extends Controller
 						->save($path, [ 'quality' => 80 ]);
 				},
 			],
-			'delete' => [
+			/*'delete' => [
 				'class'       => 'denoll\filekit\actions\DeleteAction',
 				'fileStorage' => 'autoStorage',
-			],
+			],*/
 			'error'  => [
 				'class' => 'yii\web\ErrorAction',
 			],
@@ -144,10 +144,16 @@ class ItemController extends Controller
 		if ( $model->load(Yii::$app->request->post()) ) {
 			$model->id_user = Yii::$app->user->id;
 			$model->status = AutoItem::STATUS_ACTIVE;
-			$model->save();
+			if ($model->save()) {
+				\Yii::$app->session->setFlash('success', 'Объявление успешно создано.');
+				CommonQuery::sendCreateAutoEmail(Yii::$app->user->identity->getId(), $model, Url::to('@frt_url/auto/item/my-auto'));
+				return $this->redirect(['my-ads', 'id' => $model->id]);
+			} else {
+				\Yii::$app->session->setFlash('danger', 'По каким-то причинам объявление создать не удалось.<br>Пожалуйста повторите попытку.');
+			}
 			return ControllerButton::widget([
 				'action'     => Yii::$app->request->post('action'),
-				'save_url'   => Url::previous(),
+				'save_url'   => '/auto/item/my-auto',
 				'update_url' => '/auto/item/update',
 				'id'         => $model->id,
 			]);
@@ -170,7 +176,7 @@ class ItemController extends Controller
 		if ( $model->load(Yii::$app->request->post()) && $model->save() ) {
 			return ControllerButton::widget([
 				'action'     => Yii::$app->request->post('action'),
-				'save_url'   => Url::previous(),
+				'save_url'   => '/auto/item/my-auto',
 				'update_url' => '/auto/item/update',
 				'id'         => $model->id,
 			]);
@@ -187,8 +193,9 @@ class ItemController extends Controller
 	 * @param integer $id
 	 * @return mixed
 	 */
-	public function actionDeleteItem($id)
+	public function actionDelete($id)
 	{
+		$user_id = Yii::$app->user->identity->getId();
 		$model = $this->findModel($id);
 		$images = AutoImg::find()->where([ 'id_item' => $id ])->all();
 		$path = Url::to('@frt_dir/img/auto/');
@@ -200,8 +207,18 @@ class ItemController extends Controller
 				}
 			}
 		}
-		$model->delete();
-		return $this->redirect([ 'index' ]);
+		if ($model->delete()) {
+			$ads = [
+				'id' => $model->id,
+				'name' => $model->brand->name. '&nbsp;' .$model->model->name,
+				'status' => $model->status
+			];
+			CommonQuery::sendDeleteAdsEmail($user_id, $ads, Url::to('@frt_url/auto/item/my-auto'));
+			return $this->redirect(['/auto/item/my-auto']);
+		} else {
+			\Yii::$app->session->setFlash('danger', 'Объявление не было удалено.');
+			return $this->redirect(['update', 'id' => $id]);
+		}
 	}
 
 

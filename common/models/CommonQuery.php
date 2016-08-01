@@ -243,6 +243,38 @@ class CommonQuery extends ActiveRecord
 	 * Send Email for User and Administrator about create ads.
 	 * @param integer $user_id
 	 * @param string $link
+	 * @param AutoItem $ads
+	 * @return boolean
+	 */
+	public static function sendCreateAutoEmail($user_id, $ads, $link = null){
+		$current_user = Yii::$app->user->getIdentity();
+		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
+		if(!$current_user->id == $user_id){
+			$current_user = CurUser::findOne($user_id);
+		}
+		Yii::$app->mailer->compose('@common/mail/createAutoEmail', ['current_user' => $current_user ,'ads' => $ads, 'link'=>$link, 'date'=> $current_date])
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo($current_user->email)
+			->setSubject('Создано новое о продаже авто объявление №: '.$ads['id'].' на сайте '.Yii::$app->name. '.')
+			->send();
+
+		Yii::$app->mailer->compose()
+			->setFrom(Yii::$app->params['robotEmail'])
+			->setTo(Yii::$app->params['adminEmail'])
+			->setSubject('Пользователь '.$current_user->username.' на сайте '.Yii::$app->name.' создал новое объявление о продаже авто №:'.$ads->id)
+			->setHtmlBody('Пользователь <strong>'.$current_user->username.'</strong>
+			<br><strong>Email: '.$current_user->email.'</strong>
+			<br>На сайте '.Yii::$app->name.' создал новое объявление о продаже авто №:<strong>'.$ads->id.'</strong>
+			<br>Автомобиль:<strong>'.$ads->brand->name. ' ' . $ads->model->name . ' - ' . $ads->year .' года выпуска</strong>
+			<br>Стоимость:<strong>'.$ads->price. ' руб.</strong>
+			<br>Дата создания: <strong>'. $current_date .'.</strong>')
+			->send();
+	}
+
+	/**
+	 * Send Email for User and Administrator about create ads.
+	 * @param integer $user_id
+	 * @param string $link
 	 * @param array $ads ['id', 'name', 'status', 'data']
 	 * @return boolean
 	 */
