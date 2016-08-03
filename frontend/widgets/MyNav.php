@@ -12,7 +12,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use \yii\bootstrap\Html;
 use \yii\bootstrap\BootstrapAsset;
-use \yii\bootstrap\Dropdown;
+use frontend\widgets\Dropdown;
 
 /**
  * Nav renders a nav HTML component.

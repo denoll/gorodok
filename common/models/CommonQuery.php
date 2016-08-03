@@ -74,7 +74,7 @@ class CommonQuery extends ActiveRecord
 			if ($model->save() && self::userAccontUpdateSum($user_id)) {
 				$payment = [
 					'invoice' => $request['orderNumber'],
-					'pay_in' => $request['orderNumber'],
+					'pay_in' => $request['orderSumAmount'],
 					'date' => date('Y-m-d')
 				];
 				static::sendPayInEmail($user_id, $payment);
@@ -128,7 +128,7 @@ class CommonQuery extends ActiveRecord
 	/**
 	 * Send Email for User and Administrator about payment in.
 	 * @param integer $user_id
-	 * @param array $payment ['invoice', 'pay_out', 'data']
+	 * @param array $payment ['invoice', 'pay_in', 'data']
 	 * @return boolean
 	 */
 	public static function sendPayInEmail($user_id, $payment){
