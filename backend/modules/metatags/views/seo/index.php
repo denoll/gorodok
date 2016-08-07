@@ -7,30 +7,26 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\metatags\models\Search */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Metatags';
+$this->title = 'СЕО мета теги';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="metatags-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Create Metatags', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить страницу с метатегами', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+            ],
             'key',
             'url:url',
             'kw',
             'desc',
             'info',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

@@ -15,13 +15,14 @@ $first_child = Yii::$app->session->get('first_child');
 $this->title = 'Оказание услуг';
 $this->params['left'] = true;
 $this->params['right'] = true;
+$seo = Yii::$app->seo->getByKey('service_get');
 if (!empty($cur_cat)) {
 	$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
-	$m_kw = $cur_cat['m_keyword'];
-	$m_d = $cur_cat['m_description'];
+	$m_kw = $cur_cat['m_keyword']. ', ' . $seo->kw;
+	$m_d = $cur_cat['m_description']. '. ' . $seo->desc;
 } else {
-	$m_kw = 'каталог, услуги, услуги в тынде, оказать услуги тынде, каталог услуг в тынде';
-	$m_d = 'Каталог объявлений об услугах в Тынде. Здесь Вы можете подать свое объявление об оказании услуг.';
+	$m_kw = $seo->kw;
+	$m_d = $seo->desc;
 }
 
 if (!empty($parent_cat)) {

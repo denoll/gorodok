@@ -5,10 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Metatags */
 
-$this->title = 'Update Metatags: ' . $model->key;
-$this->params['breadcrumbs'][] = ['label' => 'Metatags', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->key, 'url' => ['view', 'id' => $model->key]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Изменение метатегов на странице: ' . $model->key;
+$this->params['breadcrumbs'][] = ['label' => 'Все метатеги', 'url' => ['index']];
+
 ?>
 <div class="metatags-update">
 

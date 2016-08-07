@@ -17,13 +17,16 @@ $ses->close();
 $this->title = !empty($cur_cat) ? $cur_cat['name'] : 'Товары';
 $this->params['left'] = true;
 $this->params['right'] = true;
+$seo = Yii::$app->seo->getByKey('goods_index');
+$mk = $seo->kw;
+$md = $seo->desc;
 if(!empty($cur_cat)){
     $this->params['breadcrumbs'][] = ['label' => 'Товары', 'url' => ['index']];
-    $m_kw = $cur_cat['m_keyword'];
-    $m_d = $cur_cat['m_description'];
+    $m_kw = $cur_cat['m_keyword']. ', ' . $seo->kw;
+    $m_d = $cur_cat['m_description']. '. ' . $seo->desc;
 }else{
-    $m_kw = 'каталог, товары, товары в тынде, купить товары тынде, каталог товаров в тынде';
-    $m_d = 'Каталог объявлений о товарах в Тынде. Здесь Вы можете подать свое объявление о продаже товара.';
+	$m_kw = $seo->kw;
+	$m_d = $seo->desc;
 }
 
 if(!empty($parent_cat)){

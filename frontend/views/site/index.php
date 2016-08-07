@@ -6,8 +6,9 @@ use yii\helpers\Html;
 use common\widgets\DbBanner;
 
 $this->title = 'Наша Тында';
-$this->registerMetaTag([ 'content' => Html::encode('Городской портал Наша Тында'), 'name' => 'description' ]);
-$this->registerMetaTag([ 'content' => Html::encode('Городской портал Наша Тында'), 'name' => 'keywords' ]);
+$seo = Yii::$app->seo->getByKey('main_page');
+$this->registerMetaTag([ 'content' => $seo->desc, 'name' => 'description' ]);
+$this->registerMetaTag([ 'content' => $seo->kw, 'name' => 'keywords' ]);
 
 ?>
 <div class="site-index row" style="margin-top: 10px; margin-bottom: 20px;">

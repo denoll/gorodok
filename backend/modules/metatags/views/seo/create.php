@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Metatags */
 
-$this->title = 'Create Metatags';
-$this->params['breadcrumbs'][] = ['label' => 'Metatags', 'url' => ['index']];
+$this->title = 'Добавлнение метатегов на новую страницу';
+$this->params['breadcrumbs'][] = ['label' => 'Все метатеги', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="metatags-create">

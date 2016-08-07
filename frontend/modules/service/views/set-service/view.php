@@ -7,12 +7,21 @@ use common\widgets\Arrays;
 /* @var $this yii\web\View */
 /* @var $model common\models\goods\Goods */
 
-if (!empty($model['m_description'])) {
-    $this->registerMetaTag(['content' => Html::encode($model['m_description']), 'name' => 'description']);
+$seo = Yii::$app->seo->getByKey('service_set');
+if ( !empty($cur_cat) ) {
+    $m_kw = $model[ 'name' ] . ', ' . $cur_cat[ 'm_keyword' ] . ', ' . $seo->kw;
+    $m_d = $model[ 'name' ] . ', ' . $cur_cat[ 'm_description' ] . '. ' . $seo->desc;
+} else {
+    $m_kw = $model[ 'name' ] . ', ' . $seo->kw;
+    $m_d = $model[ 'name' ] . ', ' . $seo->desc;
 }
-if (!empty($model['m_keyword'])) {
-    $this->registerMetaTag(['content' => Html::encode($model['m_keyword']), 'name' => 'keywords']);
+if ( !empty($m_d) ) {
+    $this->registerMetaTag([ 'content' => Html::encode($m_d), 'name' => 'description' ]);
 }
+if ( !empty($m_kw) ) {
+    $this->registerMetaTag([ 'content' => Html::encode($m_kw), 'name' => 'keywords' ]);
+}
+
 $ses = Yii::$app->session;
 $ses->open();
 $cur_cat = $ses->get('current_cat');

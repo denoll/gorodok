@@ -14,9 +14,9 @@ $user = !Yii::$app->user->isGuest ? Yii::$app->user->getIdentity() : null;
 $label = $model->attributeLabels();
 
 $auto = $model->id . '.  Авто ' . $model->brand->name . ' - ' . $model->model->name;
-
-$m_kw = $auto . ', продать автомобиль в тынде, купить автомобиль в тынде, автомобили в тынде, каталог автомобилей в тынде, продажа автомобилей в тынде';
-$m_d = $auto . '. Объявления о продеже и покупке автомобилей в Тынде. Здесь Вы можете подать свое объявление о продаже или покупке автомобиля в городе Тынада.';
+$seo = Yii::$app->seo->getByKey('auto_index');
+$m_kw = $auto . ', '. $seo->kw;
+$m_d = $auto . '. '. $seo->desc;
 
 if (!empty($m_d)) {
 	$this->registerMetaTag(['content' => Html::encode($m_d), 'name' => 'description']);

@@ -16,14 +16,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'kw')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'kw')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'desc')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'desc')->textarea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'info')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'info')->textarea(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= \common\widgets\buttons\ViewButtons::widget(['id' => $model->key]); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

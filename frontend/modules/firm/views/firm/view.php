@@ -13,6 +13,7 @@ $this->params['right'] = true;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Все фирмы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model['cat']['name'], 'url' => ['index', 'cat' => $model['cat']['slug']]];
+$seo = Yii::$app->seo->getByKey('firm_index');
 
 if(!empty($model['mk'])&&!empty($model['md'])){
 	$mk = $model['mk'];
@@ -21,8 +22,8 @@ if(!empty($model['mk'])&&!empty($model['md'])){
 	$mk = $model['name'] . ', ' . $current_cat['mk'];
 	$md = $model['name'] . '. ' . $current_cat['md'];
 } else {
-	$mk = $model['name'] . ', справочник адресов Тынды, адреса Тынды, адреса гос органов Тынды, адреса фирм Тынды, каталог фирм города Тында';
-	$md = $model['name'] . '. Справочник адресов государственных органов и компаний города Тында';
+	$mk = $model['name'] . ', ' .$seo->kw;
+	$md = $model['name'] . '. ' .$seo->desc;
 }
 
 if (!empty($md)) {

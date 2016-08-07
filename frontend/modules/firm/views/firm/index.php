@@ -15,12 +15,14 @@ $this->params['right'] = true;
 
 $model = $dataProvider->getModels();
 $current_cat = Yii::$app->session->get('current_cat');
+
 $this->title = 'Фирмы';
 if(!empty($current_cat)) $this->params['breadcrumbs'][] = ['label' => $current_cat['name'], 'url' => ['index', 'cat' => $current_cat['slug']]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$mk = 'справочник адресов Тынды, адреса Тынды, адреса гос органов Тынды, адреса фирм Тынды, каталог фирм города Тында';
-$md = 'Справочник адресов государственных органов и компаний города Тында';
+$seo = Yii::$app->seo->getByKey('firm_index');
+$mk = $seo->kw;
+$md = $seo->desc;
 
 if (!empty($current_cat)) {
 	if(empty($current_cat['mk'])) $mk = $current_cat['name'] . ', ' . $mk;

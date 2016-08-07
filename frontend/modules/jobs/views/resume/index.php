@@ -12,6 +12,7 @@ use frontend\widgets\JobSearch;
 $this->params['right'] = true;
 $this->params['left'] = true;
 $get = Yii::$app->request->get();
+$seo = Yii::$app->seo->getByKey('resume_index');
 if (!empty($get['cat']) || !empty($get['JobResumeSearch']['cat'])) {
 	if (!empty($get['cat'])) {
 		$id_cat = $get['cat'];
@@ -21,12 +22,12 @@ if (!empty($get['cat']) || !empty($get['JobResumeSearch']['cat'])) {
 	$this->params['breadcrumbs'][] = ['label' => 'Резюме', 'url' => [Url::home() . 'jobs/resume/index']];
 	$cat = \common\widgets\Arrays::getJobCatBiId($id_cat);
 	$this->title = $cat['name'];
-	$m_kw = $cat['m_keyword'];
-	$m_d = $cat['m_description'];
+	$m_kw = $cat['m_keyword'] . ', ' . $seo->kw;
+	$m_d = $cat['m_description']. '. ' . $seo->desc;
 } else {
 	$this->title = 'Резюме';
-	$m_kw = 'каталог, резюме, работа и вакансии в тынде, работа в тынде, рабочие места в тынде';
-	$m_d = 'Каталог объявлений о работе в Тынде. Здесь Вы можете подать свое резюме.';
+	$m_kw = $seo->kw;
+	$m_d = $seo->desc;
 }
 $this->params['breadcrumbs'][] = $this->title;
 if (!empty($m_d)) {

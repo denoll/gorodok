@@ -2,9 +2,11 @@
 
 namespace app\modules\metatags\controllers;
 
+use common\widgets\buttons\ControllerButton;
 use Yii;
 use common\models\Metatags;
 use app\modules\metatags\models\Search;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,22 +39,10 @@ class SeoController extends Controller
     {
         $searchModel = new Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Metatags model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -66,7 +56,12 @@ class SeoController extends Controller
         $model = new Metatags();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->key]);
+            return ControllerButton::widget([
+                'action' => Yii::$app->request->post('action'),
+                'save_url' => Url::previous(),
+                'update_url' => '/metatags/seo/update',
+                'id' => $model->key
+            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +80,12 @@ class SeoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->key]);
+            return ControllerButton::widget([
+                'action' => Yii::$app->request->post('action'),
+                'save_url' => Url::previous(),
+                'update_url' => '/metatags/seo/update',
+                'id' => $model->key
+            ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
