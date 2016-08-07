@@ -51,7 +51,7 @@ $this->title = 'Регистрация';
 					])->label(false); ?>
 
 					<div id="auth_block">
-						<label class="auth-label" for="auth_block">Зарегестрируйтесь через один из внешних сервисов.</label>
+						<label class="auth-label" for="auth_block">Зарегистрируйтесь через один из внешних сервисов.</label>
 						<div class="service-block-auth">
 							<?= yii\authclient\widgets\AuthChoice::widget([
 								'baseAuthUrl' => ['site/auth'],

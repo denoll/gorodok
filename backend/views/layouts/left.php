@@ -150,6 +150,7 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-camera"></i> Фото на главной',['/slider/slider/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-font"></i> Текстовые вставки',['/text/text/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-edge"></i> Кэш',['/cache/cache/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-cubes"></i> Метатеги',['/metatags/seo/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['/mainmenu/default/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Расширения',['/mainmenu/extensions/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-map"></i> Sitemap static',['/static-sitemap/index']) ?></li>

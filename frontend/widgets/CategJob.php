@@ -15,7 +15,6 @@ use yii\helpers\Json;
 use yii\web\JsExpression;
 use yii\web\View;
 use \yii\bootstrap\BootstrapAsset;
-use \yii\bootstrap\Dropdown;
 use \yii\helpers\Url;
 use common\models\Jobs\VResume;
 
