@@ -68,11 +68,11 @@ $this->registerJsFile('/js/jquery.matchHeight.min.js',[
 ]);
 
 $js = <<<JS
-	//$(document).ready(function(){
+	$(document).ready(function(){
 		$(function() {
 			$('.for-one-height').matchHeight();
 		});
-	//});
+	});
 JS;
 $this->registerJS($js, \yii\web\View::POS_END);
 

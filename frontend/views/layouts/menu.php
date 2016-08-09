@@ -65,7 +65,7 @@ $li = (100 / $count) - 0.01;
 			<div class="row">
 				<div class="col-sm-2 side_left block-top">
 					<a class="navbar-brand" href="/" style="margin: 0px; padding: 0px;">
-						<?= Html::img(Url::to('@frt_url/img/logo_2.png'), ['id' => 'logo-header', 'style' => 'width:100%;', 'alt' => 'Logo']) ?>
+						<?= Yii::$app->logo->getLogo() ?>
 					</a>
 				</div>
 				<div class="col-sm-7 side_left block-top">

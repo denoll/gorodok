@@ -16,7 +16,8 @@ use yii\base\Component;
 /**
  * Class Seo
  * @package common\components\seo
- * @param string $key
+ * @property string $key
+ * @property string $data
  */
 class Seo extends Component
 {

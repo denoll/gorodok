@@ -58,14 +58,13 @@ if($konkurs->show_img){
 					</div>
 					<?= Html::a('Подробнее',['/konkurs/item/item', 'cat' => $konkurs['cat']['slug'], 'konkurs'=>$konkurs['slug'], 'id'=>$model['id']],['class' => 'btn btn-more hover-effect']); ?>
 					<?php Modal::begin([
-						'header' => Html::tag('h3', '<i>Конкурс: </i>' . $model['konkurs']['name']),
+						'header' => Html::tag('h3', '<i>Название: </i>' . $model['name'], ['style'=>'margin: 0;']),
 						'toggleButton' => [
 							'tag' => 'button',
 							'class' => 'btn btn-more hover-effect',
 							'label' => 'Голосовать',
 						],
 					]); ?>
-					<h4><i>Название: </i><?= $model['name'] ?></h4>
 					<?php if($konkurs->show_img): ?>
 						<?= \common\helpers\Thumb::imgWithOptions($model['base_url'], $model['img'], ['id' => 'img_id_' . $model['id'], 'style' => 'width: 100%; overflow: hidden;']) ?>
 					<?php ENDIF; ?>
@@ -76,6 +75,7 @@ if($konkurs->show_img){
 					<?php ENDIF; ?>
 					<?php $form = ActiveForm::begin(); ?>
 					<p>
+						<i>Конкурс: </i><strong><?=  $model['konkurs']['name'] ?></strong>&nbsp;&nbsp;
 						<i>Добавил участник: </i><strong><?= Html::a($model['user']['username'], ['/konkurs/konkurs/view', 'cat'=>$konkurs['cat']['slug'], 'id'=>$konkurs['slug'], 'user'=>$model['id_user']]) ?></strong>&nbsp;&nbsp;
 						<i>Дата фото: </i><strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong><br>
 						<i>Проголосовало: </i><strong><?= !empty($model['vote_count']) ? $model['vote_count'] .' (чел.) ' : 'еще нет голосов' ?></strong>&nbsp;&nbsp;
@@ -133,7 +133,7 @@ if($konkurs->show_img){
 					<?= nl2br($desc); ?>
 				</p>
 			<?php ENDIF; ?>
-			<p>
+			<p style="display: block; content: ' '; height: 65px;">
 				<i>Добавил участник: </i><strong><?= Html::a($model['user']['username'], ['/konkurs/konkurs/view', 'cat'=>$konkurs['cat']['slug'], 'id'=>$konkurs['slug'], 'user'=>$model['id_user']]) ?></strong>&nbsp;&nbsp;
 				<i>Дата фото: </i><strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong>&nbsp;&nbsp;<br>
 				<i>Проголосовало: </i><strong><?= !empty($model['vote_count']) ? $model['vote_count'] .' (чел.) ' : '0 (чел.)' ?></strong>&nbsp;&nbsp;
