@@ -38,8 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'icon',
             'subtitle',
-            'm_keyword',
-            'm_description',
+            'meta_keyword',
+            'meta_description',
         ],
     ]) ?>
 

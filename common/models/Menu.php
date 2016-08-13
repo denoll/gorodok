@@ -1,19 +1,15 @@
 <?php
 
-namespace app\modules\menu\models;
+namespace common\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\behaviors\SluggableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "menu".
  *
- * @property string $id_menu
- * @property string $id
- * @property string $parent
+ * @property integer $id_menu
+ * @property integer $id
+ * @property integer $parent
  * @property integer $order
  * @property integer $status
  * @property string $path
@@ -21,25 +17,14 @@ use yii\db\Expression;
  * @property string $title
  * @property string $icon
  * @property string $subtitle
- * @property string $m_keyword
- * @property string $m_description
+ * @property string $meta_keyword
+ * @property string $meta_description
+ *
+ * @property MenuList $menu
  */
-class Menu extends ActiveRecord
+class Menu extends \yii\db\ActiveRecord
 {
-
-	public function behaviors()
-	{
-		return [
-			[
-				'class' => SluggableBehavior::className(),
-				'attribute' => 'title',
-				'slugAttribute' => 'alias',
-				'immutable' => true,
-			],
-		];
-	}
-
-	/**
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -53,11 +38,11 @@ class Menu extends ActiveRecord
     public function rules()
     {
         return [
-	        [['title'], 'required'],
             [['id_menu', 'parent', 'order', 'status'], 'integer'],
-            [['path', 'm_keyword', 'm_description'], 'string', 'max' => 255],
+            [['path', 'meta_keyword', 'meta_description'], 'string', 'max' => 255],
             [['alias', 'title', 'icon', 'subtitle'], 'string', 'max' => 50],
-            [['alias'], 'unique']
+            [['alias'], 'unique'],
+            [['id_menu'], 'exist', 'skipOnError' => true, 'targetClass' => MenuList::className(), 'targetAttribute' => ['id_menu' => 'id']],
         ];
     }
 
@@ -77,8 +62,16 @@ class Menu extends ActiveRecord
             'title' => 'Заголовок',
             'icon' => 'Иконка',
             'subtitle' => 'Подзаоловок',
-            'm_keyword' => 'Ключевые слова',
-            'm_description' => 'Мета описание',
+            'meta_keyword' => 'Ключевые слова',
+            'meta_description' => 'Мета описание',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenu()
+    {
+        return $this->hasOne(MenuList::className(), ['id' => 'id_menu']);
     }
 }

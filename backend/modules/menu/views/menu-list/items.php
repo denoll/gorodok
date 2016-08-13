@@ -7,12 +7,13 @@
 	/* @var $this yii\web\View */
 	/* @var $model app\modules\menu\models\Menu */
 	$this->title = $model_list->title . ' элементы';
-	$this->params['breadcrumbs'][] = ['label' => 'Menus', 'url' => ['index']];
+	$this->params['breadcrumbs'][] = ['label' => 'Все меню', 'url' => ['index']];
 	$this->params['breadcrumbs'][] = $this->title;
 
 
 	function view_menu($menu)
 	{
+		if(empty($menu)) return null;
 		foreach ($menu as $item) {
 			echo '<li class="dd-item" data-id="' . $item['id'] . '"">';
 			echo '<div class="dd-handle"> ' . $item['title'];
@@ -36,13 +37,27 @@
 		<div class="col-lg-6">
 			<div class="ibox ">
 				<div class="ibox-title">
-					<h5>Пункты меню: &nbsp;<?= $model_list->title ?></h5>
+					<h5>Пункты меню: &nbsp;<?= $model_list->title ?>&nbsp;&nbsp;&nbsp;
+						<?= \yii\bootstrap\Modal::widget([
+							'id' => 'menu-create2',
+							'toggleButton' => [
+								'label' => '<i class="fa fa-plus"></i>&nbsp;Добавить новый пункт меню',
+								'title' => 'Редактировать',
+								'class' => 'btn btn-xs btn-primary',
+								'tag' => 'a',
+								'data-target' => '#menu-create2',
+								'href' => Url::to(['/menu/menu-list/item-create', 'id' => $model_list->id]),
+							],
+							'clientOptions' => false,
+						]);
+						?>
+					</h5>
 				</div>
 				<div class="ibox-content">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>Редактировавть</th><th>Пункт</th><th>Статус</th>
+								<th>Редактировавть</th><th>Пункт</th><th>Порядок</th><th>Статус</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -50,10 +65,26 @@
 								$url = '/menu/menu-list/item-edit'; ?>
 								<tr>
 									<td>
-										<?= Html::a('<i class="fa fa-edit"></i>',[$url,'id'=>$item['id']],['class' => 'btn btn-xs btn-primary','style' => 'margin-right: 10px;']) ?>
+										<?=
+											\yii\bootstrap\Modal::widget([
+												'id' => 'menu-edit_' . $item['id'],
+												'toggleButton' => [
+													'label' => '<i class="fa fa-edit"></i>',
+													'title' => 'Редактировать',
+													'class' => 'btn btn-xs btn-primary',
+													'tag' => 'a',
+													'data-target' => '#menu-edit_' . $item['id'],
+													'href' => Url::to([$url, 'id' => $item['id']]),
+												],
+												'clientOptions' => false,
+											]);
+										 ?>
 									</td>
 									<td>
 										<?=$item['title']?>
+									</td>
+									<td>
+										<?=$item['order']?>
 									</td>
 									<td>
 										<?= $item['status'] == 1 ? 'Активный' : 'Не активный' ?>
@@ -62,9 +93,6 @@
 							<?php } ?>
 						</tbody>
 					</table>
-
-					<pre><?php print_r($new_order); ?></pre>
-
 				</div>
 			</div>
 		</div>
@@ -76,7 +104,7 @@
 				<div class="ibox-content">
 
 					<p class="m-b-lg">
-						<strong><?= $model_list->title ?></strong> Для изменения положения пункта меню переместите пункт в нужное место.
+						<strong><?= $model_list->title ?></strong>
 					</p>
 
 					<div class="dd" id="nestable">
@@ -87,11 +115,10 @@
 					<div class="m-t-md">
 						<h5>Serialised Output</h5>
 					</div>
-					<pre><?php print_r($post); ?></pre>
 					<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 					<textarea id="nestable-output" name="items" class="form-control"></textarea>
 					<div class="form-group">
-						<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+						<?//= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
 					</div>
 					<?php ActiveForm::end(); ?>
 				</div>
@@ -103,11 +130,8 @@
 
 <?php
 
-
-
-	$this->registerJsFile('js/plugins/nestable/jquery.nestable.js', ['depends' => [\yii\web\YiiAsset::className()]]);
-	$this->registerJs(
-		'$("document").ready(function(){
+$js = <<<JS
+$("document").ready(function(){
 			var updateOutput = function (e) {
 			var list = e.length ? e : $(e.target),
 				output = list.data("output");
@@ -137,7 +161,10 @@ var out;
 				$(".dd").nestable("collapseAll");
 			}
 		});
-        });'
-		, View::POS_END
-	);
+        });
+JS;
+
+
+	$this->registerJsFile('js/plugins/nestable/jquery.nestable.js', ['depends' => [\yii\web\YiiAsset::className()]]);
+	$this->registerJs($js, View::POS_END);
 ?>

@@ -19,13 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
         <?= \yii\bootstrap\Modal::widget([
-	        'id' => 'menu-create',
+	        'id' => 'menu-create1',
 	        'toggleButton' => [
 		        'label' => '<i class="fa-fw fa fa-plus" style="margin-right: 12px;"></i>Создать новое меню',
 		        'class' => 'btn btn-success',
 		        'style' => 'width: 250px; font-size: 0.9em; color: #fff; padding: 5px 7px 5px 7px; text-align:center',
 		        'tag' => 'a',
-		        'data-target' => '#menu-create',
+		        'data-target' => '#menu-create1',
 		        'href' => Url::home() . 'menu/menu-list/create',
 	        ],
 	        'clientOptions' => false,
@@ -53,13 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			        },
 			        'update' => function ($url, $model, $key) {
 				        return \yii\bootstrap\Modal::widget([
-					        'id' => 'menu-edit_' . $key,
+					        'id' => 'medit-' . $key,
 					        'toggleButton' => [
 						        'label' => '<i class="fa fa-edit"></i>',
 						        'title' => 'Редактировать',
 						        'class' => 'btn btn-xs btn-primary',
 						        'tag' => 'a',
-						        'data-target' => '#menu-edit_' . $key,
+						        'data-target' => '#medit-' . $key,
 						        'href' => $url,
 					        ],
 					        'clientOptions' => false,
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        ],
 	        ],
             'title',
-            'alias',
+            'slug',
             'position',
 	        [
 		        'attribute' => 'status',

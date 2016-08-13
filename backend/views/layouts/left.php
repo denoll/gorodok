@@ -151,6 +151,7 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-font"></i> Текстовые вставки',['/text/text/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-edge"></i> Кэш',['/cache/cache/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Метатеги',['/metatags/seo/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-cubes"></i> Простые меню',['/menu/menu-list/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['/mainmenu/default/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Расширения',['/mainmenu/extensions/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-map"></i> Sitemap static',['/static-sitemap/index']) ?></li>
@@ -162,7 +163,12 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-users"></i> Пользователи',['/users/user/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-key"></i> Права',['/admin/rbac']) ?></li>
 					<li><?= Html::a('<i class="fa fa-legal"></i> Роли',['/admin/rbac/role']) ?></li>
-					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['menu/menu-list/index']) ?></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#"><i class="fa fa-cubes"></i><span class="nav-label">Простые меню</span><span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level collapse">
+					<li><?= Html::a('<i class="fa fa-cubes"></i> Простые меню',['/menu/menu-list/index']) ?></li>
 				</ul>
 			</li>
 		</ul>

@@ -5,7 +5,7 @@ namespace app\modules\menu\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\menu\models\Menu;
+use common\models\Menu;
 
 /**
  * MenuSearch represents the model behind the search form about `app\modules\menu\models\Menu`.
@@ -19,7 +19,7 @@ class MenuSearch extends Menu
     {
         return [
             [['id_menu', 'id', 'parent', 'order', 'status'], 'integer'],
-            [['path', 'alias', 'title', 'icon', 'subtitle', 'm_keyword', 'm_description'], 'safe'],
+            [['path', 'alias', 'title', 'icon', 'subtitle', 'meta_keyword', 'meta_description'], 'safe'],
         ];
     }
 
@@ -68,8 +68,8 @@ class MenuSearch extends Menu
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'icon', $this->icon])
             ->andFilterWhere(['like', 'subtitle', $this->subtitle])
-            ->andFilterWhere(['like', 'm_keyword', $this->m_keyword])
-            ->andFilterWhere(['like', 'm_description', $this->m_description]);
+            ->andFilterWhere(['like', 'm_keyword', $this->meta_keyword])
+            ->andFilterWhere(['like', 'm_description', $this->meta_description]);
 
         return $dataProvider;
     }

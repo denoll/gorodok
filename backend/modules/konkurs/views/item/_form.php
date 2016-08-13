@@ -30,28 +30,12 @@ use yii\web\JsExpression;
 				<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
 				<?= $form->field($model, 'description')->textarea(['rows'=>6, 'maxlength' => true]) ?>
-				<div class="row">
-					<div class="col-sm-6">
-						<?= $form->field($model, 'created_at')->widget(DateTimePicker::classname(), [
-							'options' => ['placeholder' => 'Укажите дату и время ...'],
-							'value' => date('Y-m-d H:i:s'),
-							'pluginOptions' => [
-								'autoclose' => true,
-							]
-						]); ?>
-					</div>
-					<div class="col-sm-6">
-						<?= $form->field($model, 'updated_at')->widget(DateTimePicker::classname(), [
-							'options' => ['placeholder' => 'Укажите дату и время ...'],
-							'pluginOptions' => [
-								'autoclose' => true
-							]
-						]); ?>
-					</div>
-				</div>
 			</div>
 			<div class="col-md-4">
 				<?= $form->field($model, 'status')->dropDownList(\common\models\konkurs\KonkursItem::getStatuses()) ?>
+				<?php if(!$model->isNewRecord){ ?>
+				<?= Html::img($model->base_url.'/'.$model->img , ['style'=>'width: 100%;']) ?>
+				<?php } ?>
 				<?= $form->field($model, 'image')->widget(
 					'\denoll\filekit\widget\Upload',
 					[

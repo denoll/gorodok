@@ -5,7 +5,7 @@ namespace app\modules\menu\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\menu\models\MenuList;
+use common\models\MenuList;
 
 /**
  * MenuListSearch represents the model behind the search form about `app\modules\menu\models\MenuList`.
@@ -19,7 +19,7 @@ class MenuListSearch extends MenuList
     {
         return [
             [['id', 'status'], 'integer'],
-            [['title', 'alias', 'position'], 'safe'],
+            [['title', 'slug', 'position'], 'safe'],
         ];
     }
 
@@ -61,7 +61,7 @@ class MenuListSearch extends MenuList
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'alias', $this->alias])
+            ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'position', $this->position]);
 
         return $dataProvider;

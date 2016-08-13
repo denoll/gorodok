@@ -49,7 +49,6 @@ class ItemController extends Controller
 				'disableCsrf' => false,
 				'responseFormat' => Response::FORMAT_JSON,
 				'on afterSave' => function ($event) {
-					/* @var $file \League\Flysystem\File */
 					$file = $event->file;
 					$post = Yii::$app->request->post('KonkursItem');
 					$path = Url::to('@frt_dir/img/konkurs/' . $file->getPath());

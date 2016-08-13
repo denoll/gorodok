@@ -3,8 +3,8 @@
 namespace app\modules\menu\controllers;
 
 use Yii;
-use app\modules\menu\models\Menu;
-use app\modules\menu\models\MenuList;
+use common\models\Menu;
+use common\models\MenuList;
 use app\modules\menu\models\MenuListSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -45,6 +45,7 @@ class MenuListController extends Controller
 
 	public function mapTree($data) {
 		$tree = array();
+		if(empty($data)) return null;
 		foreach ($data as $id=>&$node) {
 			if (!$node['parent']) {
 				$tree[$id] = &$node;
@@ -92,13 +93,27 @@ class MenuListController extends Controller
 
     }
 
+	public function actionItemCreate($id){
+		$menuList = MenuList::findOne($id);
+		$model = new Menu();
+		$post = $model->load(Yii::$app->request->post());
+		if ($post && $model->save()) {
+			return $this->redirect(['items','id'=>$model->id_menu]);
+		} else {
+			return $this->renderAjax('item-create', [
+				'model' => $model,
+				'menuList' => $menuList,
+			]);
+		}
+	}
+
 	public function actionItemEdit($id){
 		$model = Menu::findOne(['id'=>$id]);
 		$post = $model->load(Yii::$app->request->post());
 		if ($post && $model->save()) {
 			return $this->redirect(['items','id'=>$model->id_menu]);
 		} else {
-			return $this->render('item-edit', [
+			return $this->renderAjax('item-edit', [
 				'model' => $model,
 			]);
 		}

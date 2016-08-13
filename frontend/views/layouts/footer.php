@@ -11,8 +11,7 @@ use yii\helpers\Html;
 			<div class="row">
 				<!-- About -->
 				<div class="col-md-3 md-margin-bottom-40">
-					<div class="headline"><h2>НАША ТЫНДА</h2></div>
-					<p>Городской портал Наша Тында,<br> создан специально для Вас.</p>
+					<?= \app\widgets\DbText::widget([ 'key' => 'footer_left_block' ]) ?>
 				</div>
 				<!--/col-md-3-->
 				<!-- End About -->
@@ -21,14 +20,7 @@ use yii\helpers\Html;
 				<div class="col-md-3 md-margin-bottom-40">
 					<div class="posts">
 						<div class="headline"><h2>Меню</h2></div>
-						<ul class="list-unstyled link-list">
-							<li><?= Html::a('Новости ', ['/news/news/index']) ?><i class="fa fa-angle-right"></i></li>
-							<li><?= Html::a('Афиша ', ['/afisha/afisha/index']) ?><i class="fa fa-angle-right"></i></li>
-							<li><?= Html::a('Форум ', ['/forum/forum/index']) ?><i class="fa fa-angle-right"></i></li>
-							<li><?= Html::a('Товары ', ['/goods/goods/index']) ?><i class="fa fa-angle-right"></i></li>
-							<li><?= Html::a('Услуги ', ['/service/service/index']) ?><i class="fa fa-angle-right"></i></li>
-							<li><?= Html::a('Недвижимость ', ['/realty/sale/index']) ?><i class="fa fa-angle-right"></i></li>
-						</ul>
+						<?= \common\widgets\menu\MenuListWidget::widget([ 'key' => 'footer_left_menu', 'ulOptions' => ['class'=> 'list-unstyled link-list'], 'icon'=>'<i class="fa fa-angle-right"></i>' ]) ?>
 					</div>
 				</div>
 				<!--/col-md-3-->
@@ -37,14 +29,7 @@ use yii\helpers\Html;
 				<!-- Link List -->
 				<div class="col-md-3 md-margin-bottom-40">
 					<div class="headline"><h2>Полезные ссылки</h2></div>
-					<ul class="list-unstyled link-list">
-						<li><?= Html::a('Расписание поездов и электричек станция Тында ', ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('Расписание автобусов по г. Тында ', ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-avtobusov']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('О сайте ', ['/page/page/view','id'=>'about']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('Как пользоваться ', ['/page/page/index','cat'=>'kak-polzovatsa-sajtom']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('Пользовательское соглашение ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'polzovatelskoe-soglasenie']) ?><i class="fa fa-angle-right"></i></li>
-						<li><?= Html::a('Реклама на сайте ', ['/page/page/view', 'cat' => 'o-sajte','id'=>'reklama-na-sajte']) ?><i class="fa fa-angle-right"></i></li>
-					</ul>
+					<?= \common\widgets\menu\MenuListWidget::widget([ 'key' => 'footer_right_menu', 'ulOptions' => ['class'=> 'list-unstyled link-list'], 'icon'=>'<i class="fa fa-angle-right"></i>' ]) ?>
 				</div>
 				<!--/col-md-3-->
 				<!-- End Link List -->
@@ -53,10 +38,7 @@ use yii\helpers\Html;
 				<div class="col-md-3 map-img md-margin-bottom-40">
 					<div class="headline"><h2>Контакты</h2></div>
 					<address class="md-margin-bottom-40">
-						Россия, Амурская область <br/>
-						г. Тында <br/>
-						Email: <a href="mailto:info@nashatynda.ru" class="">info@nashatynda.ru</a> <br/>
-						Телефон представителя: <strong>8-914-568-69-02</strong>
+						<?= \app\widgets\DbText::widget([ 'key' => 'footer_kontacts' ]) ?>
 					</address>
 				</div>
 				<!--/col-md-3-->
@@ -71,8 +53,7 @@ use yii\helpers\Html;
 			<div class="row">
 				<div class="col-md-10">
 					<p>
-						2015 - <?= date('Y') ?> &copy; Наша Тында. Все права защищены.
-						<a href="#">Политика использования</a> | <a href="#">Правила и соглашения</a>
+						2015 - <?= date('Y') ?> &copy; ООО "НАШ ГОРОД". Все права защищены.
 						<?php
 						$user = \Yii::$app->user->identity;
 						if ($user->username == 'denoll') {

@@ -19,20 +19,22 @@
 		</button>
 		<h4 style="margin: 0px;"><?= Html::encode('Изменение меню: ' . ' ' . $model->title) ?></h4>
 	</div>
+	<?php $form = ActiveForm::begin(); ?>
 	<div class="modal-body">
-		<?php $form = ActiveForm::begin(); ?>
 
 		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-		<?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
+		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'status')->radioList(['1'=>'Активное','0'=>'Не активное']) ?>
+		
+		<?= $form->field($model, 'data')->textarea(['maxlength' => true]) ?>
 	</div>
 	<div class="modal-footer">
 		<div class="form-group">
-			<?= Html::submitButton($model->isNewRecord ? 'Сохранить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+			<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
 		</div>
 	</div>
 

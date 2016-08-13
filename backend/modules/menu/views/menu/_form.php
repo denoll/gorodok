@@ -30,9 +30,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'm_keyword')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'meta_keyword')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'm_description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

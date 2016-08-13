@@ -1,37 +1,23 @@
 <?php
 
-namespace app\modules\menu\models;
+namespace common\models;
 
 use Yii;
-use yii\db\ActiveRecord;
-use yii\behaviors\SluggableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "menu_list".
  *
- * @property string $id
+ * @property integer $id
  * @property string $title
- * @property string $alias
+ * @property string $slug
  * @property string $position
  * @property integer $status
+ * @property string $data
+ *
+ * @property Menu[] $menus
  */
-class MenuList extends ActiveRecord
+class MenuList extends \yii\db\ActiveRecord
 {
-
-	public function behaviors()
-	{
-		return [
-			[
-				'class' => SluggableBehavior::className(),
-				'attribute' => 'title',
-				'slugAttribute' => 'alias',
-				'immutable' => true,
-			],
-		];
-	}
-
     /**
      * @inheritdoc
      */
@@ -47,10 +33,9 @@ class MenuList extends ActiveRecord
     {
         return [
             [['status'], 'integer'],
-	        [['title'], 'required'],
-            [['title', 'alias'], 'string', 'max' => 50],
+            [['data'], 'string'],
+            [['title', 'slug'], 'string', 'max' => 50],
             [['position'], 'string', 'max' => 255],
-            [['alias'], 'unique']
         ];
     }
 
@@ -62,9 +47,18 @@ class MenuList extends ActiveRecord
         return [
             'id' => 'ID меню',
             'title' => 'Название',
-            'alias' => 'Алиас',
+            'slug' => 'Алиас',
             'position' => 'Позиция',
             'status' => 'Статус',
+            'data' => 'Данные меню в формате JSON',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenu()
+    {
+        return $this->hasMany(Menu::className(), ['id_menu' => 'id']);
     }
 }

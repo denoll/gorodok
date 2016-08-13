@@ -21,8 +21,8 @@ $menuItems = [
 	],
 	[
 		'label' => 'Очистить кеш', 'items' => [
-			[ 'label' => 'Общий кеш', 'url' => ['flush-cache', 'id'=>'cache'] ],
-			[ 'label' => 'Фронтенд кеш', 'url' => ['flush-cache', 'id'=>'frontendCache'] ],
+			[ 'label' => 'Общий кеш', 'url' => ['/cache/cache/flush-cache', 'id'=>'cache'] ],
+			[ 'label' => 'Фронтенд кеш', 'url' => ['/cache/cache/flush-cache', 'id'=>'frontendCache'] ],
 		],
 	],
 
