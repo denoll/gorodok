@@ -151,6 +151,14 @@ class ItemController extends Controller
 		echo json_encode($arr);
 	}
 
+	public function actionCalculate(){
+		$items = KonkursItem::find()->where(['status' => 1])->all();
+		foreach ($items as $item){
+			KonkursItem::getSumScope($item->id);
+		}
+		return $this->redirect(['index']);
+	}
+
 	/**
 	 * Deletes an existing KonkursItem model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.

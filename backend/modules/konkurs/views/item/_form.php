@@ -55,6 +55,7 @@ use yii\web\JsExpression;
 				<?//= $form->field($model, 'no')->textInput() ?>
 
 				<?= $form->field($model, 'scope')->textInput() ?>
+				<?= $form->field($model, 'sum')->textInput() ?>
 			</div>
 		</div>
 		<?= \common\widgets\buttons\ViewButtons::widget(['id' => $model->id]); ?>

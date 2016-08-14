@@ -19,7 +19,7 @@ class ItemSearchFront extends KonkursItem
 	{
 		return [
 			[['id', 'id_konkurs', 'id_user', 'status', 'yes', 'no', 'vote_count'], 'integer'],
-			[['scope'],'number'],
+			[['scope', 'sum'],'number'],
 			[['base_url', 'img', 'description', 'created_at', 'updated_at', 'name'], 'safe'],
 		];
 	}
@@ -56,6 +56,11 @@ class ItemSearchFront extends KonkursItem
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'sort' => [
+				'defaultOrder' => [
+					'sum' => SORT_ASC
+				]
+			],
 			'pagination' => [
 				'forcePageParam' => false,
 				'pageSizeParam' => false,
@@ -64,19 +69,18 @@ class ItemSearchFront extends KonkursItem
 		]);
 		$dataProvider->setSort([
 			'attributes' => [
-				'scope_desc' => [
+				'scope' => [
 					'attribute' => 'scope',
 					'asc' => ['scope' => SORT_DESC,],
 					'desc' => ['scope' => SORT_ASC,],
-					'label' => 'первые места',
+					'label' => 'по среднему баллу',
 				],
-				'scope_asc' => [
-					'attribute' => 'scope',
-					'asc' => ['scope' => SORT_ASC,],
-					'desc' => ['scope' => SORT_DESC,],
-					'label' => 'последние места',
+				'sum' => [
+					'attribute' => 'sum',
+					'asc' => ['sum' => SORT_DESC,],
+					'desc' => ['sum' => SORT_ASC,],
+					'label' => 'по сумме баллов',
 				],
-
 				'created_at' => [
 					'asc' => ['created_at' => SORT_ASC,],
 					'desc' => ['created_at' => SORT_DESC,],
@@ -110,6 +114,7 @@ class ItemSearchFront extends KonkursItem
 			'yes' => $this->yes,
 			'no' => $this->no,
 			'scope' => $this->scope,
+			'sum' => $this->sum,
 			'vote_count' => $this->vote_count,
 		]);
 

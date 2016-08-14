@@ -137,6 +137,7 @@ if($konkurs->show_img){
 				<i>Добавил участник: </i><strong><?= Html::a($model['user']['username'], ['/konkurs/konkurs/view', 'cat'=>$konkurs['cat']['slug'], 'id'=>$konkurs['slug'], 'user'=>$model['id_user']]) ?></strong>&nbsp;&nbsp;
 				<i>Дата фото: </i><strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong>&nbsp;&nbsp;<br>
 				<i>Проголосовало: </i><strong><?= !empty($model['vote_count']) ? $model['vote_count'] .' (чел.) ' : '0 (чел.)' ?></strong>&nbsp;&nbsp;
+				<i>Сумма баллов: </i><strong><?= !empty($model['sum']) ? $model['sum'] : 'еще нет голосов' ?></strong>&nbsp;&nbsp;<br>
 				<i>Средний балл: </i><strong><?= !empty($model['scope']) ? $model['scope'] : 'еще нет голосов' ?></strong><br>
 			</p>
 		</div>

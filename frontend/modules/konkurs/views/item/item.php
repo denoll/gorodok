@@ -111,6 +111,7 @@ if (Yii::$app->user->isGuest) {
 			<li>Добавил участник: <strong><?= $model['user']['username'] ?></strong>&nbsp;&nbsp;</li>
 			<li>Дата фото: <strong><?= $model['created_at'] ? Yii::$app->formatter->asDate($model['created_at']) : 'не указана' ?></strong>&nbsp;&nbsp;</li>
 			<li>Проголосовало: <strong><?= !empty($model['vote_count']) ? $model['vote_count'] . ' (чел.) ' : 'еще нет голосов' ?></strong>&nbsp;&nbsp;</li>
+			<li>Сумма баллов: <strong><?= !empty($model['sum']) ? $model['sum'] : 'еще нет голосов' ?></strong>&nbsp;&nbsp;</li>
 			<li>Средний балл: <strong><?= !empty($model['scope']) ? $model['scope'] : 'еще нет голосов' ?></strong>&nbsp;&nbsp;</li>
 			<?php if ($model->id_user === Yii::$app->user->id && $model->status === KonkursItem::STATUS_VERIFICATION): ?>
 				<li><?= Html::a('<i class="fa fa-edit"></i>&nbsp;Редактировать', ['update', 'id' => $model->id], ['class' => 'btn-u btn-brd rounded-2x btn-u-xs']) ?></li>

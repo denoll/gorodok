@@ -27,6 +27,7 @@ use yii\db\Expression;
  * @property integer $yes
  * @property integer $no
  * @property integer $scope
+ * @property integer $sum
  * @property integer $vote_count
  *
  * @property Konkurs $konkurs
@@ -87,7 +88,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 		return [
 			['name', 'required'],
 			[['id_konkurs', 'id_user', 'status', 'yes', 'no', 'height', 'width', 'vote_count'], 'integer'],
-			['scope', 'number'],
+			[['scope', 'sum'], 'number'],
 			[['created_at', 'updated_at', 'image'], 'safe'],
 			[['base_url', 'img'], 'string', 'max' => 255],
 			[['name'], 'string', 'max' => 32],
@@ -119,6 +120,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 			'yes' => 'За',
 			'no' => 'Против',
 			'scope' => 'Средний балл',
+			'sum' => 'Сумма баллов',
 			'vote_count' => 'Проголосовало (чел)',
 		];
 	}
@@ -133,6 +135,7 @@ class KonkursItem extends \yii\db\ActiveRecord
 			$model = self::findOne($id_item);
 			$model->vote_count = $vote['count'];
 			$model->scope = $vote['scope'] !== 0 ? $vote['scope'] / $vote['count'] : 0;
+			$model->sum = $vote['scope'] !== 0 ? $vote['scope'] : 0;
 			$model->save();
 		}
 

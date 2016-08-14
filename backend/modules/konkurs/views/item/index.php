@@ -12,6 +12,7 @@ use common\models\users\User;
 
 $this->title = 'Элементы конкурсов';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="konkurs-item-index">
 
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<p>
 		<?= Html::a('Создать новый элемент конкурса', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::a('Пересчитать все баллы', ['calculate'], ['class' => 'btn btn-default']) ?>
 	</p>
 	<?= GridView::widget([
 		'dataProvider' => $dataProvider,
@@ -58,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => 'user.username'
 			],
 			'scope',
+			'sum',
 			'created_at',
 			//'yes',
 			//'no',

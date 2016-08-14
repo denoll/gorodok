@@ -19,7 +19,7 @@ class ItemSearch extends KonkursItem
 	{
 		return [
 			[['id', 'id_konkurs', 'id_user', 'status', 'yes', 'no', 'vote_count'], 'integer'],
-			[['scope'],'number'],
+			[['scope', 'sum'],'number'],
 			[['base_url', 'img', 'description', 'created_at', 'updated_at', 'name'], 'safe'],
 		];
 	}
@@ -48,6 +48,11 @@ class ItemSearch extends KonkursItem
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'sort' => [
+				'defaultOrder' => [
+					'id' => SORT_DESC
+				]
+			],
 		]);
 
 		$this->load($params);
@@ -69,6 +74,7 @@ class ItemSearch extends KonkursItem
 			'yes' => $this->yes,
 			'no' => $this->no,
 			'scope' => $this->scope,
+			'sum' => $this->sum,
 			'vote_count' => $this->vote_count,
 		]);
 
