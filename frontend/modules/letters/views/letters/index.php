@@ -14,16 +14,17 @@ $cur_cat = $ses->get('current_cat');
 $parent_cat = $ses->get('parent_cat');
 $first_child = $ses->get('first_child');
 $ses->close();
-$this->title = !empty($cur_cat) ? $cur_cat['name'] : 'Коллективные письма к руководству города Тында';
+$seo = Yii::$app->seo->getByKey('letter_index');
+$this->title = !empty($cur_cat) ? $cur_cat['name'] : $seo->title;
 $this->params['right'] = true;
 $this->params['left'] = true;
 if(!empty($cur_cat)){
-    $this->params['breadcrumbs'][] = ['label' => 'Коллективные письма', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $seo->title, 'url' => ['index']];
     $m_kw = $cur_cat['m_keyword'];
     $m_d = $cur_cat['m_description'];
 }else{
-    $m_kw = 'коллективные письма, коллективные письма тынды, коллективные письма, актуальные проблемы тынды';
-    $m_d = 'Коллективные письма по актуальным проблемам к руководству города Тында';
+    $m_kw = $seo->kw;
+    $m_d = $seo->desc;
 }
 
 if(!empty($parent_cat)){

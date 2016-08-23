@@ -41,8 +41,9 @@ class MenuListWidget extends Widget
 		if (empty($this->key)) return null;
 		$this->data = \Yii::$app->cache->get($this->key);
 		if(!$this->data){
-			$menu = MenuList::find()->where(['position'=>$this->key])->asArray()->one();
-			$model = Menu::find()->where(['id_menu'=>$menu['id']])->asArray()->orderBy('order')->all();
+			$menu = MenuList::find()->where(['position'=>$this->key, 'status' => MenuList::STATUS_ACTIVE])->asArray()->one();
+			if(!$menu) return null;
+			$model = Menu::find()->where(['id_menu'=>$menu['id'], 'status' => Menu::STATUS_ACTIVE ])->asArray()->orderBy('order')->all();
 			if (!$model) return null;
 			foreach($model as $item){
 				$this->data[$item['id']] = $item;

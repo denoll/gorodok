@@ -59,6 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filter' => ArrayHelper::map(User::find()->orderBy('id DESC')->asArray()->all(), 'id', 'username') ,
 				'value' => 'user.username'
 			],
+			[
+				'attribute' => 'id_user',
+				'format' => 'raw',
+				'filter' => ArrayHelper::map(User::find()->orderBy('id DESC')->asArray()->all(), 'id', 'email') ,
+				'value' => 'user.email'
+			],
 			'scope',
 			'sum',
 			'created_at',

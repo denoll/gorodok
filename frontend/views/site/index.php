@@ -5,8 +5,9 @@ use app\widgets\DbText;
 use yii\helpers\Html;
 use common\widgets\DbBanner;
 
-$this->title = 'Наша Тында';
+
 $seo = Yii::$app->seo->getByKey('main_page');
+$this->title = $seo->title;
 $this->registerMetaTag([ 'content' => $seo->desc, 'name' => 'description' ]);
 $this->registerMetaTag([ 'content' => $seo->kw, 'name' => 'keywords' ]);
 
@@ -90,7 +91,7 @@ $this->registerMetaTag([ 'content' => $seo->kw, 'name' => 'keywords' ]);
 			],
 		]);
 		echo \frontend\widgets\LinkPage::widget([
-			'text' => '<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;Коллективные письма',
+			'text' => '<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;Что улучшить в городе?',
 			'url' => ['/letters/letters/index'],
 			'options' => [
 				'class' => 'btn-u header-link',

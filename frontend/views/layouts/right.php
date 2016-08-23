@@ -31,7 +31,7 @@ if (!stristr($path, 'site')) {
 		],
 	]);
 	echo \frontend\widgets\LinkPage::widget([
-		'text' => '<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;Коллективные письма',
+		'text' => '<i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;Что улучшить в городе?',
 		'url' => ['/letters/letters/index'],
 		'options' => [
 			'class' => 'btn-u header-link',

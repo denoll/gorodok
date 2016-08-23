@@ -24,54 +24,57 @@ use Yii;
  */
 class Menu extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'menu';
-    }
+	const STATUS_ACTIVE = 1;
+	const STATUS_DISABLE = 0;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id_menu', 'parent', 'order', 'status'], 'integer'],
-            [['path', 'meta_keyword', 'meta_description'], 'string', 'max' => 255],
-            [['alias', 'title', 'icon', 'subtitle'], 'string', 'max' => 50],
-            [['alias'], 'unique'],
-            [['id_menu'], 'exist', 'skipOnError' => true, 'targetClass' => MenuList::className(), 'targetAttribute' => ['id_menu' => 'id']],
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'menu';
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id_menu' => 'Id Menu',
-            'id' => 'ID',
-            'parent' => 'Parent',
-            'order' => 'Порядок',
-            'status' => 'Статус',
-            'path' => 'Путь к элементу',
-            'alias' => 'Алиас',
-            'title' => 'Заголовок',
-            'icon' => 'Иконка',
-            'subtitle' => 'Подзаоловок',
-            'meta_keyword' => 'Ключевые слова',
-            'meta_description' => 'Мета описание',
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[ [ 'id_menu', 'parent', 'order', 'status' ], 'integer' ],
+			[ [ 'path', 'meta_keyword', 'meta_description' ], 'string', 'max' => 255 ],
+			[ [ 'alias', 'title', 'icon', 'subtitle' ], 'string', 'max' => 50 ],
+			[ [ 'alias' ], 'unique' ],
+			[ [ 'id_menu' ], 'exist', 'skipOnError' => true, 'targetClass' => MenuList::className(), 'targetAttribute' => [ 'id_menu' => 'id' ] ],
+		];
+	}
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMenu()
-    {
-        return $this->hasOne(MenuList::className(), ['id' => 'id_menu']);
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id_menu'          => 'Id Menu',
+			'id'               => 'ID',
+			'parent'           => 'Parent',
+			'order'            => 'Порядок',
+			'status'           => 'Статус',
+			'path'             => 'Путь к элементу',
+			'alias'            => 'Алиас',
+			'title'            => 'Заголовок',
+			'icon'             => 'Иконка',
+			'subtitle'         => 'Подзаоловок',
+			'meta_keyword'     => 'Ключевые слова',
+			'meta_description' => 'Мета описание',
+		];
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getMenu()
+	{
+		return $this->hasOne(MenuList::className(), [ 'id' => 'id_menu' ]);
+	}
 }

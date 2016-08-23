@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->params['left'] = true;
+//$this->params['left'] = true;
 $this->params['right'] = true;
 
 Yii::$app->session->remove('id_konkurs');

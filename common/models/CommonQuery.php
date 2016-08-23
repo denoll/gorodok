@@ -440,7 +440,7 @@ class CommonQuery extends ActiveRecord
 		$user_id = $model->id_user;
 		$current_user = Yii::$app->user->getIdentity();
 		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
-		if(!$current_user->id == $user_id){
+		if($current_user->id != $user_id){
 			$current_user = CurUser::findOne($user_id);
 		}
 		Yii::$app->mailer->compose('@common/mail/createKonkursItemEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])
@@ -475,7 +475,7 @@ class CommonQuery extends ActiveRecord
 		$user_id = $model->id_user;
 		$current_user = Yii::$app->user->getIdentity();
 		$current_date = Yii::$app->formatter->asDate(date("Y-m-d H:i:s"));
-		if(!$current_user->id == $user_id){
+		if($current_user->id != $user_id){
 			$current_user = CurUser::findOne($user_id);
 		}
 		Yii::$app->mailer->compose('@common/mail/updateKonkursItemEmail', ['model' => $model, 'link'=>$link, 'date'=> $current_date])

@@ -33,7 +33,7 @@ class LettersSidebarWidget extends Widget
 		echo '<div class="panel panel-u" style="margin-top: 10px;">';
 		echo '<div class="panel-heading">';
 		echo '<h3 class="panel-title" style="color: #fff; display: block;">';
-		echo Html::a('Коллективные письма',['/letters/letters/index'],['class'=>'header-link']);
+		echo Html::a('Что улучшить в городе?',['/letters/letters/index'],['class'=>'header-link']);
 		echo '</h3>';
 		echo '</div>';
 		echo '<div class="posts panel-body" style=" padding: 7px;">';
