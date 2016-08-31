@@ -15,7 +15,9 @@ use common\widgets\Arrays;
 
 <div class="goods-form row" style="margin-bottom: 55px;">
 	<div class="container-fluid">
-		<?php $form = ActiveForm::begin(); ?>
+		<?php $form = ActiveForm::begin([
+			'options' => ['enctype' => 'multipart/form-data'],
+		]); ?>
 		<div class="form-group">
 			<?= Html::submitButton('<i class="fa fa-save"></i>&nbsp;&nbsp;Сохранить', ['class' => 'btn btn-success']) ?>
 		</div>

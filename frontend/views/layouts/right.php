@@ -15,6 +15,14 @@ $path = Url::current();
 
 if (!stristr($path, 'site')) {
 	echo \frontend\widgets\LinkPage::widget([
+		'text' => '<i class="fa fa-smile-o"></i>&nbsp;&nbsp;&nbsp;Улыбнись',
+		'url' => ['/news/news/index', 'cat'=>'ulybnis'],
+		'options' => [
+			'class' => 'btn-u header-link',
+			'style' => 'margin-top: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+		],
+	]);
+	echo \frontend\widgets\LinkPage::widget([
 		'text' => '<i class="fa fa-train"></i>&nbsp;&nbsp;&nbsp;Ж/Д расписание',
 		'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda'],
 		'options' => [

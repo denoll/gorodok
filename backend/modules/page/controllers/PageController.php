@@ -136,7 +136,7 @@ class PageController extends Controller
         $model = $this->findModel($id);
         $id_page = $model->id;
         $dir = Yii::getAlias('@frt_dir/img/page/');
-	    if(is_dir($dir)){
+	    if(is_dir($dir) && !empty($model->thumbnail) && !empty($model->images)){
 	        $images = FileHelper::findFiles($dir, [
 	            'only' => [
 	                $model->thumbnail,

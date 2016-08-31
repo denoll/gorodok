@@ -179,7 +179,7 @@ class NewsController extends Controller
 		$model = $this->findModel($id);
 		$id_news = $model->id;
 		$dir = Yii::getAlias('@frt_dir/img/news/');
-		if (is_dir($dir)) {
+		if(is_dir($dir) && !empty($model->thumbnail) && !empty($model->images)){
 			$images = FileHelper::findFiles($dir, [
 				'only' => [
 					$model->thumbnail,
