@@ -50,4 +50,18 @@ class Logo extends Component
 		}
 		return $result;
 	}
+	/**
+	 * @return string
+	 */
+	public function getLogoLink()
+	{
+		if($this->type === 'img' && !empty($this->img)){
+			$result  = $this->img;
+		}elseif ($this->type === 'text' && !empty($this->text)){
+			$result = $this->text;
+		}else{
+			$result = Yii::$app->name;
+		}
+		return $result;
+	}
 }

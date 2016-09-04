@@ -14,7 +14,7 @@ use \yii\bootstrap\Modal;
 
 AppAsset::register($this);
 
-$this->registerMetaTag(['content' => Url::to('@frt_url/img/logo_2.png'), 'property' => 'og:image']);
+$this->registerMetaTag(['content' => \Yii::$app->logo->getLogoLink(), 'property' => 'og:image']);
 $this->registerMetaTag(['content' => Url::to('@frt_url') . ' - ' . $this->title, 'property' => 'og:site_name']);
 
 ?>
