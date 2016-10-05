@@ -46,7 +46,12 @@ $this->params['letter_id'] = $model['id'];
 					<?= $model['author'] ? '&nbsp;&nbsp;&nbsp;<i class="small-text">Автор:&nbsp;</i>' . $model['author'] : '' ?>
 
 				</p>
-
+<?php if (Yii::$app->user->isGuest) : ?>
+	<div class="tag-box tag-box-v4 margin-bottom-10">
+		<h4>Для голосования Вам необходимо войти на сайт, либо зарегистрироваться, если еще не регистрировались.</h4>
+		<p><?= Html::a('Войти', ['/site/login'], ['class' => 'btn-u']) ?> <?= Html::a('Зарегистрироваться', ['/site/signup'], ['class' => 'btn-u btn-brd']) ?></p>
+	</div>
+<?php ELSE : ?>
 				<div class="service-block service-block-u rating-block">
 					<?php if ($model['stage'] != 2) { ?>
 						<span style="font-size: 1.2em;">Голосуем за письмо&nbsp;</span><span id="message_<?= $model['id'] ?>"></span>
@@ -69,7 +74,7 @@ $this->params['letter_id'] = $model['id'];
                         <i> Текущий рейтинг: </i>&nbsp;<strong id="rating_val_<?= $model['id'] ?>"><?= Yii::$app->formatter->asText($model['rating']) ?></strong>&nbsp;&nbsp;
                     </span>
 				</div>
-
+<?php ENDIF ?>
 				<p><strong><?= $model['subtitle'] != '' ? $model['subtitle'] : '' ?></strong></p>
 			</div>
 		</div>

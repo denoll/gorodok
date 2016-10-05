@@ -22,10 +22,10 @@ class LettersController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['my-letters','update','create','create-comment','rating-up','rating-down'],
+                'only' => ['my-letters','update','create','create-comment'],
                 'rules' => [
                     [
-                        'actions' => ['my-letters','update','create','create-comment','rating-up','rating-down'],
+                        'actions' => ['my-letters','update','create','create-comment'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -99,7 +99,7 @@ class LettersController extends Controller
     }
 
     public function actionRatingUp(){
-        if(Yii::$app->user->isGuest)\Yii::$app->session->setFlash('danger', 'Для голосования зарегистрируйтесь или войдите на сайт.');
+        if(Yii::$app->user->isGuest){echo json_encode(['message'=>'reg']); return;}
         $post = \Yii::$app->request->post();
         $rating = LettersRating::findOne([
             'id_user'=>Yii::$app->user->id,
@@ -141,7 +141,7 @@ class LettersController extends Controller
     }
 
     public function actionRatingDown(){
-        if(Yii::$app->user->isGuest)\Yii::$app->session->setFlash('danger', 'Для голосования зарегистрируйтесь или войдите на сайт.');
+        if(Yii::$app->user->isGuest){echo json_encode(['message'=>'reg']); return;}
         $post = \Yii::$app->request->post();
         $rating = LettersRating::findOne([
             'id_user'=>Yii::$app->user->id,

@@ -12,13 +12,17 @@ function rating_up(letter_id) {
             cache: true,
             dataType: "json",
             success: function (data) {
-                if(data.message == 'no'){
-                    $("#vote_yes_"+letter_id).html(data.vote_yes);
-                    $("#vote_no_"+letter_id).html(data.vote_no);
-                    $("#rating_val_"+letter_id).html(data.rating);
-                    $("#message_"+letter_id).html('');
+                if(data.message == 'reg'){
+                    $("#message_"+letter_id).html('Для голосования зарегистрируйтесь или войдите на сайт.');
                 }else{
-                    $("#message_"+letter_id).html('Вы уже голосовали');
+                    if(data.message == 'no'){
+                        $("#vote_yes_"+letter_id).html(data.vote_yes);
+                        $("#vote_no_"+letter_id).html(data.vote_no);
+                        $("#rating_val_"+letter_id).html(data.rating);
+                        $("#message_"+letter_id).html('');
+                    }else{
+                        $("#message_"+letter_id).html('Вы уже голосовали');
+                    }
                 }
                 //$("#id_rating_txt_"+letter_id).html(data);
             }
@@ -36,13 +40,17 @@ function rating_down(letter_id) {
             cache: true,
             dataType: "json",
             success: function (data) {
-                if(data.message == 'no'){
-                    $("#vote_yes_"+letter_id).html(data.vote_yes);
-                    $("#vote_no_"+letter_id).html(data.vote_no);
-                    $("#rating_val_"+letter_id).html(data.rating);
-                    $("#message_"+letter_id).html('');
+                if(data.message == 'reg'){
+                    $("#message_"+letter_id).html('Для голосования зарегистрируйтесь или войдите на сайт.');
                 }else{
-                    $("#message_"+letter_id).html('Вы уже голосовали');
+                    if(data.message == 'no'){
+                        $("#vote_yes_"+letter_id).html(data.vote_yes);
+                        $("#vote_no_"+letter_id).html(data.vote_no);
+                        $("#rating_val_"+letter_id).html(data.rating);
+                        $("#message_"+letter_id).html('');
+                    }else{
+                        $("#message_"+letter_id).html('Вы уже голосовали');
+                    }
                 }
             }
         });

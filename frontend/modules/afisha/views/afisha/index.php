@@ -7,23 +7,24 @@ use yii\widgets\ListView;
 /* @var $searchModel common\models\afisha\AfishaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
+$this->params[ 'right' ] = true;
+$this->params[ 'left' ] = true;
+$seo = Yii::$app->seo->getByKey('afisha_index');
 $ses = Yii::$app->session;
 $ses->open();
 $cur_cat = $ses->get('current_cat');
 $parent_cat = $ses->get('parent_cat');
 $first_child = $ses->get('first_child');
 $ses->close();
-$this->title = !empty($cur_cat) ? $cur_cat['name'] : 'Афиша';
-$this->params['right'] = true;
-$this->params['left'] = true;
-if(!empty($cur_cat)){
-    $this->params['breadcrumbs'][] = ['label' => 'Афиша', 'url' => ['index']];
-    $m_kw = $cur_cat['m_keyword'];
-    $m_d = $cur_cat['m_description'];
-}else{
-    $m_kw = 'афиша, афиша тынды,информационный портал тынды, вся афиша тынды';
-    $m_d = 'Афиша. Информационный портал города Тында.';
+$this->title = !empty($cur_cat) ? $seo->title .' '. $cur_cat['name'] : $seo->title;
+
+if ( !empty($cur_cat) ) {
+    $this->params[ 'breadcrumbs' ][] = [ 'label' => 'Афиша', 'url' => [ 'index' ] ];
+    $m_kw = $cur_cat[ 'm_keyword' ] . ', ' . $seo->kw;
+    $m_d = $cur_cat[ 'm_description' ] . '. ' . $seo->desc;
+} else {
+    $m_kw = $seo->kw;
+    $m_d = $seo->desc;
 }
 
 if(!empty($parent_cat)){

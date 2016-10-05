@@ -9,21 +9,21 @@ use yii\widgets\ListView;
 
 $this->params['right'] = true;
 $this->params['left'] = true;
-
+$seo = Yii::$app->seo->getByKey('news_index');
 $ses = Yii::$app->session;
 $cur_cat = $ses->get('current_cat');
 $parent_cat = $ses->get('parent_cat');
 $first_child = $ses->get('first_child');
 
-$this->title = !empty($cur_cat) ? $cur_cat['name'] : 'Новости Тынды';
+$this->title = !empty($cur_cat) ? $cur_cat['name'] : $seo->title;
 
 if (!empty($cur_cat)) {
 	$this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
-	$m_kw = $cur_cat['m_keyword']. ', новости, новости тынды, новостной портал тынды, все новости тынды';
-	$m_d = $cur_cat['m_description']. '. Новостной портал города Тында';
+	$m_kw = $cur_cat['m_keyword']. ', '.$seo->kw;
+	$m_d = $cur_cat['m_description']. '. '.$seo->desc;
 } else {
-	$m_kw = 'новости, новости тынды, новостной портал тынды, все новости тынды';
-	$m_d = 'Новостной портал города Тында';
+	$m_kw = $seo->kw;
+	$m_d = $seo->desc;
 }
 
 if (!empty($parent_cat)) {

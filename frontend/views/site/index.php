@@ -83,8 +83,24 @@ $this->registerMetaTag([ 'content' => $seo->kw, 'name' => 'keywords' ]);
 			],
 		]);
 		echo \frontend\widgets\LinkPage::widget([
-			'text' => '<i class="fa fa-train"></i>&nbsp;&nbsp;&nbsp;Ж/Д расписание',
-			'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-poezdov-i-elektricek-stancia-tynda'],
+			'text' => '<i class="fa fa-train"></i>&nbsp;&nbsp;&nbsp;Расписание поездов',
+			'url' => ['/schedule/default/train'],
+			'options' => [
+				'class' => 'btn-u header-link',
+				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+			],
+		]);
+		echo \frontend\widgets\LinkPage::widget([
+			'text' => '<i class="fa fa-train"></i>&nbsp;&nbsp;&nbsp;Расписание электричек',
+			'url' => ['/schedule/default/suburban'],
+			'options' => [
+				'class' => 'btn-u header-link',
+				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'
+			],
+		]);
+		echo \frontend\widgets\LinkPage::widget([
+			'text' => '<i class="fa fa-plane"></i>&nbsp;&nbsp;&nbsp;Авиа расписание',
+			'url' => ['/page/page/view', 'cat' => 'poleznaa-informacia','id'=>'raspisanie-samoletov'],
 			'options' => [
 				'class' => 'btn-u header-link',
 				'style' => 'margin-bottom: 10px; padding: 10px 15px; width: 100%; font-size: 1.2em;'

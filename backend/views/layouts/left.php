@@ -155,6 +155,7 @@ use yii\bootstrap\NavBar;
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Меню',['/mainmenu/default/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-cubes"></i> Расширения',['/mainmenu/extensions/index']) ?></li>
 					<li><?= Html::a('<i class="fa fa-map"></i> Sitemap static',['/static-sitemap/index']) ?></li>
+					<li><?= Html::a('<i class="fa fa-map"></i> Расписание',['/schedule/default/train']) ?></li>
 				</ul>
 			</li>
 			<li>
