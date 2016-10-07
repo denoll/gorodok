@@ -8,9 +8,7 @@
 /composer.lock
 /composer.json
 /.bowerrc
-/frontend/web/.htaccess
-/frontend/web/temp
-/frontend/web/js/plugins
+/frontend/web
 /frontend/config
 /backend/config
 /common/config
