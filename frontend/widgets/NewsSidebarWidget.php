@@ -47,7 +47,7 @@ class NewsSidebarWidget extends Widget
 			echo '</dt>';
 			echo '<dd>';
 			echo Html::a($item['title'], ['/news/news/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']], ['style' => 'font-size: 0.9em;']);
-			echo '<br><i style="font-size: 0.9em; color: #aaa;">' . Yii::$app->formatter->asDate($item['publish'], 'long') . '</i>';
+			echo '<br><i style="font-size: 0.9em; color: #aaa;">' . Yii::$app->formatter->asDatetime($item['publish'], 'short') . '</i>';
 			echo '</dd>';
 			echo '</dl>';
 		}

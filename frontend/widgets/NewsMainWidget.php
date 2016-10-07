@@ -35,6 +35,7 @@ class NewsMainWidget extends Widget
 				echo Html::a(Avatar::imgNews($item['thumbnail'], '95px; border: 1px solid #c6c6c6; padding: 1px;'), ['/news/news/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']]);
 				echo '</td>';
 				echo '<td style="padding: 0px;">';
+				echo '<i style="font-size: 0.9em; color: #aaa;">' . Yii::$app->formatter->asDatetime($item['publish'], 'short') . '</i>&nbsp;&nbsp;';
 				echo Html::a($item['title'], ['/news/news/view', 'cat'=>$item['cat']['alias'], 'id'=>$item['alias']], ['class' => '', 'style' => 'margin-left: 0px;', 'title' => 'Подробнее']);
 				echo '<br><i class="small-text" >Категория:</i> ' . Html::a($item['cat']['name'], ['/news/news/index', 'cat' => $item['cat']['alias']]);
 				echo '<ul class="list-inline"><li class="tag-sign" style="margin-right: 5px;">Теги: </li>';

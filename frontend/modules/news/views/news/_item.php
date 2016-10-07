@@ -19,7 +19,7 @@ use \common\widgets\Arrays;
                 <h2 style="font-size: 1.25em; margin: 3px 0px;">
                     <?= Html::a(Html::encode($model['title']), [Url::to('/news/news/view'),'cat'=>$model['cat']['alias'], 'id' => $model['alias']]) ?>
                 </h2>
-                <p style="margin: 2px 0;"><i class="small-text">Дата новости:&nbsp;<?= \Yii::$app->formatter->asDate($model['publish'], 'long') ?></i>
+                <p style="margin: 2px 0;"><i class="small-text">Дата новости:&nbsp;<?= \Yii::$app->formatter->asDatetime($model['publish'], 'short') ?></i>
                 <span style="padding-left: 15px;"><i class="small-text">Категория:&nbsp;&nbsp;</i><strong><?=Html::a($model['cat']['name'],['/news/news/index','cat'=>$model['cat']['alias']])?></strong></span>
                 </p>
                 <p style="margin: 2px 0;"><?= $model['autor'] ? '<i class="small-text">Автор:&nbsp;</i>'. $model['autor'] : ''?></p>
