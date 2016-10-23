@@ -19,8 +19,8 @@ class SetYaMap extends Widget
 {
 	public $lat;
 	public $lon;
-	public $center_lat = 55.154656;
-	public $center_lon = 124.729236;
+	public $center_lat = 0;
+	public $center_lon = 0;
 	public $firm_name;
 	public $address;
 	public $width = '100%';
@@ -30,6 +30,8 @@ class SetYaMap extends Widget
 	public function init()
 	{
 		parent::init();
+		$this->center_lat = \Yii::$app->api->lat();
+		$this->center_lon = \Yii::$app->api->lon();
 		echo Html::tag('div',null,['id'=>'map', 'style'=>'width: '.$this->width.'; height: '.$this->height.';']);
 	}
 

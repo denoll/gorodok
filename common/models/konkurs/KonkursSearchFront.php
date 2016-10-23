@@ -63,6 +63,7 @@ class KonkursSearchFront extends Konkurs
 				'pageSizeParam' => false,
 				'pageSize' => 20,
 			],
+
 		]);
 		$dataProvider->setSort([
 			'attributes' => [
@@ -70,12 +71,16 @@ class KonkursSearchFront extends Konkurs
 					'asc' => ['start' => SORT_ASC,],
 					'desc' => ['start' => SORT_DESC,],
 					'label' => 'по дате',
+					'default' => SORT_DESC,
 				],
 				'name' => [
 					'asc' => ['name' => SORT_ASC,],
 					'desc' => ['name' => SORT_DESC,],
 					'label' => 'по названию',
 				],
+			],
+			'defaultOrder'=>[
+				'start'=>SORT_DESC
 			],
 		]);
 

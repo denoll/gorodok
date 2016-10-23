@@ -92,6 +92,9 @@ class ItemSearchFront extends KonkursItem
 					'label' => 'по пользователю',
 				],
 			],
+			'defaultOrder'=>[
+				'created_at'=>SORT_DESC
+			],
 		]);
 
 

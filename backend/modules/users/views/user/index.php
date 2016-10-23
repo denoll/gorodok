@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'confirmed_at',
             // 'blocked_at',
             // 'status',
-            // 'created_at',
+            'created_at:date',
             // 'updated_at',
             // 'rating',
             // 'flags',

@@ -138,7 +138,7 @@ class AfishaController extends Controller
 		$model = $this->findModel($id);
 		$id_afisha = $model->id;
 		$dir = Yii::getAlias('@frt_dir/img/afisha/');
-		if (is_dir($dir)) {
+		if (is_dir($dir) && $model->thumbnail) {
 			$images = FileHelper::findFiles($dir, [
 				'only' => [
 					$model->thumbnail,

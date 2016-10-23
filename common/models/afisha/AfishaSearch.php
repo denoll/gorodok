@@ -11,6 +11,8 @@ use common\models\afisha\Afisha;
  */
 class AfishaSearch extends Afisha
 {
+	public $period;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -19,6 +21,7 @@ class AfishaSearch extends Afisha
 		return [
 			[ [ 'id', 'id_cat', 'id_place' ], 'integer' ],
 			[ [ 'on_main', 'status' ], 'boolean' ],
+			[ [ 'period' ], 'string', 'max' => 10 ],
 			[ [ 'publish', 'unpublish', 'title', 'alias', 'subtitle', 'short_text', 'text', 'created_at', 'updated_at', 'autor', 'm_keyword', 'm_description', 'icon', 'thumbnail', 'images', 'date_in', 'date_out' ], 'safe' ],
 		];
 	}
@@ -91,12 +94,28 @@ class AfishaSearch extends Afisha
 			$query->andWhere('id_cat IN (' . $cats . ')');
 		}
 
+		$period = \Yii::$app->request->get('period');
+		if(!empty($period)){
+		$now = date('Y-m-d');
+		if($period === 'today'){
+			$_date = $now;
+		}elseif($period === 'tomorrow'){
+			$date = new \DateTime($now);
+			$date->add(new \DateInterval('P1D'));
+			$_date = $date->format('Y-m-d');
+		}else{
+			$_date = $this->check($period);
+		}
+			$query->andWhere(' ( date_in <= \''.$_date.'\' AND date_out >= \''.$_date.'\' ) OR ( date_in = \''.$_date.'\' AND date_out IS NULL ) ');
+		}
+
+
 		if ( !empty($this->date_in) ) {
-			$query->andFilterWhere(['>=','date_in',$this->date_in]);
+			$query->andFilterWhere([ '>=', 'date_in', $this->date_in ]);
 		}
 
 		if ( !empty($this->date_out) ) {
-			$query->andFilterWhere(['<=','date_out',$this->date_out]);
+			$query->andFilterWhere([ '<=', 'date_out', $this->date_out ]);
 		}
 
 		$query->andFilterWhere([
@@ -115,5 +134,12 @@ class AfishaSearch extends Afisha
 			->orFilterWhere([ 'like', 'short_text', $this->title ]);
 
 		return $dataProvider;
+	}
+
+	protected function check($str){
+		$arr = [',','.',':',';','_','"','\'','+','\\'];
+		$str = str_replace($arr, ' ',$str);
+		$str = strip_tags($str);
+		return trim($str);
 	}
 }

@@ -39,7 +39,7 @@ $user = Yii::$app->user->getIdentity();
 		<div class="col-sm-12">
 			<h1><strong style="font-size: 0.9em; font-style: italic;"><?= $model[ 'title' ] ?></strong></h1>
 			<p>
-				<i class="small-text">Дата новости:&nbsp;<?= \Yii::$app->formatter->asDatetime($model['publish'], 'short') ?></i>
+				<i class="small-text">Дата новости:&nbsp;<?= \Yii::$app->dateFormat->getDateTime($model['publish']) ?></i>
 				<?= $model[ 'autor' ] ? '&nbsp;&nbsp;&nbsp;<i class="small-text">Автор:&nbsp;</i>' . $model[ 'autor' ] : '' ?>
 				<?= \frontend\widgets\SocialButtons::widget([ 'text' => 'Поделитесь новостью в своей любимой соцсети:' ]) ?>
 			</p>
